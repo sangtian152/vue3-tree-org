@@ -1,0 +1,361 @@
+@import url("//at.alicdn.com/t/font_2201426_wnqkpnyga1.css");
+.zm-tree-org {
+  height: 100%;
+  padding: 15px;
+  position: relative;
+  background: #fff;
+  .zm-draggable {
+    touch-action: none;
+    &:not(.dragging) {
+      transition: all 0.1s;
+    }
+  }
+  .zoom-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    transform-origin: left top;
+  }
+}
+.tree-org {
+  display: table;
+  text-align: center;
+  &:before, &:after {
+    content: '';
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+  &-node, &-node__children {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    &:before, &:after {
+      transition: all .35s;
+    }
+  }
+
+  &-node {
+    padding-top: 20px;
+    display: table-cell;
+    vertical-align: top;
+    &.is-leaf, &.collapsed {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 19px;
+    }
+
+    &:after {
+      left: 50%;
+      border-left: 1px solid #ddd;
+    }
+
+    &:not(:first-child):before,
+    &:not(:last-child):after {
+      border-top: 1px solid #ddd;
+    }
+    &__textarea {
+      width: 100%;
+      height: 100%;
+      position:absolute;
+      top: 0;
+      left: 0;
+      font-size: 14px;
+    }
+    &__content {
+      position: relative;
+      display: inline-block;
+      user-select: none;
+      &.is-new {
+        width: 50px;
+        height: 100px;
+      }
+      .tree-org-node__inner {
+        text-align: center;
+        border-radius: 2px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, .15);
+      }
+      .tree-org-node__text {
+        padding: 10px 15px;
+      }
+    }
+    &__expand {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      z-index: 10;
+      margin-left: -11px;
+      margin-top: 9px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      box-shadow: 0 0 2px rgba(0, 0, 0, .15);
+      cursor: pointer;
+      transition: all .35s ease;
+      &.expanded {
+        margin-left: -10px;
+      }
+      &:hover {
+        background-color: #e7e8e9;
+        transform: scale(1.15);
+      }
+      .tree-org-node__expand-btn {
+        &:before, &:after {
+          content: '';
+          position: absolute;
+        }
+
+        &:before {
+          top: 50%;
+          left: 4px;
+          right: 4px;
+          height: 0;
+          border-top: 1px solid #ccc;
+        }
+
+        &:after {
+          top: 4px;
+          left: 50%;
+          bottom: 4px;
+          width: 0;
+          border-left: 1px solid #ccc;
+        }
+      }
+      &.expanded {
+        .tree-org-node__expand-btn:after {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+.collapsable .tree-org-node.collapsed {
+  padding-bottom: 30px;
+  .tree-org-node__content:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 50%;
+    height: 20px;
+    border-right: 1px solid #ddd;
+  }
+}
+.tree-org > .tree-org-node {
+  display: flex!important;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0;
+  &:after {
+    border-left: 0;
+  }
+}
+.tree-org-node__children {
+  display: table;
+  padding-top: 20px;
+  width: 100%;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 20px;
+    border-left: 1px solid #ddd;
+  }
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.horizontal {
+  & > .tree-org-node{
+    flex-direction: row;
+  }
+  .tree-org-node {
+    display: table-cell;
+    float: none;
+    padding-top: 0;
+    padding-left: 20px;
+
+    &.is-leaf, &.collapsed {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    &:before, &:after {
+      width: 19px;
+      height: 50%;
+    }
+
+    &:after {
+      top: 50%;
+      left: 0;
+      border-left: 0;
+    }
+
+    &:only-child:before {
+      top: 1px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    &:not(:first-child):before,
+    &:not(:last-child):after {
+      border-top: 0;
+      border-left: 1px solid #ddd;
+    }
+
+    &:not(:only-child):after {
+      border-top: 1px solid #ddd;
+    }
+
+    .tree-org-node-inner {
+      display: table;
+    }
+
+  }
+
+  .tree-org-node__content {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  &.collapsable .tree-org-node.collapsed {
+    padding-right: 30px;
+
+    .tree-org-node__content:after {
+      top: 0;
+      left: 100%;
+      width: 20px;
+      height: 50%;
+      border-right: 0;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  .tree-org-node__expand {
+    top: 50%;
+    left: 100%;
+    margin-top: -11px;
+    margin-left: 9px;
+    &.expanded {
+      margin-top: -10px;
+    }
+  }
+
+  & > .tree-org-node:only-child:before {
+    border-bottom: 0;
+  }
+
+  .tree-org-node__children {
+    display: table-cell;
+    padding-top: 0;
+    padding-left: 20px;
+
+    &:before {
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 0;
+      border-left: 0;
+      border-top: 1px solid #ddd;
+    }
+    &:after {
+      display: none;
+    }
+
+    & > .tree-org-node {
+      display: block;
+    }
+  }
+}
+.zm-tree-handle {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  .zm-tree-percent,
+  .zm-tree-handle-item {
+    width: 32px;
+    height: 32px;
+    user-select: none;
+    line-height: 32px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .zm-tree-handle-item {
+    color: #999;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+    &:not(:last-child){
+      margin-bottom: 6px;
+    }
+    &.zoom-out {
+      margin-bottom: -1px;
+      z-index: 2;
+    }
+    &.zoom-in:hover {
+      z-index: 3;
+    }
+    &:hover {
+      color: #2d8cf0;
+      background: #f0faff;
+      border-color: #2d8cf0;
+      .zm-tree-restore {
+        border-color: #2d8cf0;
+        &:after {
+          border-color: #2d8cf0;
+        }
+      }
+    }
+    .zm-tree-icon {
+      font-size: 18px;
+    }
+    .zm-tree-restore {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #aaa;
+      margin-left: -2px;
+      margin-bottom: -2px;
+      &:after {
+        content: "";
+        display: block;
+        height: 100%;
+        border-top: 1px solid #aaa;
+        border-right: 1px solid #aaa;
+        transform: translate(3px, -3px);
+      }
+    }
+    .zm-tree-svg{
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 50%;
+        height: 50%;
+        vertical-align: middle;
+        opacity: 0.5;
+      }
+    } 
+  }
+}
