@@ -1,7 +1,5 @@
-import { defineUserConfig } from 'vuepress'
-import { mdPlugin, hoistedTags } from './config/plugins'
+import { mdPlugin } from './config/plugins'
 const { path } = require('@vuepress/utils')
-// import type { DefaultThemeOptions } from 'vuepress'
 import type { UserConfig } from 'vitepress'
 
 const buildTransformers = () => {
@@ -33,7 +31,7 @@ const buildTransformers = () => {
 export const config:UserConfig = {
     // 站点配置
   lang: 'zh-CN',
-  title: 'zm-tree-org',
+  title: 'vue3-tree-org',
   base: '/vue3-tree-org/',
   description: 'Just playing around',
   // 主题和它的配置
