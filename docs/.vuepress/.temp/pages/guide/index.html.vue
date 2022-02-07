@@ -10,7 +10,7 @@ es6配合使用。并且支持按需引入</p>
 </code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="引入" tabindex="-1"><a class="header-anchor" href="#引入" aria-hidden="true">#</a> 引入</h3>
 <p>在 main.js 中写入以下内容：</p>
 <div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createApp <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
-<span class="token keyword">import</span> vue3TreeOrg <span class="token keyword">from</span> <span class="token string">'zm-tree-org'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> vue3TreeOrg <span class="token keyword">from</span> <span class="token string">'vue3-tree-org'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token string">"vue3-tree-org/lib/vue3-tree-org.css"</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
@@ -18,5 +18,5 @@ es6配合使用。并且支持按需引入</p>
 app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>vue3TreeOrg<span class="token punctuation">)</span>
 app<span class="token punctuation">.</span><span class="token function">mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
 </code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="最新版本" tabindex="-1"><a class="header-anchor" href="#最新版本" aria-hidden="true">#</a> 最新版本</h3>
-<p><a href="https://www.npmjs.com/package/zm-tree-org" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/zm-tree-org" alt="NPM version"><ExternalLinkIcon/></a></p>
+<p><a href="https://www.npmjs.com/package/vue3-tree-org" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/vue3-tree-org" alt="NPM version"><ExternalLinkIcon/></a></p>
 </template>

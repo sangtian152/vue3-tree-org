@@ -1,15 +1,30 @@
 export const data = {
   "key": "v-8daa1a0e",
   "path": "/",
-  "title": "",
+  "title": "Home",
   "lang": "zh-CN",
-  "frontmatter": {},
+  "frontmatter": {
+    "home": true,
+    "title": "Home",
+    "actions": [
+      {
+        "text": "快速开始",
+        "link": "/guide/",
+        "type": "primary"
+      },
+      {
+        "text": "项目简介",
+        "link": "/guide/",
+        "type": "secondary"
+      }
+    ]
+  },
   "excerpt": "",
   "headers": [
     {
-      "level": 2,
-      "title": "介绍",
-      "slug": "介绍",
+      "level": 3,
+      "title": "As Easy as 1, 2, 3",
+      "slug": "as-easy-as-1-2-3",
       "children": []
     }
   ],

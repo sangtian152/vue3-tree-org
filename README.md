@@ -20,7 +20,7 @@ yarn add vue3-tree-org
 ### 引入
 ```
 import { createApp } from 'vue'
-import vue3TreeOrg from 'zm-tree-org';
+import vue3TreeOrg from 'vue3-tree-org';
 import "vue3-tree-org/lib/vue3-tree-org.css";
 
 const app = createApp(App)
@@ -31,7 +31,7 @@ app.mount('#app')
 ### 使用示例
 ![](https://oscimg.oschina.net/oscnet/up-84b0329b0dff74d87da1252248deb5aab5e.png)
 
-[示例代码](https://sangtian152.gitee.io/vue3-tree-org/)
+[示例代码](https://sangtian152.github.io/vue3-tree-org/demo/#%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95)
 
 ### 最新版本
 
@@ -39,5 +39,5 @@ app.mount('#app')
 
 ### 文档
 
-[说明文档](https://sangtian152.gitee.io/vue3-tree-org/).
+[说明文档](https://sangtian152.github.io/vue3-tree-org/guide/#%E4%BB%8B%E7%BB%8D).
 

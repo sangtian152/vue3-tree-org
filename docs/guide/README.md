@@ -20,7 +20,7 @@ yarn add vue3-tree-org
 
 ```javascript
 import { createApp } from 'vue'
-import vue3TreeOrg from 'zm-tree-org';
+import vue3TreeOrg from 'vue3-tree-org';
 import "vue3-tree-org/lib/vue3-tree-org.css";
 
 const app = createApp(App)
@@ -31,4 +31,4 @@ app.mount('#app')
 
 ### 最新版本
 
-[![NPM version](https://img.shields.io/npm/v/zm-tree-org)](https://www.npmjs.com/package/zm-tree-org)
+[![NPM version](https://img.shields.io/npm/v/vue3-tree-org)](https://www.npmjs.com/package/vue3-tree-org)
