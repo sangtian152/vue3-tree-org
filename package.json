@@ -1,10 +1,25 @@
 {
   "name": "vue3-tree-org",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "sangtian152",
-  "private": true,
+  "private": false,
   "main": "lib/vue3-tree-org.common.js",
   "license": "MIT",
+  "homepage": "https://sangtian152.gitee.io/vue3-tree-org",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/sangtian152/vue3-tree-org.git"
+  },
+  "keywords": [
+    "vue3-tree-org",
+    "orgchart",
+    "vue",
+    "tree-org",
+    "组织架构图"
+  ],
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",

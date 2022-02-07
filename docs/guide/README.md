@@ -21,7 +21,7 @@ yarn add vue3-tree-org
 ```javascript
 import { createApp } from 'vue'
 import vue3TreeOrg from 'zm-tree-org';
-import "zm-tree-org/lib/zm-tree-org.css";
+import "vue3-tree-org/lib/vue3-tree-org.css";
 
 const app = createApp(App)
 
