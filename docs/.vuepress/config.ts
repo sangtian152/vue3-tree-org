@@ -34,6 +34,7 @@ export const config:UserConfig = {
     // 站点配置
   lang: 'zh-CN',
   title: 'zm-tree-org',
+  base: '/vue3-tree-org/',
   description: 'Just playing around',
   // 主题和它的配置
   theme: '@vuepress/theme-default',

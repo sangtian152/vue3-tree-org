@@ -11,7 +11,7 @@ es6配合使用。并且支持按需引入</p>
 <p>在 main.js 中写入以下内容：</p>
 <div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createApp <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vue'</span>
 <span class="token keyword">import</span> vue3TreeOrg <span class="token keyword">from</span> <span class="token string">'zm-tree-org'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token string">"zm-tree-org/lib/zm-tree-org.css"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token string">"vue3-tree-org/lib/vue3-tree-org.css"</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
 
