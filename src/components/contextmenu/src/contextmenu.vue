@@ -32,46 +32,10 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue'
 import { useContextmenu } from './use-contextmenu'
-import { menus, contextmenuEmits } from './contextmenus'
+import { contextmenuProps, contextmenuEmits } from './contextmenus'
 export default defineComponent({
   name: 'Contextmenu',
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true
-    },
-    data: {
-      type: Object,
-      required: true
-    },
-    node: {
-      type: Object,
-      required: true
-    },
-    props: {
-      type: Object,
-      default: () => ({
-        id: 'id',
-        pid: 'pid',
-        label: 'label',
-        expand: 'expand',
-        children: 'children'
-      })
-    },
-    x: Number,
-    y: Number,
-    menus: {
-      type: Array,
-      default () {
-        return menus
-      }
-    },
-    nodeAdd: Function,
-    nodeDelete: Function,
-    nodeEdit: Function,
-    nodeCopy: Function,
-    disabled: Boolean
-  },
+  props: contextmenuProps,
   emits: contextmenuEmits,
   setup (props, ctx) {
     const inputRef = ref<HTMLInputElement>()

@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <div style="height: 400px; border: 1px solid #eee">
-        <zm-tree-org
+      <div style="height: 400px;">
+        <vue3-tree-org
           :data="data"
           :disabled="disaled"
           :horizontal="horizontal"
@@ -27,7 +27,7 @@
           <!-- <template v-slot:expand="{node}">
           <div>{{node.children.length}}</div>
         </template> -->
-        </zm-tree-org>
+        </vue3-tree-org>
       </div>
     </div>
   </div>

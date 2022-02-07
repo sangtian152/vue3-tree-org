@@ -1,5 +1,3 @@
-## Demo 演示案例
-
 ### 基础用法
 
 可以设置类似的data数据格式来生成树形组织图，并可以通过style精确配置每个节点的样式或className精确配置每个节点的class名
@@ -10,12 +8,14 @@
 2.由于节点拖拽功能阻止了节点文本选中，所以，在右键菜单中提供了复制节点文本功能。
 ```
 
-<ClientOnly>
-    <my-demo />
-</ClientOnly>
 
-@[code](../.vuepress/components/myDemo.vue)
+### 示例
 
+:::demo
+
+treeNode
+
+:::
 
 ### Attributes
 

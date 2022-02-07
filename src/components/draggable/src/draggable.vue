@@ -33,12 +33,6 @@ export default defineComponent({
       ...draggable
     }
   }
-
-  /* created() {
-
-    this.resetBoundsAndMouseState()
-  },
-  */
 })
 </script>
 <style lang="scss" scoped>

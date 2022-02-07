@@ -1,10 +1,10 @@
 import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
 import log from '@/utils/log'
 import type { SetupContext } from 'vue'
-import type { ContextmenuEmits } from './contextmenus'
+import type { ContextmenuEmits, ContextmenuProps } from './contextmenus'
 import type { IRefs } from '@/utils/types'
 export const useContextmenu = (
-  defaultProps: any,
+  defaultProps: ContextmenuProps,
   { emit }: SetupContext<ContextmenuEmits>,
   refs: IRefs
 ) => {

@@ -1,7 +1,7 @@
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-2SZL67VI.js";
+} from "./chunk-EMKRM5AF.js";
 
 // node_modules/@vue/shared/dist/shared.esm-bundler.js
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -37,12 +37,64 @@ var slotFlagsText = {
 };
 var GLOBALS_WHITE_LISTED = "Infinity,undefined,NaN,isFinite,isNaN,parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,Math,Number,Date,Array,Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt";
 var isGloballyWhitelisted = makeMap(GLOBALS_WHITE_LISTED);
+var range = 2;
+function generateCodeFrame(source, start = 0, end = source.length) {
+  let lines = source.split(/(\r?\n)/);
+  const newlineSequences = lines.filter((_, idx) => idx % 2 === 1);
+  lines = lines.filter((_, idx) => idx % 2 === 0);
+  let count = 0;
+  const res = [];
+  for (let i = 0; i < lines.length; i++) {
+    count += lines[i].length + (newlineSequences[i] && newlineSequences[i].length || 0);
+    if (count >= start) {
+      for (let j = i - range; j <= i + range || end > count; j++) {
+        if (j < 0 || j >= lines.length)
+          continue;
+        const line = j + 1;
+        res.push(`${line}${" ".repeat(Math.max(3 - String(line).length, 0))}|  ${lines[j]}`);
+        const lineLength = lines[j].length;
+        const newLineSeqLength = newlineSequences[j] && newlineSequences[j].length || 0;
+        if (j === i) {
+          const pad = start - (count - (lineLength + newLineSeqLength));
+          const length = Math.max(1, end > count ? lineLength - pad : end - start);
+          res.push(`   |  ` + " ".repeat(pad) + "^".repeat(length));
+        } else if (j > i) {
+          if (end > count) {
+            const length = Math.max(Math.min(end - count, lineLength), 1);
+            res.push(`   |  ` + "^".repeat(length));
+          }
+          count += lineLength + newLineSeqLength;
+        }
+      }
+      break;
+    }
+  }
+  return res.join("\n");
+}
 var specialBooleanAttrs = `itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly`;
 var isSpecialBooleanAttr = makeMap(specialBooleanAttrs);
 var isBooleanAttr = makeMap(specialBooleanAttrs + `,async,autofocus,autoplay,controls,default,defer,disabled,hidden,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected`);
 function includeBooleanAttr(value) {
   return !!value || value === "";
 }
+var unsafeAttrCharRE = /[>/="'\u0009\u000a\u000c\u0020]/;
+var attrValidationCache = {};
+function isSSRSafeAttrName(name) {
+  if (attrValidationCache.hasOwnProperty(name)) {
+    return attrValidationCache[name];
+  }
+  const isUnsafe = unsafeAttrCharRE.test(name);
+  if (isUnsafe) {
+    console.error(`unsafe attribute name: ${name}`);
+  }
+  return attrValidationCache[name] = !isUnsafe;
+}
+var propsToAttrMap = {
+  acceptCharset: "accept-charset",
+  className: "class",
+  htmlFor: "for",
+  httpEquiv: "http-equiv"
+};
 var isNoUnitNumericStyleProp = makeMap(`animation-iteration-count,border-image-outset,border-image-slice,border-image-width,box-flex,box-flex-group,box-ordinal-group,column-count,columns,flex,flex-grow,flex-positive,flex-shrink,flex-negative,flex-order,grid-row,grid-row-end,grid-row-span,grid-row-start,grid-column,grid-column-end,grid-column-span,grid-column-start,font-weight,line-clamp,line-height,opacity,order,orphans,tab-size,widows,z-index,zoom,fill-opacity,flood-opacity,stop-opacity,stroke-dasharray,stroke-dashoffset,stroke-miterlimit,stroke-opacity,stroke-width`);
 var isKnownHtmlAttr = makeMap(`accept,accept-charset,accesskey,action,align,allow,alt,async,autocapitalize,autocomplete,autofocus,autoplay,background,bgcolor,border,buffered,capture,challenge,charset,checked,cite,class,code,codebase,color,cols,colspan,content,contenteditable,contextmenu,controls,coords,crossorigin,csp,data,datetime,decoding,default,defer,dir,dirname,disabled,download,draggable,dropzone,enctype,enterkeyhint,for,form,formaction,formenctype,formmethod,formnovalidate,formtarget,headers,height,hidden,high,href,hreflang,http-equiv,icon,id,importance,integrity,ismap,itemprop,keytype,kind,label,lang,language,loading,list,loop,low,manifest,max,maxlength,minlength,media,min,multiple,muted,name,novalidate,open,optimum,pattern,ping,placeholder,poster,preload,radiogroup,readonly,referrerpolicy,rel,required,reversed,rows,rowspan,sandbox,scope,scoped,selected,shape,size,sizes,slot,span,spellcheck,src,srcdoc,srclang,srcset,start,step,style,summary,tabindex,target,title,translate,type,usemap,value,width,wrap`);
 var isKnownSvgAttr = makeMap(`xmlns,accent-height,accumulate,additive,alignment-baseline,alphabetic,amplitude,arabic-form,ascent,attributeName,attributeType,azimuth,baseFrequency,baseline-shift,baseProfile,bbox,begin,bias,by,calcMode,cap-height,class,clip,clipPathUnits,clip-path,clip-rule,color,color-interpolation,color-interpolation-filters,color-profile,color-rendering,contentScriptType,contentStyleType,crossorigin,cursor,cx,cy,d,decelerate,descent,diffuseConstant,direction,display,divisor,dominant-baseline,dur,dx,dy,edgeMode,elevation,enable-background,end,exponent,fill,fill-opacity,fill-rule,filter,filterRes,filterUnits,flood-color,flood-opacity,font-family,font-size,font-size-adjust,font-stretch,font-style,font-variant,font-weight,format,from,fr,fx,fy,g1,g2,glyph-name,glyph-orientation-horizontal,glyph-orientation-vertical,glyphRef,gradientTransform,gradientUnits,hanging,height,href,hreflang,horiz-adv-x,horiz-origin-x,id,ideographic,image-rendering,in,in2,intercept,k,k1,k2,k3,k4,kernelMatrix,kernelUnitLength,kerning,keyPoints,keySplines,keyTimes,lang,lengthAdjust,letter-spacing,lighting-color,limitingConeAngle,local,marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mask,maskContentUnits,maskUnits,mathematical,max,media,method,min,mode,name,numOctaves,offset,opacity,operator,order,orient,orientation,origin,overflow,overline-position,overline-thickness,panose-1,paint-order,path,pathLength,patternContentUnits,patternTransform,patternUnits,ping,pointer-events,points,pointsAtX,pointsAtY,pointsAtZ,preserveAlpha,preserveAspectRatio,primitiveUnits,r,radius,referrerPolicy,refX,refY,rel,rendering-intent,repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,result,rotate,rx,ry,scale,seed,shape-rendering,slope,spacing,specularConstant,specularExponent,speed,spreadMethod,startOffset,stdDeviation,stemh,stemv,stitchTiles,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,string,stroke,stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,stroke-width,style,surfaceScale,systemLanguage,tabindex,tableValues,target,targetX,targetY,text-anchor,text-decoration,text-rendering,textLength,to,transform,transform-origin,type,u1,u2,underline-position,underline-thickness,unicode,unicode-bidi,unicode-range,units-per-em,v-alphabetic,v-hanging,v-ideographic,v-mathematical,values,vector-effect,version,vert-adv-y,vert-origin-x,vert-origin-y,viewBox,viewTarget,visibility,width,widths,word-spacing,writing-mode,x,x-height,x1,x2,xChannelSelector,xlink:actuate,xlink:arcrole,xlink:href,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,y,y1,y2,yChannelSelector,z,zoomAndPan`);
@@ -75,6 +127,20 @@ function parseStringStyle(cssText) {
       tmp.length > 1 && (ret[tmp[0].trim()] = tmp[1].trim());
     }
   });
+  return ret;
+}
+function stringifyStyle(styles) {
+  let ret = "";
+  if (!styles || isString(styles)) {
+    return ret;
+  }
+  for (const key in styles) {
+    const value = styles[key];
+    const normalizedKey = key.startsWith(`--`) ? key : hyphenate(key);
+    if (isString(value) || typeof value === "number" && isNoUnitNumericStyleProp(normalizedKey)) {
+      ret += `${normalizedKey}:${value};`;
+    }
+  }
   return ret;
 }
 function normalizeClass(value) {
@@ -115,6 +181,49 @@ var VOID_TAGS = "area,base,br,col,embed,hr,img,input,link,meta,param,source,trac
 var isHTMLTag = makeMap(HTML_TAGS);
 var isSVGTag = makeMap(SVG_TAGS);
 var isVoidTag = makeMap(VOID_TAGS);
+var escapeRE = /["'&<>]/;
+function escapeHtml(string) {
+  const str = "" + string;
+  const match = escapeRE.exec(str);
+  if (!match) {
+    return str;
+  }
+  let html = "";
+  let escaped;
+  let index;
+  let lastIndex = 0;
+  for (index = match.index; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34:
+        escaped = "&quot;";
+        break;
+      case 38:
+        escaped = "&amp;";
+        break;
+      case 39:
+        escaped = "&#39;";
+        break;
+      case 60:
+        escaped = "&lt;";
+        break;
+      case 62:
+        escaped = "&gt;";
+        break;
+      default:
+        continue;
+    }
+    if (lastIndex !== index) {
+      html += str.slice(lastIndex, index);
+    }
+    lastIndex = index + 1;
+    html += escaped;
+  }
+  return lastIndex !== index ? html + str.slice(lastIndex, index) : html;
+}
+var commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g;
+function escapeHtmlComment(src) {
+  return src.replace(commentStripRE, "");
+}
 function looseCompareArrays(a, b) {
   if (a.length !== b.length)
     return false;
@@ -258,14 +367,28 @@ var getGlobalThis = () => {
 
 export {
   makeMap,
+  PatchFlagNames,
+  slotFlagsText,
   isGloballyWhitelisted,
+  generateCodeFrame,
   isSpecialBooleanAttr,
+  isBooleanAttr,
   includeBooleanAttr,
+  isSSRSafeAttrName,
+  propsToAttrMap,
+  isNoUnitNumericStyleProp,
+  isKnownHtmlAttr,
+  isKnownSvgAttr,
   normalizeStyle,
+  parseStringStyle,
+  stringifyStyle,
   normalizeClass,
   normalizeProps,
   isHTMLTag,
   isSVGTag,
+  isVoidTag,
+  escapeHtml,
+  escapeHtmlComment,
   looseEqual,
   looseIndexOf,
   toDisplayString,
@@ -281,11 +404,14 @@ export {
   isArray,
   isMap,
   isSet,
+  isDate,
   isFunction,
   isString,
   isSymbol,
   isObject,
   isPromise,
+  objectToString,
+  toTypeString,
   toRawType,
   isPlainObject,
   isIntegerKey,
@@ -300,4 +426,4 @@ export {
   toNumber,
   getGlobalThis
 };
-//# sourceMappingURL=chunk-CROVZVFQ.js.map
+//# sourceMappingURL=chunk-CYEDY7PC.js.map

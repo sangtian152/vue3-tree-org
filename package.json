@@ -1,12 +1,16 @@
 {
   "name": "vue3-tree-org",
   "version": "0.1.0",
+  "author": "sangtian152",
   "private": true,
+  "main": "lib/vue3-tree-org.common.js",
+  "license": "MIT",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "build-lib": "vue-cli-service build --target lib --name vue3-tree-org --dest lib src/index.ts",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vuepress build docs && npm run build-lib",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -26,12 +30,15 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
     "element-plus": "^1.3.0-beta.9",
+    "escape-html": "^1.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0",
+    "markdown-it": "^12.3.2",
+    "markdown-it-container": "^3.0.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^10.2.1",
     "typescript": "~4.1.5",

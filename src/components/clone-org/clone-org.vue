@@ -23,12 +23,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { buildProps, definePropType } from '@/utils/props'
 import TreeOrgNode from '@/components/node'
-export default defineComponent({
-  components: {
-    TreeOrgNode: TreeOrgNode
-  },
-  props: {
+const cloneorgProps = buildProps({
     data: {
       type: Object,
       required: true
@@ -47,9 +44,18 @@ export default defineComponent({
     collapsable: Boolean,
     renderContent: Function,
     labelStyle: Object,
-    labelClassName: [Function, String],
-    selectedClassName: [Function, String]
-  }
+    labelClassName: {
+        type: [Function, String]
+    },
+    selectedClassName: {
+        type: [Function, String]
+    }
+  } as const)
+export default defineComponent({
+  components: {
+    TreeOrgNode: TreeOrgNode
+  },
+  props: cloneorgProps
 })
 </script>
 <style lang="scss" scoped>

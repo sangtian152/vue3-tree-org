@@ -1,7 +1,7 @@
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-2SZL67VI.js";
+} from "./chunk-EMKRM5AF.js";
 
 // node_modules/@vue/devtools-api/lib/esm/index.js
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -178,4 +178,4 @@ function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
 export {
   setupDevtoolsPlugin
 };
-//# sourceMappingURL=chunk-XU5IFLKR.js.map
+//# sourceMappingURL=chunk-BIVWRNDE.js.map

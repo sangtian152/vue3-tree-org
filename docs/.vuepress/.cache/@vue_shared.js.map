@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["dep:@vue_shared"],
+  "sourcesContent": ["\nexport * from \"../../../../node_modules/@vue/shared/dist/shared.esm-bundler.js\""],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

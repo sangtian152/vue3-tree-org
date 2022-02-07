@@ -1,6 +1,7 @@
+import { buildProps, definePropType } from '@/utils/props'
 import type { ExtractPropTypes } from 'vue'
 
-export const draggableProps = {
+export const draggableProps = buildProps({
     className: {
         type: String,
         default: 'zm-draggable'
@@ -52,7 +53,6 @@ export const draggableProps = {
             if (typeof val === 'number') {
                 return val > 0
             }
-
             return val === 'auto'
         }
     },
@@ -63,7 +63,6 @@ export const draggableProps = {
             if (typeof val === 'number') {
                 return val > 0
             }
-
             return val === 'auto'
         }
     },
@@ -80,14 +79,8 @@ export const draggableProps = {
         default: 'auto',
         validator: (val: string | number) => (typeof val === 'string' ? val === 'auto' : val >= 0)
     },
-    dragHandle: {
-        type: String,
-        default: null
-    },
-    dragCancel: {
-        type: String,
-        default: null
-    },
+    dragHandle: String,
+    dragCancel: String,
     axis: {
         type: String,
         default: 'both',
@@ -113,9 +106,11 @@ export const draggableProps = {
     onDrag: {
         type: Function,
         default: () => true
-    },
-}
+    }
+} as const)
+
 export type DraggableProps = ExtractPropTypes<typeof draggableProps>
+
 export const draggableEmits = {
     activated: () => true,
     deactivated: () => false,

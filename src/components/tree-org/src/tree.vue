@@ -130,9 +130,10 @@ import Draggable from '@/components/draggable'
 import CloneOrg from '@/components/clone-org'
 import Contextmenu from '@/components/contextmenu'
 import drag from '@/directives/drag'
+import { treeProps, treeEmits } from './tree'
 import { useTree } from './use-tree'
 export default defineComponent({
-  name: 'ZmTreeOrg',
+  name: 'vue3TreeOrg',
   components: {
     Tools,
     CloneOrg,
@@ -143,88 +144,8 @@ export default defineComponent({
   directives: {
     nodedrag: drag
   },
-  props: {
-    data: {
-      type: Object,
-      required: true
-    },
-    props: {
-      type: Object,
-      default: () => ({
-        id: 'id',
-        pid: 'pid',
-        label: 'label',
-        expand: 'expand',
-        children: 'children'
-      })
-    },
-    toolBar: {
-      type: [Object, Boolean],
-      default: () => ({
-        expand: true,
-        scale: true,
-        zoom: true,
-        restore: true,
-        fullscreen: true
-      })
-    },
-    disabled: {
-      // 是否禁用编辑
-      type: Boolean,
-      default: false
-    },
-    draggable: {
-      // 是否可拖拽移动位置
-      type: Boolean,
-      default: true
-    },
-    draggableOnNode: {
-      // 是否可拖拽节点移动位置
-      type: Boolean,
-      default: false
-    },
-    nodeDraggable: {
-      // 节点是否可拖拽
-      type: Boolean,
-      default: true
-    },
-    cloneNodeDrag: {
-      // 拷贝并拖拽节点
-      type: Boolean,
-      default: true
-    },
-    onlyOneNode: {
-      // 是否仅拖动当前节点
-      type: Boolean,
-      default: true
-    },
-    clickDelay: {
-      // 是否仅拖动当前节点
-      type: Number,
-      default: 260
-    },
-    nodeDragStart: Function,
-    nodeDraging: Function,
-    nodeDragEnd: Function,
-    horizontal: Boolean,
-    selectedKey: String,
-    collapsable: Boolean,
-    renderContent: Function,
-    labelStyle: Object,
-    labelClassName: [Function, String],
-    selectedClassName: [Function, String],
-    defineMenus: Array,
-    nodeAdd: Function,
-    nodeDelete: Function,
-    nodeEdit: Function,
-    nodeCopy: Function
-  },
-  data () {
-    return {
-      copyText: '',
-      timer: null
-    }
-  },
+  props: treeProps,
+  emits: treeEmits,
   setup (props, ctx) {
     const eleRef = ref<HTMLElement>()
     const treeRef = ref<HTMLElement>()

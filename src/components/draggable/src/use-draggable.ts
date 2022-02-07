@@ -3,9 +3,9 @@ import { restrictToBounds, snapToGrid } from '@/utils/fns'
 import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from '@/utils/dom'
 import type { SetupContext } from 'vue'
 import type { IMousePosition, IBounds, IRefs } from '@/utils/types'
-import type { DraggableEmits } from './draggable'
+import type { DraggableEmits, DraggableProps } from './draggable'
 export const useDraggable = (
-  props: any,
+  props: DraggableProps,
   { emit }: SetupContext<DraggableEmits>,
   refs: IRefs
 ) => {
@@ -104,7 +104,6 @@ export const useDraggable = (
     elementDown(e)
   }
   function elementDown (e: MouseEvent|TouchEvent) {
-    console.log(e.which)
     if (e instanceof MouseEvent && e.which !== 1) {
       return
     }
@@ -154,15 +153,16 @@ export const useDraggable = (
     }
   }
   function calcDragLimits () {
+    const grid = props.grid as number[]
     return {
-      minLeft: left.value % props.grid[0],
-      maxLeft: Math.floor((parentWidth.value - width.value - left.value) / props.grid[0]) * props.grid[0] + left.value,
-      minRight: right.value % props.grid[0],
-      maxRight: Math.floor((parentWidth.value - width.value - right.value) / props.grid[0]) * props.grid[0] + right.value,
-      minTop: top.value % props.grid[1],
-      maxTop: Math.floor((parentHeight.value - height.value - top.value) / props.grid[1]) * props.grid[1] + top.value,
-      minBottom: bottom.value % props.grid[1],
-      maxBottom: Math.floor((parentHeight.value - height.value - bottom.value) / props.grid[1]) * props.grid[1] + bottom.value
+      minLeft: left.value % grid[0],
+      maxLeft: Math.floor((parentWidth.value - width.value - left.value) / grid[0]) * grid[0] + left.value,
+      minRight: right.value % grid[0],
+      maxRight: Math.floor((parentWidth.value - width.value - right.value) / grid[0]) * grid[0] + right.value,
+      minTop: top.value % grid[1],
+      maxTop: Math.floor((parentHeight.value - height.value - top.value) / grid[1]) * grid[1] + top.value,
+      minBottom: bottom.value % grid[1],
+      maxBottom: Math.floor((parentHeight.value - height.value - bottom.value) / grid[1]) * grid[1] + bottom.value
     }
   }
   function deselect (e: Event): void {
@@ -194,14 +194,11 @@ export const useDraggable = (
       pageX = e.touches[0].pageX
       pageY = e.touches[0].pageY
     }
-    console.log(axis, mouseClickPosition.mouseX, pageX)
     const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - pageX : 0
     const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - pageY : 0
     const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, props.scale)
-    console.log(mouseClickPosition, deltaX, bounds.minLeft, bounds.maxLeft)
     const lf = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
     const tp = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
-    console.log(lf, tp, 204)
     if (props.onDrag(lf, tp) === false) {
       return
     }
@@ -250,8 +247,8 @@ export const useDraggable = (
     parentHeight.value = ph
     if (refs.eleRef.value) {
       const [elWidth, elHeight] = getComputedSize(refs.eleRef.value)
-      width.value = props.w !== 'auto' ? props.w : elWidth
-      height.value = props.h !== 'auto' ? props.h : elHeight
+      width.value = props.w !== 'auto' ? <number>props.w : elWidth
+      height.value = props.h !== 'auto' ? <number>props.h : elHeight
       right.value = parentWidth.value - width.value - left.value
       bottom.value = parentHeight.value - height.value - top.value
     }

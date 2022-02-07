@@ -1,9 +1,10 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
 import type { SetupContext } from 'vue'
 import type { INode, IRefs } from '@/utils/types'
+import type { TreeEmits, TreeProps } from './tree'
 export const useTree = (
-  props: any,
-  { emit }: SetupContext,
+  props: TreeProps,
+  { emit }: SetupContext<TreeEmits>,
   refs: IRefs
 ) => {
   const left = ref(0)
@@ -51,7 +52,6 @@ export const useTree = (
   const nodeMoving = ref(false)
   const parenNode = reactive({ value: <INode| null>{} })
   function nodeMouseenter (e: MouseEvent, data: INode) {
-    console.log(data, 54)
     if (nodeMoving.value) {
       parenNode.value = data
     }
@@ -182,24 +182,12 @@ export const useTree = (
     if (element.requestFullscreen) {
       element.requestFullscreen()
     }
-    // else if (element.mozRequestFullScreen) {
-    //   element.mozRequestFullScreen()
-    // } else if (element.webkitRequestFullscreen) {
-    //   element.webkitRequestFullscreen()
-    // } else if (element.msRequestFullscreen) {
-    //   element.msRequestFullscreen()
-    // }
   }
   function exitFullscreen () {
     // 退出全屏
     if (document.exitFullscreen) {
       document.exitFullscreen()
     }
-    /* else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } */
   }
   function collapse (list: Array<INode>) {
     list.forEach((child) => {

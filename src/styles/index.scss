@@ -4,6 +4,7 @@
   padding: 15px;
   position: relative;
   background: #fff;
+  box-sizing: border-box;
   .zm-draggable {
     touch-action: none;
     &:not(.dragging) {

@@ -26,19 +26,6 @@ module.exports = {
         return options
       })
   },
-  configureWebpack: config => {
-    config.module.rules.push({
-      test: /\.md$/,
-      use: [
-        {
-          loader: 'vue-loader'
-        },
-        {
-          loader: resolve('./md-loader/index.js')
-        }
-      ]
-    })
-  },
   css: {
     requireModuleExtension: true,
     sourceMap: true,
@@ -48,7 +35,7 @@ module.exports = {
         // prependData: '@import "~@/styles/variables.scss";',
 
         /* sass-loader 9.0写法，感谢github用户 shaonialife */
-        additionalData (content, loaderContext) {
+        /* additionalData (content, loaderContext) {
           const { resourcePath, rootContext } = loaderContext
           const relativePath = path.relative(rootContext, resourcePath)
           if (
@@ -57,7 +44,7 @@ module.exports = {
             return '@import "demo/assets/styles/variables.scss";' + content
           }
           return content
-        }
+        } */
       }
     }
   }

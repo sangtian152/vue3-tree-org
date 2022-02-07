@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t,a as s,b as o}from"./app.2ba8d00a.js";const c={},r={id:"\u4ECB\u7ECD",tabindex:"-1"},_=s("a",{class:"header-anchor",href:"#\u4ECB\u7ECD","aria-hidden":"true"},"#",-1),n=o(" \u4ECB\u7ECD"),d=[_,n];function i(h,f){return a(),t("h2",r,d)}var p=e(c,[["render",i]]);export{p as default};
