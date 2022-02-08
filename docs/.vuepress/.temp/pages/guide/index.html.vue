@@ -1,5 +1,14 @@
 <template><h3 id="介绍" tabindex="-1"><a class="header-anchor" href="#介绍" aria-hidden="true">#</a> 介绍</h3>
 <p>一个基于vue3.x的简易版组织架构图，vue2.x版本请访问<a href="https://sangtian152.gitee.io/zm-tree-org" target="_blank" rel="noopener noreferrer">zm-tree-org<ExternalLinkIcon/></a></p>
+<ul>
+<li>架构图支持拖拽和通过鼠标滚轮缩放</li>
+<li>支持新增/删除节点</li>
+<li>支持编辑节点名称</li>
+<li>支持拖动节点改变树结构</li>
+<li>支持自定义右键菜单</li>
+<li>支持slot自定义节点渲染内容</li>
+<li>支持slot自定义展开按钮渲染内容</li>
+</ul>
 <h3 id="安装" tabindex="-1"><a class="header-anchor" href="#安装" aria-hidden="true">#</a> 安装</h3>
 <p>推荐使用npm安装，它能更好地和<a href="https://webpack.js.org/" target="_blank" rel="noopener noreferrer">webpack<ExternalLinkIcon/></a>打包工具配合使用。而且可以更好的和
 es6配合使用。并且支持按需引入</p>
