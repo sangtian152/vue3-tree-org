@@ -5,7 +5,7 @@
   "private": false,
   "main": "lib/vue3-tree-org.common.js",
   "license": "MIT",
-  "homepage": "https://sangtian152.gitee.io/vue3-tree-org",
+  "homepage": "https://sangtian152.github.io/vue3-tree-org",
   "files": [
     "lib"
   ],
@@ -30,8 +30,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
@@ -57,6 +56,7 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^10.2.1",
     "typescript": "~4.1.5",
+    "vue-router": "^4.0.0-0",
     "vuepress": "^2.0.0-beta.35"
   }
 }
