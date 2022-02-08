@@ -1,6 +1,5 @@
 <template><h3 id="介绍" tabindex="-1"><a class="header-anchor" href="#介绍" aria-hidden="true">#</a> 介绍</h3>
-<p>一个简易版组织架构图，组件依赖于<a href="https://github.com/hukaibaihu/vue-org-tree" target="_blank" rel="noopener noreferrer">vue-org-tree<ExternalLinkIcon/></a>，
-在此基础上将部分源代码进行优化修改。增加鼠标拖拽和鼠标滚轮缩放，并支持节点拖拽，以及节点编辑等功能。</p>
+<p>一个基于vue3.x的简易版组织架构图，vue2.x版本请访问<a href="https://sangtian152.gitee.io/zm-tree-org" target="_blank" rel="noopener noreferrer">zm-tree-org<ExternalLinkIcon/></a></p>
 <h3 id="安装" tabindex="-1"><a class="header-anchor" href="#安装" aria-hidden="true">#</a> 安装</h3>
 <p>推荐使用npm安装，它能更好地和<a href="https://webpack.js.org/" target="_blank" rel="noopener noreferrer">webpack<ExternalLinkIcon/></a>打包工具配合使用。而且可以更好的和
 es6配合使用。并且支持按需引入</p>
@@ -17,6 +16,9 @@ es6配合使用。并且支持按需引入</p>
 
 app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>vue3TreeOrg<span class="token punctuation">)</span>
 app<span class="token punctuation">.</span><span class="token function">mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
-</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="最新版本" tabindex="-1"><a class="header-anchor" href="#最新版本" aria-hidden="true">#</a> 最新版本</h3>
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="源码" tabindex="-1"><a class="header-anchor" href="#源码" aria-hidden="true">#</a> 源码</h3>
+<p><a href="https://gitee.com/sangtian152/zm-tree-org" target="_blank" rel="noopener noreferrer">gitee<ExternalLinkIcon/></a></p>
+<p><a href="https://github.com/sangtian152/zm-tree-org" target="_blank" rel="noopener noreferrer">github<ExternalLinkIcon/></a></p>
+<h3 id="最新版本" tabindex="-1"><a class="header-anchor" href="#最新版本" aria-hidden="true">#</a> 最新版本</h3>
 <p><a href="https://www.npmjs.com/package/vue3-tree-org" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/npm/v/vue3-tree-org" alt="NPM version"><ExternalLinkIcon/></a></p>
 </template>

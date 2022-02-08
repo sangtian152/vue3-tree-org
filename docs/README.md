@@ -10,7 +10,7 @@ actions:
     type: secondary
 ---
 
-### As Easy as 1, 2, 3
+### 安装
 
 <CodeGroup>
   <CodeGroupItem title="YARN" active>

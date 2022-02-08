@@ -1,4 +1,4 @@
-<template><h3 id="as-easy-as-1-2-3" tabindex="-1"><a class="header-anchor" href="#as-easy-as-1-2-3" aria-hidden="true">#</a> As Easy as 1, 2, 3</h3>
+<template><h3 id="安装" tabindex="-1"><a class="header-anchor" href="#安装" aria-hidden="true">#</a> 安装</h3>
 <CodeGroup>
   <CodeGroupItem title="YARN" active>
 <div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token comment"># install in your project</span>

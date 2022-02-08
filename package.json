@@ -21,7 +21,7 @@
     "组织架构图"
   ],
   "scripts": {
-    "docs:dev": "vuepress dev docs",
+    "dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "build-lib": "vue-cli-service build --target lib --name vue3-tree-org --dest lib src/index.ts",
     "serve": "vue-cli-service serve",

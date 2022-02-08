@@ -23,18 +23,18 @@ export const data = {
   "headers": [
     {
       "level": 3,
-      "title": "As Easy as 1, 2, 3",
-      "slug": "as-easy-as-1-2-3",
+      "title": "安装",
+      "slug": "安装",
       "children": []
     }
   ],
   "git": {
-    "updatedTime": 1643894070000,
+    "updatedTime": 1644232129000,
     "contributors": [
       {
         "name": "sangtian152",
         "email": "jzyazn@sina.cn",
-        "commits": 1
+        "commits": 2
       }
     ]
   },

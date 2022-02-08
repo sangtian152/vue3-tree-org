@@ -1,7 +1,7 @@
 ### 介绍
 
-一个简易版组织架构图，组件依赖于[vue-org-tree](https://github.com/hukaibaihu/vue-org-tree)，
-在此基础上将部分源代码进行优化修改。增加鼠标拖拽和鼠标滚轮缩放，并支持节点拖拽，以及节点编辑等功能。
+一个基于vue3.x的简易版组织架构图，vue2.x版本请访问[zm-tree-org](https://sangtian152.gitee.io/zm-tree-org)
+
 
 ### 安装
 
@@ -28,6 +28,10 @@ const app = createApp(App)
 app.use(vue3TreeOrg)
 app.mount('#app')
 ```
+### 源码
+[gitee](https://gitee.com/sangtian152/zm-tree-org)
+
+[github](https://github.com/sangtian152/zm-tree-org)
 
 ### 最新版本
 
