@@ -34,10 +34,12 @@ const app = createApp(App)
 app.use(vue3TreeOrg)
 app.mount('#app')
 ```
-### 源码
-[gitee](https://gitee.com/sangtian152/zm-tree-org)
 
-[github](https://github.com/sangtian152/zm-tree-org)
+### 源码
+
+[gitee地址](https://gitee.com/sangtian152/vue3-tree-org)
+
+[github地址](https://github.com/sangtian152/vue3-tree-org)
 
 ### 最新版本
 

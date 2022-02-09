@@ -1,9 +1,8 @@
-examples/
+docs/
 src/
 public/
 demo/
 dist/
-md-loader/
 .gitee/
 vue.config.js
 postcss.config.js
