@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance } from 'vue'
+import { ElTooltip, ElCollapseTransition } from 'element-plus'
 import { useClipboard } from '@vueuse/core'
 import { useToggle } from '../composables/toggle'
 import Example from './example.vue'
@@ -60,19 +61,30 @@ const copyCode = async () => {
     <p text="sm" v-html="decodedDescription" />
     <div class="example">
       <div class="op-btns">
+        <el-tooltip
+          effect="dark"
+          content="复制代码"
+          placement="top"
+        >
           <div class="op-btn" @click="copyCode">
               <span class="iconfont icon-copy"></span>
           </div>
+        </el-tooltip>
+        <el-tooltip
+          effect="dark"
+          content="查看源代码"
+          placement="top"
+        >
           <div class="op-btn" @click="setSourceVisible">
             <span class="iconfont icon-code"></span>
           </div>
+        </el-tooltip>
       </div>
-      <!-- <el-divider class="m-0" /> -->
       <Example :file="path" :demo="formatPathDemos[path]" />
       <!-- <el-divider v-if="sourceVisible" /> -->
-      <!-- <el-collapse-transition> -->
+      <el-collapse-transition>
         <SourceCode v-show="sourceVisible" :source="source" />
-      <!-- </el-collapse-transition> -->
+      </el-collapse-transition>
     </div>
   </ClientOnly>
 </template>
@@ -97,7 +109,7 @@ const copyCode = async () => {
       color: #909399;
       transition: 0.2s;
       .iconfont {
-          font-size: 18px;
+          font-size: 22px;
       }
     }
   }

@@ -1,6 +1,14 @@
 import type { ExtractPropTypes } from 'vue'
-import type { INode, IKeysProps, IMousePosition } from '@/utils/types'
+import type { INode, IMenu, IKeysProps, IMousePosition } from '@/utils/types'
 import { buildProps, definePropType } from '@/utils/props'
+
+export const menus = [
+  { name: '复制文本', command: 'copy' },
+  { name: '新增节点', command: 'add' },
+  { name: '编辑节点', command: 'edit' },
+  { name: '删除节点', command: 'delete' }
+]
+
 export const treeProps = buildProps({
   data: {
     type: Object,
@@ -75,7 +83,12 @@ export const treeProps = buildProps({
   selectedClassName: {
     type: [Function, String]
   },
-  defineMenus: Array,
+  defineMenus: {
+    type: definePropType<IMenu[]>(Array),
+    default () {
+      return menus
+    }
+  },
   nodeAdd: Function,
   nodeDelete: Function,
   nodeEdit: Function,

@@ -9,13 +9,71 @@
 ```
 
 
-### 示例
+#### 基础示例
 
 :::demo
 
-treeNode
+baseTree
 
 :::
+
+
+#### 自定义节点
+
+节点和展开按钮支持自定义
+使用`default`和`expand`插槽自定义字之书节点和展开按钮渲染内容
+也可以通过`renderContent` 自定义节点渲染内容 使用`renderContent`指定渲染函数，该函数返回需要的节点区内容即可。 渲染函数的用法请参考 Vue 文档
+:::tip
+插槽优先级大于renderContent
+:::
+
+:::demo
+
+slotTree
+
+:::
+
+#### 自定义右键菜单
+
+节点右键菜单支持自定义
+使用`define-menus`属性可以自定义右键菜单，接受包含`name`-菜单名称和`command`-事件指令属性的对象数组
+
+:::tip
+可通过on-contextmenu事件定义右键菜单执行事件<br />
+command相同则执行事件相同，应避免重复
+:::
+
+:::demo
+
+menuTree
+
+:::
+
+#### 示例中demo.json内容如下
+```json
+{
+    "id":1,"label":"xxx科技有限公司",
+    "children":[
+        {
+            "id":2,"pid":1,"label":"产品研发部",
+            "style":{"color":"#fff","background":"#108ffe"},
+            "children":[
+                {"id":6,"pid":2,"label":"禁止编辑节点","disabled":true},
+                {"id":8,"pid":2,"label":"禁止拖拽节点","noDragging":true},
+                {"id":10,"pid":2,"label":"测试"}
+            ]
+        },
+        {
+            "id":3,"pid":1,"label":"客服部",
+            "children":[
+                {"id":11,"pid":3,"label":"客服一部"},
+                {"id":12,"pid":3,"label":"客服二部"}
+            ]
+        },
+        {"id":4,"pid":1,"label":"业务部"}
+    ]}
+}
+```
 
 ### Attributes
 

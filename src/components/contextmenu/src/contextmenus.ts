@@ -4,12 +4,6 @@ import type { ExtractPropTypes } from 'vue'
 import type { INode, IKeysProps, IMenu } from '@/utils/types'
 
 import { UPDATE_MODEL_EVENT } from '@/utils/constants'
-export const menus = [
-  { name: '复制文本', command: 'copy' },
-  { name: '新增节点', command: 'add' },
-  { name: '编辑节点', command: 'edit' },
-  { name: '删除节点', command: 'delete' }
-]
 
 export const contextmenuProps = buildProps({
   modelValue: {
@@ -30,10 +24,7 @@ export const contextmenuProps = buildProps({
   x: Number,
   y: Number,
   menus: {
-    type: definePropType<IMenu[]>(Array),
-    default () {
-      return menus
-    }
+    type: definePropType<IMenu[]>(Array)
   },
   nodeAdd: Function,
   nodeDelete: Function,

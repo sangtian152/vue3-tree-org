@@ -1,8 +1,19 @@
 @import url('//at.alicdn.com/t/font_2201426_9b0nl2hgfc.css');
+// 按需引入样式丢失，暂时这样处理
+@import url('element-plus/theme-chalk/base.css');
+@import url('element-plus/theme-chalk/el-message.css');
+@import url('element-plus/theme-chalk/el-switch.css');
+@import url('element-plus/theme-chalk/el-popper.css');
+@import url('element-plus/theme-chalk/el-color-picker.css');
+@import url('element-plus/theme-chalk/el-input.css');
+@import url('element-plus/theme-chalk/el-button.css');
 .theme-default-content {
     max-width: 100%!important;
     table {
         width: 100%;
+    }
+    pre {
+        margin: 0;
     }
 }
 .page-meta,

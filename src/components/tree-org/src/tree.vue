@@ -62,7 +62,7 @@
       v-if="tools.visible"
       :tools="tools.data"
       :scale="zoomPercent"
-      @on-expand="handleExpand"
+      @on-expand="expandChange"
       @on-scale="zoomOrgchart"
       @on-restore="restoreOrgchart"
       @on-fullscreen="handleFullscreen" />
@@ -91,6 +91,7 @@
       </template>
     </clone-org>
     <Contextmenu
+      v-if="defineMenus.length"
       v-model="contextmenu"
       :x="menuX"
       :y="menuY"

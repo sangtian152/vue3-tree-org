@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["dep:element-plus_es_components_popper_style_css", "../../../node_modules/element-plus/es/components/popper/style/css.mjs"],
+  "sourcesContent": ["\nexport * from \"../../../../node_modules/element-plus/es/components/popper/style/css.mjs\"", "import '../../base/style/css.mjs';\nimport 'element-plus/theme-chalk/el-popper.css';\n//# sourceMappingURL=css.mjs.map\n"],
+  "mappings": ";;;;;;;AAAA;AAAA;;;ACAA;AAAA;AACA;",
+  "names": []
+}

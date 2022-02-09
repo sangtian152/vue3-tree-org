@@ -14,12 +14,6 @@ export const data = {
     },
     {
       "level": 3,
-      "title": "示例",
-      "slug": "示例",
-      "children": []
-    },
-    {
-      "level": 3,
       "title": "Attributes",
       "slug": "attributes",
       "children": []
