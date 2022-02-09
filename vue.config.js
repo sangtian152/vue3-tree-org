@@ -1,7 +1,7 @@
 const path = require('path')
 
 function resolve (dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
@@ -28,24 +28,6 @@ module.exports = {
   },
   css: {
     requireModuleExtension: true,
-    sourceMap: true,
-    loaderOptions: {
-      scss: {
-        /* sass-loader 8.0语法 */
-        // prependData: '@import "~@/styles/variables.scss";',
-
-        /* sass-loader 9.0写法，感谢github用户 shaonialife */
-        /* additionalData (content, loaderContext) {
-          const { resourcePath, rootContext } = loaderContext
-          const relativePath = path.relative(rootContext, resourcePath)
-          if (
-            relativePath.replace(/\\/g, '/') !== 'demo/assets/styles/variables.scss'
-          ) {
-            return '@import "demo/assets/styles/variables.scss";' + content
-          }
-          return content
-        } */
-      }
-    }
+    sourceMap: true
   }
 }

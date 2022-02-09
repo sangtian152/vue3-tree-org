@@ -1,7 +1,7 @@
 import { buildProps, definePropType } from '@/utils/props'
 
 import type { ExtractPropTypes } from 'vue'
-import type { INode } from '@/utils/types'
+import type { INode, IKeysProps, IMenu } from '@/utils/types'
 
 import { UPDATE_MODEL_EVENT } from '@/utils/constants'
 export const menus = [
@@ -25,19 +25,12 @@ export const contextmenuProps = buildProps({
     required: true
   },
   props: {
-    type: Object,
-    default: () => ({
-      id: 'id',
-      pid: 'pid',
-      label: 'label',
-      expand: 'expand',
-      children: 'children'
-    })
+    type: definePropType<IKeysProps>(Object)
   },
   x: Number,
   y: Number,
   menus: {
-    type: Array,
+    type: definePropType<IMenu[]>(Array),
     default () {
       return menus
     }
@@ -54,7 +47,7 @@ export type ContextmenuProps = ExtractPropTypes<typeof contextmenuProps>
 export const contextmenuEmits = {
   onNodeDelete: (data: INode) => data,
   onNodeCopy: (str: string) => str,
-  contextmenu: (data: INode) => data,
+  contextmenu: (arg:{node: any, command:string|null}) => arg,
   opened: () => true,
   closed: () => false,
   [UPDATE_MODEL_EVENT]: (value: boolean) => typeof value === 'boolean'

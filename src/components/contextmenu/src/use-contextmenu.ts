@@ -2,7 +2,7 @@ import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
 import log from '@/utils/log'
 import type { SetupContext } from 'vue'
 import type { ContextmenuEmits, ContextmenuProps } from './contextmenus'
-import type { IRefs } from '@/utils/types'
+import type { IRefs, IKeysObject, INode } from '@/utils/types'
 export const useContextmenu = (
   defaultProps: ContextmenuProps,
   { emit }: SetupContext<ContextmenuEmits>,
@@ -10,7 +10,7 @@ export const useContextmenu = (
 ) => {
   const copyText = ref('')
   // 递归遍历实现
-  function getNodeById (data: any, key: any, value: any): any {
+  function getNodeById (data: INode, key: string, value: any): INode | undefined {
     if (data[key] === value) {
       return data
     } else if (Array.isArray(data.children)) {
@@ -35,14 +35,16 @@ export const useContextmenu = (
       log.pretty('[提示] ', '根节点不允许删除', 'danger')
       return
     }
-    const { id, pid, children } = props.data
+    const { id, pid, children } = (props as IKeysObject)
     const oldPaNode = getNodeById(data, id, node[pid])
-    const list = oldPaNode[children]
-    for (let i = 0, len = list.length; i < len; i++) {
-      if (list[i][id] === node[id]) {
-        list.splice(i, 1)
-        emit('onNodeDelete', node)
-        break
+    if (oldPaNode) {
+      const list = oldPaNode[children]
+      for (let i = 0, len = list.length; i < len; i++) {
+        if (list[i][id] === node[id]) {
+          list.splice(i, 1)
+          emit('onNodeDelete', node)
+          break
+        }
       }
     }
   }
@@ -73,13 +75,18 @@ export const useContextmenu = (
       defaultProps.nodeCopy(defaultProps.node)
       return
     }
-    copyText.value = defaultProps.node[defaultProps.props.label]
+    copyText.value = defaultProps.node[(defaultProps.props as IKeysObject).label]
     nextTick(() => {
       if (refs.inputRef && refs.inputRef.value) {
         refs.inputRef && refs.inputRef.value.select() // 选中文本
-        document.execCommand('copy') // 执行浏览器复制命令
+        navigator.clipboard.writeText(copyText.value).then(function () {
+          /* clipboard successfully set */
+          log.pretty('[提示] ', '文本复制成功', 'success')
+        }, function () {
+          /* clipboard write failed */
+          log.pretty('[错误] ', '浏览器不支持', 'danger')
+        })
         emit('onNodeCopy', copyText.value)
-        log.pretty('[提示] ', '文本复制成功', 'success')
       }
     })
   }
@@ -88,7 +95,7 @@ export const useContextmenu = (
       defaultProps.nodeAdd(defaultProps.node)
       return
     }
-    const { id, pid, label, expand, children } = defaultProps.props
+    const { id, pid, label, expand, children } = <IKeysObject>defaultProps.props
     const { node } = defaultProps
     const json = {
       [id]: String(new Date().getTime()),

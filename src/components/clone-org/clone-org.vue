@@ -24,33 +24,29 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { buildProps, definePropType } from '@/utils/props'
+import type { IKeysProps } from '@/utils/types'
 import TreeOrgNode from '@/components/node'
 const cloneorgProps = buildProps({
-    data: {
-      type: Object,
-      required: true
-    },
-    props: {
-      type: Object,
-      default: () => ({
-        label: 'label',
-        expand: 'expand',
-        children: 'children'
-      })
-    },
-    modelValue: Boolean,
-    horizontal: Boolean,
-    selectedKey: String,
-    collapsable: Boolean,
-    renderContent: Function,
-    labelStyle: Object,
-    labelClassName: {
-        type: [Function, String]
-    },
-    selectedClassName: {
-        type: [Function, String]
-    }
-  } as const)
+  data: {
+    type: Object,
+    required: true
+  },
+  props: {
+    type: definePropType<IKeysProps>(Object)
+  },
+  modelValue: Boolean,
+  horizontal: Boolean,
+  selectedKey: String,
+  collapsable: Boolean,
+  renderContent: Function,
+  labelStyle: Object,
+  labelClassName: {
+    type: [Function, String]
+  },
+  selectedClassName: {
+    type: [Function, String]
+  }
+} as const)
 export default defineComponent({
   components: {
     TreeOrgNode: TreeOrgNode

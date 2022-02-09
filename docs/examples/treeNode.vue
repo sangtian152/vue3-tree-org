@@ -132,20 +132,16 @@ export default {
     },
     nodeDragEnd(data, isSelf) {
       console.log(data, isSelf);
-      isSelf && this.$Message.info("移动到自身");
     },
     onNodeClick(e, data) {
       this.$Message.info(data.label);
     },
     onNodeDblclick() {
-      this.$Message.info("双击节点");
     },
     onNodeCopy() {
-      this.$Message.success("复制成功");
     },
     handleNodeAdd(node) {
       console.log(node);
-      this.$Message.info("新增节点");
     },
     expandChange() {
       this.toggleExpand(this.data, this.expandAll);

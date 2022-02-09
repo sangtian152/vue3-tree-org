@@ -13,7 +13,7 @@ const EVENTS = {
   onMouseleave: 'onNodeMouseleave'
 }
 
-function createListener (handler:any, data:any) {
+function createListener (handler:any, data:INode) {
   if (typeof handler === 'function') {
     return function (e:MouseEvent) {
       const target = e.target as HTMLElement
@@ -32,7 +32,7 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
   const { attrs } = context
   const cls = ['tree-org-node']
   const childNodes = []
-  const defaultProps = attrs.props.data
+  const defaultProps = attrs.props
   const children = data[defaultProps.children]
   // const show = resolveDirective('v-show')
   // 如果是叶子节点则追加leaf事件
@@ -57,11 +57,11 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
 }
 
 // 创建展开折叠按钮
-export const renderBtn = (h:any, data:any, context:any) => {
+export const renderBtn = (h:any, data:INode, context:any) => {
   const { attrs } = context
   const expandHandler = attrs.onOnExpand
   const cls = ['tree-org-node__expand']
-  const defaultProps = attrs.props.data
+  const defaultProps = attrs.props
   if (data[defaultProps.expand]) {
     cls.push('expanded')
   }
@@ -78,9 +78,9 @@ export const renderBtn = (h:any, data:any, context:any) => {
 }
 
 // 创建 label 节点
-export const renderLabel = (h:any, data:any, context:any, root:boolean) => {
+export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
   const { attrs } = context
-  const defaultProps = attrs.props.data
+  const defaultProps = attrs.props
   const label = data[defaultProps.label]
   const renderContent = attrs.renderContent
   // const { directives } = context.data

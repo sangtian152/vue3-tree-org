@@ -1,8 +1,8 @@
 import { isObject } from '@/utils/utils'
-import type { IContext, INode, IKeys } from '@/utils/types'
+import type { IContext, INode, IKeysObject } from '@/utils/types'
 import type { ObjectDirective, DirectiveBinding } from 'vue'
 // 递归遍历处理数据
-const recurseData = function (data: INode | INode[], keys: IKeys, cb: { (item: INode): void; }) {
+const recurseData = function (data: INode | INode[], keys: IKeysObject, cb: { (item: INode): void; }) {
   const { children } = keys
   if (isObject(data)) {
     fn(data)
@@ -22,7 +22,7 @@ const recurseData = function (data: INode | INode[], keys: IKeys, cb: { (item: I
   }
 }
 // 获取父级节点
-const getNodeById = function (node: INode, keys: IKeys, value: string): any {
+const getNodeById = function (node: INode, keys: IKeysObject, value: string): any {
   const { id, children } = keys
   if (node[id] === value) {
     return node

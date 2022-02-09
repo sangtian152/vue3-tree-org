@@ -1,13 +1,41 @@
 interface ILog {
-  [key: string]: Function;
+  print: (text:string | number | Record<string, unknown>, type:string, back:boolean) => void;
+  pretty: (title:string, text:string, type?:string) => void;
+  primary: (text:string, back?:boolean) => void;
+  success: (text:string, back?:boolean) => void;
+  info: (text:string, back?:boolean) => void;
+  warning: (text:string, back?:boolean) => void;
+  danger: (text:string, back?:boolean) => void;
 }
-const log: ILog = {}
 
+const log:ILog = {
+  print: function (text: string | number | Record<string, unknown>, type: string, back: boolean): void {
+    throw new Error('Function not implemented.')
+  },
+  pretty: function (title: string, text: string, type?: string): void {
+    throw new Error('Function not implemented.')
+  },
+  primary: function (text: string, back?: boolean): void {
+    throw new Error('Function not implemented.')
+  },
+  success: function (text: string, back?: boolean): void {
+    throw new Error('Function not implemented.')
+  },
+  info: function (text: string, back?: boolean): void {
+    throw new Error('Function not implemented.')
+  },
+  warning: function (text: string, back?: boolean): void {
+    throw new Error('Function not implemented.')
+  },
+  danger: function (text: string, back?: boolean): void {
+    throw new Error('Function not implemented.')
+  }
+}
 /**
  * @description 返回这个样式的颜色值
  * @param {String} type 样式名称 [ primary | success | warning | danger | text ]
  */
-export function typeColor (type = 'default') {
+export function typeColor (type = 'default'):string {
   let color = ''
   switch (type) {
     case 'primary':
@@ -35,7 +63,7 @@ export function typeColor (type = 'default') {
   return color
 }
 
-log.print = function (text: string, type = 'default', back = false) {
+log.print = function (text: string | number | Record<string, unknown>, type = 'default', back = false) {
   if (typeof text === 'object') { // 如果是对象则调用打印对象方式
     console.dir(text)
     return
@@ -63,19 +91,19 @@ log.pretty = function (title: string, text: string, type = 'primary') {
 }
 
 log.primary = function (text: string, back = false) {
-  this.print(text, 'primary', back)
+  this.print && this.print(text, 'primary', back)
 }
 log.success = function (text: string, back = false) {
-  this.print(text, 'success', back)
+  this.print && this.print(text, 'success', back)
 }
 log.info = function (text: string, back = false) {
-  this.print(text, 'info', back)
+  this.print && this.print(text, 'info', back)
 }
 log.warning = function (text: string, back = false) {
-  this.print(text, 'warning', back)
+  this.print && this.print(text, 'warning', back)
 }
 log.danger = function (text: string, back = false) {
-  this.print(text, 'danger', back)
+  this.print && this.print(text, 'danger', back)
 }
 
 export default log

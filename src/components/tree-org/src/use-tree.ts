@@ -146,17 +146,16 @@ export const useTree = (
       emit('on-expand', e, data)
     }
   }
-  const keys = reactive({
-    data: {
-      id: 'id',
-      pid: 'pid',
-      label: 'label',
-      expand: 'expand',
-      children: 'children'
-    }
-  })
+  const keys = reactive(Object.assign({
+    id: 'id',
+    pid: 'pid',
+    label: 'label',
+    expand: 'expand',
+    children: 'children'
+  }, props.props))
+
   function handleBlur (e: MouseEvent, data: INode) {
-    const { children, id, label } = keys.data
+    const { children, id, label } = keys
     const childNodes = menuData.data[children] || []
     for (let i = childNodes.length; i > 0; i--) {
       const item = childNodes[i - 1]
@@ -269,7 +268,6 @@ export const useTree = (
     }
   })
   onBeforeMount(() => {
-    Object.assign(keys.data, props.props)
     if (typeof props.toolBar === 'object') {
       Object.assign(tools.data, props.toolBar)
     } else if (!props.toolBar) {

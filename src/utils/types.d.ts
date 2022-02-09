@@ -19,7 +19,20 @@ export interface IBounds {
 export interface IMousePosition {
     [key: string]: number;
 }
-export interface IKeys {
+
+export interface IMenu {
+    name: string, command: string
+}
+
+export interface IKeysProps {
+    id?: string;
+    pid?: string;
+    label?: string;
+    expand?: string;
+    children?: string;
+}
+
+export interface IKeysObject {
     id: string;
     pid: string;
     label: string;

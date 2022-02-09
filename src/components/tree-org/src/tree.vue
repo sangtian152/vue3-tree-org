@@ -40,7 +40,7 @@
                 $emit('on-node-focus', e, data);
               }
             "
-            @on-node-blur="handleBlur"
+            @node-blur="handleBlur"
           >
           <template v-slot:default="{node}">
             <slot :node="node">
@@ -80,7 +80,7 @@
       <template v-slot:default="{node}">
         <slot :node="node">
           <div class="tree-org-node__text">
-            <span>{{ node[keys.data.label] }}</span>
+            <span>{{ node[keys.label] }}</span>
           </div>
         </slot>
       </template>

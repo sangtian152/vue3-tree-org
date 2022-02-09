@@ -102,7 +102,7 @@ export function buildProp<
   R extends boolean = false,
   V = never,
   C = never
->(
+> (
   option: BuildPropOption<T, D, R, V, C>,
   key?: string
 ): BuildPropReturn<T, D, R, V, C> {
@@ -114,29 +114,29 @@ export function buildProp<
   const _validator =
     values || validator
       ? (val: unknown) => {
-          let valid = false
-          let allowedValues: unknown[] = []
+        let valid = false
+        let allowedValues: unknown[] = []
 
-          if (values) {
-            allowedValues = [...values, defaultValue]
-            valid ||= allowedValues.includes(val)
-          }
-          if (validator) valid ||= validator(val)
+        if (values) {
+          allowedValues = [...values, defaultValue]
+          valid ||= allowedValues.includes(val)
+        }
+        if (validator) valid ||= validator(val)
 
-          if (!valid && allowedValues.length > 0) {
-            const allowValuesText = [...new Set(allowedValues)]
-              .map((value) => JSON.stringify(value))
-              .join(', ')
-            warn(
+        if (!valid && allowedValues.length > 0) {
+          const allowValuesText = [...new Set(allowedValues)]
+            .map((value) => JSON.stringify(value))
+            .join(', ')
+          warn(
               `Invalid prop: validation failed${
                 key ? ` for prop "${key}"` : ''
               }. Expected one of [${allowValuesText}], got value ${JSON.stringify(
                 val
               )}.`
-            )
-          }
-          return valid
+          )
         }
+        return valid
+      }
       : undefined
 
   return {
@@ -148,7 +148,7 @@ export function buildProp<
     required: !!required,
     default: defaultValue,
     validator: _validator,
-    [propKey]: true,
+    [propKey]: true
   } as unknown as BuildPropReturn<T, D, R, V, C>
 }
 
@@ -175,12 +175,12 @@ export const buildProps = <
       : never
   }
 >(
-  props: O
-) =>
+    props: O
+  ) =>
   fromPairs(
     Object.entries(props).map(([key, option]) => [
       key,
-      buildProp(option as any, key),
+      buildProp(option as any, key)
     ])
   ) as unknown as {
     [K in keyof O]: O[K] extends { [propKey]: boolean }
