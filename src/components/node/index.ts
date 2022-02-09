@@ -160,10 +160,8 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
     ...NODEEVENTS
   }, childNodes), cloneDirs), withDirectives(h('textarea', {
     class: 'tree-org-node__textarea',
-    domProps: {
-      placeholder: '请输入节点名称',
-      value: data[defaultProps.label]
-    },
+    placeholder: '请输入节点名称',
+    value: data[defaultProps.label],
     onFocus: (e:MouseEvent) => focusHandler && focusHandler(e, data),
     onInput: (event:InputEvent) => { data[defaultProps.label] = (<HTMLInputElement>event.target).value },
     onBlur: (e:MouseEvent) => { data.focused = false; blurHandler && blurHandler(e, data) },

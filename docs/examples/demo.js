@@ -1,4 +1,5 @@
-{
+export default () => {
+    return {
     "id": 1,
     "label": "xxx科技有限公司",
     "children": [
@@ -51,3 +52,4 @@
         }
     ]
     }
+}
