@@ -99,7 +99,7 @@ const drag:ObjectDirective = {
     const { l, t } = binding.modifiers
     const { drag, dragData, node, handleStart, handleMove, handleEnd } = binding.value
     const { value }:{value: any } = binding
-    const instance = { ...dragData, keys: dragData.keys.data }
+    const instance = { ...dragData }
     el.addEventListener('mousedown', handleDownCb)
     let offsetLeft = 0
     let hasRender = false
