@@ -11,12 +11,14 @@ const props = defineProps({
 const decoded = computed(() => {
   return decodeURIComponent(props.source)
 })
+const key = Math.floor(Math.random() * (999999 - 100000) + 100000);
+const className = `source_${key}`
 </script>
 
 <template>
-<div :class="'example-source'">
+<div :class="['example-source', className]">
   <div class="language-vue" v-html="decoded"></div>
-  <el-affix target=".example-source" position="bottom" :offset="0">
+  <el-affix :target="`.${className}`" position="bottom" :offset="0">
     <div class="demo-block-control" @click="$emit('hide')">
       <span>隐藏代码</span>
     </div>
