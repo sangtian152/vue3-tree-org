@@ -79,6 +79,7 @@ export const useTree = (
   }
   const scale = ref(1)
   function zoomWheel (e: WheelEvent) {
+    if(!props.scalable) return
     e.preventDefault()
     // 鼠标滚轮缩放
     if (e.deltaY > 0) {
@@ -89,6 +90,7 @@ export const useTree = (
     emit('on-zoom', scale.value)
   }
   function zoomOrgchart (zoom:number) {
+    if(!props.scalable) return
     const value = Number((Number(scale.value) + zoom).toFixed(1))
     if (zoom > 0) {
       scale.value = Math.min(3, value)

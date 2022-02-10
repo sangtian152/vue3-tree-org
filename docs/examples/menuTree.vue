@@ -5,6 +5,8 @@
             :horizontal="horizontal"
             :collapsable="collapsable"
             :label-style="style"
+            :tool-bar="false"
+            :scalable="false"
             :node-draggable="true"
             :define-menus="defineMenus"
             :only-one-node="onlyOneNode"

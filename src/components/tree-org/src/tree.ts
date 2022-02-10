@@ -39,6 +39,11 @@ export const treeProps = buildProps({
     type: Boolean,
     default: false
   },
+  scalable: {
+    // 是否可缩放
+    type: Boolean,
+    default: true
+  },
   draggable: {
     // 是否可拖拽移动位置
     type: Boolean,

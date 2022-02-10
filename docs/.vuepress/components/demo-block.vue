@@ -83,7 +83,7 @@ const copyCode = async () => {
       <Example :file="path" :demo="formatPathDemos[path]" />
       <!-- <el-divider v-if="sourceVisible" /> -->
       <el-collapse-transition>
-        <SourceCode v-show="sourceVisible" :source="source" />
+        <SourceCode v-show="sourceVisible" :source="source" @hide="setSourceVisible" />
       </el-collapse-transition>
     </div>
   </ClientOnly>

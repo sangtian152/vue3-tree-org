@@ -6,6 +6,7 @@
             :collapsable="collapsable"
             :label-style="style"
             :node-draggable="true"
+            :scalable="false"
             :only-one-node="onlyOneNode"
             :clone-node-drag="cloneNodeDrag"
             @on-contextmenu="onMenus"

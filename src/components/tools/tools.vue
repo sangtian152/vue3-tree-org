@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 export default defineComponent({
   props: {
     scale: String,
@@ -64,9 +64,8 @@ export default defineComponent({
   setup (props, { emit }) {
     const expanded = ref(false)
     const fullscreen = ref(false)
-    const expandTitle = ref('')
-    const fullTiltle = ref('')
     function handleExpand () {
+      expanded.value = !expanded.value
       emit('onExpand')
     }
     function handleScale (scale) {
@@ -79,8 +78,15 @@ export default defineComponent({
       }
     }
     function handleFullscreen () {
+      fullscreen.value = !fullscreen.value
       emit('onFullscreen')
     }
+    const expandTitle = computed(() => {
+      return expanded.value ? '全部收起' : '全部展开'
+    })
+    const fullTiltle = computed(() => {
+      return fullscreen.value ? '退出全屏' : '全屏'
+    })
     return {
       expanded,
       fullscreen,

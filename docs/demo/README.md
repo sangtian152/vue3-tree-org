@@ -60,6 +60,7 @@ menuTree
 | horizontal     | 是否是横向   | Boolean  | true,false  |  false  |
 | collapsable     | 是否可以展开收起节点   | Boolean  | true,false  |  false  |
 | disabled     | 禁止编辑，设为true后，所有节点不可新增下级、编辑和删除，单个节点禁止编辑，可将节点属性设置disabled为true   | Boolean  | true,false  |  true  |
+| scalable     | 架构图是否可缩放   | Boolean  | true,false  |  true  |
 | draggable     | 架构图是否可拖拽，单个节点禁止拖拽，可将节点属性设置noDragging为true   | Boolean  | true,false  |  true  |
 | draggable-on-node     | 架构图拖拽在节点触发，node-draggable值为false时，设为true才有效  | Boolean  | true,false  |  false  |
 | node-draggable     | 节点是否可拖拽   | Boolean  | true,false  |  true  |
@@ -69,7 +70,7 @@ menuTree
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-copy  | 复制节点文本，覆盖默认复制节点文本行为（参数当前节点node） | Function   |  —   |   —   |
-| define-menus  | 自定义右键菜单，接受包含name和command属性的对象数组 | Array   |  [{ name: '复制文本', command: 'copy' },{ name: '新增节点', command: 'add' },{ name: '编辑节点', command: 'edit' },{ name: '删除节点', command: 'delete' }]  |   —   |
+| define-menus  | 自定义右键菜单，接受包含name和command属性的对象数组 | Array   |  —  |   [{ name: '复制文本', command: 'copy' },{ name: '新增节点', command: 'add' },{ name: '编辑节点', command: 'edit' },{ name: '删除节点', command: 'delete' }]   |
 | render-content     | 渲染函数   | Function  |  —   |   —   |
 | label-style     | 自定义label标签的样式   | Object  |  —   |   —    |
 | label-className     | 自定义label节点的样式名   | [Function, String]  |  —   |   —   |
