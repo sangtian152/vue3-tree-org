@@ -117,8 +117,12 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
   const nodeLabelClass = ['tree-org-node__content']
   if (root) {
     nodeLabelClass.push('is-root')
-  } else if (data.newNode) {
-    nodeLabelClass.push('is-new')
+  }
+  if (!data[defaultProps.label]) {
+    nodeLabelClass.push('is-empty')
+  }
+  if (data.focused) {
+    nodeLabelClass.push('is-edit')
   }
   // directives
   // let cloneDirs
