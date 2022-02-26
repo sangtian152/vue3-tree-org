@@ -1,35 +1,14 @@
-interface ILog {
-  print: (text:string | number | Record<string, unknown>, type:string, back:boolean) => void;
-  pretty: (title:string, text:string, type?:string) => void;
-  primary: (text:string, back?:boolean) => void;
-  success: (text:string, back?:boolean) => void;
-  info: (text:string, back?:boolean) => void;
-  warning: (text:string, back?:boolean) => void;
-  danger: (text:string, back?:boolean) => void;
-}
+/* eslint-disable no-console */
+import { isString } from '@/utils/utils'
 
-const log:ILog = {
-  print: function (text: string | number | Record<string, unknown>, type: string, back: boolean): void {
-    throw new Error('Function not implemented.')
-  },
-  pretty: function (title: string, text: string, type?: string): void {
-    throw new Error('Function not implemented.')
-  },
-  primary: function (text: string, back?: boolean): void {
-    throw new Error('Function not implemented.')
-  },
-  success: function (text: string, back?: boolean): void {
-    throw new Error('Function not implemented.')
-  },
-  info: function (text: string, back?: boolean): void {
-    throw new Error('Function not implemented.')
-  },
-  warning: function (text: string, back?: boolean): void {
-    throw new Error('Function not implemented.')
-  },
-  danger: function (text: string, back?: boolean): void {
-    throw new Error('Function not implemented.')
-  }
+const log = {
+  print: (text: string | number | Record<string, unknown>, type: string, back: boolean) => isString(type) || typeof back === 'boolean',
+  pretty: (title: string, text: string, type?: string) => (isString(text) && isString(title)) || typeof type === 'string',
+  primary: (text: string, back?: boolean) => isString(text) || typeof back === 'boolean',
+  success: (text: string, back?: boolean) => isString(text) || typeof back === 'boolean',
+  info: (text: string, back?: boolean) => isString(text) || typeof back === 'boolean',
+  warning: (text: string, back?: boolean) => isString(text) || typeof back === 'boolean',
+  danger: (text: string, back?: boolean) => isString(text) || typeof back === 'boolean'
 }
 /**
  * @description 返回这个样式的颜色值
@@ -66,7 +45,7 @@ export function typeColor (type = 'default'):string {
 log.print = function (text: string | number | Record<string, unknown>, type = 'default', back = false) {
   if (typeof text === 'object') { // 如果是对象则调用打印对象方式
     console.dir(text)
-    return
+    return true
   }
   if (back) { // 如果是打印带背景图的
     console.log(
@@ -79,6 +58,7 @@ log.print = function (text: string | number | Record<string, unknown>, type = 'd
       `color: ${typeColor(type)};`
     )
   }
+  return true
 }
 // 漂亮的
 log.pretty = function (title: string, text: string, type = 'primary') {
@@ -88,22 +68,28 @@ log.pretty = function (title: string, text: string, type = 'primary') {
     `border:1px solid ${typeColor(type)}; padding: 1px; border-radius: 0 4px 4px 0; color: ${typeColor(type)};`,
     'background:transparent'
   )
+  return true
 }
 
 log.primary = function (text: string, back = false) {
   this.print && this.print(text, 'primary', back)
+  return true
 }
 log.success = function (text: string, back = false) {
   this.print && this.print(text, 'success', back)
+  return true
 }
 log.info = function (text: string, back = false) {
   this.print && this.print(text, 'info', back)
+  return true
 }
 log.warning = function (text: string, back = false) {
   this.print && this.print(text, 'warning', back)
+  return true
 }
 log.danger = function (text: string, back = false) {
   this.print && this.print(text, 'danger', back)
+  return true
 }
 
 export default log

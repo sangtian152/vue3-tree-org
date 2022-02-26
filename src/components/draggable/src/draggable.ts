@@ -1,4 +1,5 @@
-import { buildProps, definePropType } from '@/utils/props'
+import { buildProps } from '@/utils/props'
+import { isNumber } from '@/utils/utils'
 import type { ExtractPropTypes } from 'vue'
 
 export const draggableProps = buildProps({
@@ -38,34 +39,6 @@ export const draggableProps = buildProps({
     type: Boolean,
     default: true
   },
-  resizable: {
-    type: Boolean,
-    default: true
-  },
-  lockAspectRatio: {
-    type: Boolean,
-    default: false
-  },
-  w: {
-    type: [Number, String],
-    default: 200,
-    validator: (val: string | number) => {
-      if (typeof val === 'number') {
-        return val > 0
-      }
-      return val === 'auto'
-    }
-  },
-  h: {
-    type: [Number, String],
-    default: 200,
-    validator: (val: string | number) => {
-      if (typeof val === 'number') {
-        return val > 0
-      }
-      return val === 'auto'
-    }
-  },
   x: {
     type: Number,
     default: 0
@@ -79,7 +52,6 @@ export const draggableProps = buildProps({
     default: 'auto',
     validator: (val: string | number) => (typeof val === 'string' ? val === 'auto' : val >= 0)
   },
-  dragHandle: String,
   dragCancel: String,
   axis: {
     type: String,
@@ -98,14 +70,6 @@ export const draggableProps = buildProps({
     type: Number,
     default: 1,
     validator: (val: number) => val > 0
-  },
-  onDragStart: {
-    type: Function,
-    default: () => true
-  },
-  onDrag: {
-    type: Function,
-    default: () => true
   }
 } as const)
 
@@ -113,9 +77,9 @@ export type DraggableProps = ExtractPropTypes<typeof draggableProps>
 
 export const draggableEmits = {
   activated: () => true,
-  deactivated: () => false,
-  dragging: (x:number, y:number) => {},
-  dragstop: (x:number, y:number) => {},
+  deactivated: () => true,
+  dragging: (x:number, y:number) => isNumber(x) && isNumber(y),
+  dragstop: (x:number, y:number) => isNumber(x) && isNumber(y),
   'update:active': (value: boolean) => typeof value === 'boolean'
 }
 export type DraggableEmits = typeof draggableEmits

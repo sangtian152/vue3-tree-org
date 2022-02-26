@@ -10,7 +10,7 @@ const components = [
   ZmTreeOrg
 ]
 
-const install = function (app: App) {
+const install = function (app: App):void {
   components.forEach(component => {
     app.component(component.name, component)
   })

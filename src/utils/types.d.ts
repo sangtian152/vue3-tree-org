@@ -10,26 +10,15 @@ export interface IContext {
     cloneNodeDrag?: any;
     keys?: any;
 }
-export interface INode {
-    [key: string]: any;
-}
-export interface IBounds {
-    [key: string]: number | null;
-}
-export interface IMousePosition {
-    [key: string]: number;
-}
+export type INode = Record<string, any>
+
+export type IBounds = Record<string, number>
+
+export type IMousePosition = Record<string, number>
 
 export interface IMenu {
-    name: string, command: string
-}
-
-export interface IKeysProps {
-    id?: string;
-    pid?: string;
-    label?: string;
-    expand?: string;
-    children?: string;
+    name: string;
+    command: string
 }
 
 export interface IKeysObject {
@@ -39,3 +28,5 @@ export interface IKeysObject {
     expand: string;
     children: string;
 }
+
+export type IKeysProps = Partial<IKeysObject>

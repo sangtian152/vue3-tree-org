@@ -4,7 +4,7 @@ import type { ExtractPropTypes, PropType } from '@vue/runtime-core'
 
 import { fromPairs } from './utils'
 
-const wrapperKey = Symbol()
+const wrapperKey = Symbol('wrapper')
 export type PropWrapper<T> = { [wrapperKey]: T }
 
 export const propKey = '__elPropsReservedKey'
@@ -23,7 +23,22 @@ type ResolvePropTypeWithReadonly<T> = Readonly<T> extends Readonly<
 
 type IfUnknown<T, V> = [unknown] extends [T] ? V : T
 
-export type BuildPropOption<T, D extends BuildPropType<T, V, C>, R, V, C> = {
+type _BuildPropType<T, V, C> =
+  | (T extends PropWrapper<unknown>
+      ? T[typeof wrapperKey]
+      : [V] extends [never]
+      ? ResolvePropTypeWithReadonly<T>
+      : never)
+  | V
+  | C
+
+export type BuildPropType<T, V, C> = _BuildPropType<
+  IfUnknown<T, never>,
+  IfUnknown<V, never>,
+  IfUnknown<C, never>
+>
+
+export type BuildPropOption<T, V, C, D extends BuildPropType<T, V, C>, R> = {
   type?: T
   values?: readonly V[]
   required?: R
@@ -34,20 +49,6 @@ export type BuildPropOption<T, D extends BuildPropType<T, V, C>, R, V, C> = {
     : (() => D) | D
   validator?: ((val: any) => val is C) | ((val: any) => boolean)
 }
-
-type _BuildPropType<T, V, C> =
-  | (T extends PropWrapper<unknown>
-      ? T[typeof wrapperKey]
-      : [V] extends [never]
-      ? ResolvePropTypeWithReadonly<T>
-      : never)
-  | V
-  | C
-export type BuildPropType<T, V, C> = _BuildPropType<
-  IfUnknown<T, never>,
-  IfUnknown<V, never>,
-  IfUnknown<C, never>
->
 
 type _BuildPropDefault<T, D> = [T] extends [
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -65,7 +66,7 @@ export type BuildPropDefault<T, D, R> = R extends true
         ? undefined
         : Exclude<_BuildPropDefault<T, D>, undefined>
     }
-export type BuildPropReturn<T, D, R, V, C> = {
+export type BuildPropReturn<T, V, C, D, R> = {
   readonly type: PropType<BuildPropType<T, V, C>>
   readonly required: IfUnknown<R, false>
   readonly validator: ((val: unknown) => boolean) | undefined
@@ -98,14 +99,14 @@ export type BuildPropReturn<T, D, R, V, C> = {
  */
 export function buildProp<
   T = never,
-  D extends BuildPropType<T, V, C> = never,
-  R extends boolean = false,
   V = never,
-  C = never
+  C = never,
+  D extends BuildPropType<T, V, C> = never,
+  R extends boolean = false
 > (
-  option: BuildPropOption<T, D, R, V, C>,
+  option: BuildPropOption<T, V, C, D, R>,
   key?: string
-): BuildPropReturn<T, D, R, V, C> {
+): BuildPropReturn<T, V, C, D, R> {
   // filter native prop type and nested prop, e.g `null`, `undefined` (from `buildProps`)
   if (!isObject(option) || !!option[propKey]) return option as any
 
@@ -119,9 +120,9 @@ export function buildProp<
 
         if (values) {
           allowedValues = [...values, defaultValue]
-          valid ||= allowedValues.includes(val)
+          valid = valid || allowedValues.includes(val)
         }
-        if (validator) valid ||= validator(val)
+        if (validator) valid = valid || validator(val)
 
         if (!valid && allowedValues.length > 0) {
           const allowValuesText = [...new Set(allowedValues)]
@@ -145,11 +146,11 @@ export function buildProp<
       Object.getOwnPropertySymbols(type).includes(wrapperKey)
         ? type[wrapperKey]
         : type,
-    required: !!required,
-    default: defaultValue,
     validator: _validator,
-    [propKey]: true
-  } as unknown as BuildPropReturn<T, D, R, V, C>
+    [propKey]: true,
+    default: defaultValue,
+    required: !!required
+  } as unknown as BuildPropReturn<T, V, C, D, R>
 }
 
 type NativePropType = [
@@ -164,13 +165,13 @@ export const buildProps = <
       ? O[K]
       : O[K] extends BuildPropOption<
           infer T,
-          infer D,
-          infer R,
           infer V,
-          infer C
+          infer C,
+          infer D,
+          infer R
         >
       ? D extends BuildPropType<T, V, C>
-        ? BuildPropOption<T, D, R, V, C>
+        ? BuildPropOption<T, V, C, D, R>
         : never
       : never
   }
@@ -189,19 +190,15 @@ export const buildProps = <
       ? O[K]
       : O[K] extends BuildPropOption<
           infer T,
+          infer V,
+          infer C,
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           infer _D,
-          infer R,
-          infer V,
-          infer C
+          infer R
         >
-      ? BuildPropReturn<T, O[K]['default'], R, V, C>
+      ? BuildPropReturn<T, V, C, O[K]['default'], R>
       : never
   }
 
 export const definePropType = <T>(val: any) =>
   ({ [wrapperKey]: val } as PropWrapper<T>)
-
-export const keyOf = <T>(arr: T) => Object.keys(arr) as Array<keyof T>
-
-export const componentSize = ['large', 'default', 'small'] as const

@@ -1,7 +1,7 @@
 import { isFunction } from './fns'
 
-export function matchesSelectorToParentElements (el: Element, selector:string, baseNode: Element) {
-  let node:Element | ParentNode | Node | null = el
+export function matchesSelectorToParentElements (el: Element, selector:string, baseNode: Element):boolean {
+  let node = el as Node
 
   const matchesSelectorFunc = [
     'matches',
@@ -16,13 +16,13 @@ export function matchesSelectorToParentElements (el: Element, selector:string, b
   do {
     if (node[matchesSelectorFunc](selector)) return true
     if (node === baseNode) return false
-    node = (node as Node).parentNode
+    node = node.parentNode as Node
   } while (node)
 
   return false
 }
 
-export function getComputedSize ($el: HTMLElement) {
+export function getComputedSize ($el: HTMLElement):number[] {
   const style = window.getComputedStyle($el)
 
   return [
@@ -37,7 +37,7 @@ export const addEvent = function (
   useCapture = false
 ): void {
   if (element && event && handler) {
-    element?.addEventListener(event, handler, useCapture)
+    element.addEventListener(event, handler, useCapture)
   }
 }
 
@@ -49,6 +49,6 @@ export const removeEvent = function (
   useCapture = false
 ): void {
   if (element && event && handler) {
-    element?.removeEventListener(event, handler, useCapture)
+    element.removeEventListener(event, handler, useCapture)
   }
 }

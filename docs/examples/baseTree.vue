@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import { ElSwitch, ElColorPicker } from 'element-plus'
+import { ElSwitch, ElColorPicker, ElMessage } from 'element-plus'
 export default {
   name: "baseTree",
   components: {
@@ -91,7 +91,7 @@ export default {
       console.log(data, isSelf);
     },
     onNodeClick(e, data) {
-      this.$Message.info(data.label);
+      ElMessage.info(data.label);
     },
     expandChange() {
       this.toggleExpand(this.data, this.expandAll);

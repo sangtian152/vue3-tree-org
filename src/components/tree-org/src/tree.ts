@@ -1,7 +1,8 @@
+import { buildProps, definePropType } from '@/utils/props'
+import { isNumber, isObject, isString } from '@/utils/utils'
+
 import type { ExtractPropTypes } from 'vue'
 import type { INode, IMenu, IKeysProps, IMousePosition } from '@/utils/types'
-import { buildProps, definePropType } from '@/utils/props'
-
 export const menus = [
   { name: '复制文本', command: 'copy' },
   { name: '新增节点', command: 'add' },
@@ -103,19 +104,19 @@ export const treeProps = buildProps({
 export type TreeProps = ExtractPropTypes<typeof treeProps>
 
 export const treeEmits = {
-  'on-drag': ({ x, y }:IMousePosition) => {},
-  'on-drag-stop': ({ x, y }:IMousePosition) => {},
-  'on-zoom': (val:number) => val,
-  'on-expand': (e:MouseEvent, data:INode) => {},
-  'on-node-blur': (e:MouseEvent, data:INode) => {},
-  'on-node-click': (e:MouseEvent, data:INode) => {},
-  'on-node-dblclick': (e:MouseEvent, data:INode) => {},
-  'on-node-mouseenter': (e:MouseEvent, data:INode) => {},
-  'on-node-mouseleave': (e:MouseEvent, data:INode) => {},
-  'on-contextmenu': (data: any) => {},
-  'on-node-copy': (str: string) => {},
-  'on-node-delete': (node: INode) => {},
-  'on-node-focus': (e:MouseEvent, data:INode) => {}
+  'on-drag': ({ x, y }:IMousePosition) => isNumber(x) && isNumber(y),
+  'on-drag-stop': ({ x, y }:IMousePosition) => isNumber(x) && isNumber(y),
+  'on-zoom': (val:number) => isNumber(val),
+  'on-expand': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-node-blur': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-node-click': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-node-dblclick': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-node-mouseenter': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-node-mouseleave': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data),
+  'on-contextmenu': (data: any) => isObject(data),
+  'on-node-copy': (str: string) => isString(str),
+  'on-node-delete': (node: INode) => isObject(node),
+  'on-node-focus': (e:MouseEvent, data:INode) => e instanceof MouseEvent && isObject(data)
 
 }
 export type TreeEmits = typeof treeEmits

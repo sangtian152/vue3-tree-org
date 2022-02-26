@@ -1,12 +1,17 @@
+interface IGrid {
+  deltaX: number;
+  deltaY: number;
+}
+
 export function isFunction (func: any): boolean {
   return (typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]')
 }
 
-export function snapToGrid (grid: any[], pendingX: number, pendingY: number, scale = 1) {
-  const x = Math.round((pendingX / scale) / grid[0]) * grid[0]
-  const y = Math.round((pendingY / scale) / grid[1]) * grid[1]
+export function snapToGrid (grid: any[], pendingX: number, pendingY: number, scale = 1):IGrid {
+  const deltaX = Math.round((pendingX / scale) / grid[0]) * grid[0]
+  const deltaY = Math.round((pendingY / scale) / grid[1]) * grid[1]
 
-  return [x, y]
+  return { deltaX, deltaY }
 }
 
 export function getSize (el: HTMLElement): number[] {
@@ -18,12 +23,12 @@ export function getSize (el: HTMLElement): number[] {
   ]
 }
 
-export function restrictToBounds (value: any, min: any, max: any) {
-  if (min !== null && value < min) {
+export function restrictToBounds (value: number, min: number, max: number): number {
+  if (value < min) {
     return min
   }
 
-  if (max !== null && max < value) {
+  if (max < value) {
     return max
   }
 

@@ -95,7 +95,7 @@ const addChildNode = function (node: INode, context: IContext) {
   }
 }
 const drag:ObjectDirective = {
-  beforeMount (el: HTMLElement, binding: DirectiveBinding, vnode) {
+  beforeMount (el: HTMLElement, binding: DirectiveBinding) {
     const { l, t } = binding.modifiers
     const { drag, dragData, node, handleStart, handleMove, handleEnd } = binding.value
     const { value }:{value: any } = binding

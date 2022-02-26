@@ -63,14 +63,14 @@ export const useDraggable = (
     }
 
     bounds = {
-      minLeft: null,
-      maxLeft: null,
-      minRight: null,
-      maxRight: null,
-      minTop: null,
-      maxTop: null,
-      minBottom: null,
-      maxBottom: null
+      minLeft: -Infinity,
+      maxLeft: Infinity,
+      minRight: -Infinity,
+      maxRight: Infinity,
+      minTop: -Infinity,
+      maxTop: Infinity,
+      minBottom: -Infinity,
+      maxBottom: Infinity
     }
   }
   function checkParentSize () {
@@ -110,12 +110,8 @@ export const useDraggable = (
 
     const target = (e.target || e.srcElement) as Element
     if (target && refs.eleRef.value && refs.eleRef.value.contains(target)) {
-      if (props.onDragStart(e) === false) {
-        return
-      }
       if (
-        (props.dragHandle && !matchesSelectorToParentElements(target, props.dragHandle, refs.eleRef.value)) ||
-        (props.dragCancel && matchesSelectorToParentElements(target, props.dragCancel, refs.eleRef.value))
+        props.dragCancel && matchesSelectorToParentElements(target, props.dragCancel, refs.eleRef.value)
       ) {
         dragging.value = false
 
@@ -143,7 +139,7 @@ export const useDraggable = (
       mouseClickPosition.right = right.value
       mouseClickPosition.top = top.value
       mouseClickPosition.bottom = bottom.value
-
+      console.log(mouseClickPosition)
       if (props.parent) {
         bounds = calcDragLimits()
       }
@@ -196,13 +192,9 @@ export const useDraggable = (
     }
     const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - pageX : 0
     const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - pageY : 0
-    const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, props.scale)
+    const { deltaX, deltaY } = snapToGrid(grid, tmpDeltaX, tmpDeltaY, props.scale)
     const lf = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
     const tp = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
-    if (props.onDrag(lf, tp) === false) {
-      return
-    }
-
     const rt = restrictToBounds(mouseClickPosition.right + deltaX, bounds.minRight, bounds.maxRight)
     const bt = restrictToBounds(mouseClickPosition.bottom + deltaY, bounds.minBottom, bounds.maxBottom)
 
@@ -213,7 +205,7 @@ export const useDraggable = (
     emit('dragging', left.value, top.value)
   }
   function moveHorizontally (val: number) {
-    const [deltaX, _] = snapToGrid(props.grid, val, top.value, props.scale)
+    const { deltaX } = snapToGrid(props.grid, val, top.value, props.scale)
 
     const lf = restrictToBounds(deltaX, bounds.minLeft, bounds.maxLeft)
 
@@ -221,7 +213,7 @@ export const useDraggable = (
     right.value = parentWidth.value - width.value - lf
   }
   function moveVertically (val: number) {
-    const [_, deltaY] = snapToGrid(props.grid, left.value, val, props.scale)
+    const { deltaY } = snapToGrid(props.grid, left.value, val, props.scale)
 
     const tp = restrictToBounds(deltaY, bounds.minTop, bounds.maxTop)
 
@@ -247,8 +239,8 @@ export const useDraggable = (
     parentHeight.value = ph
     if (refs.eleRef.value) {
       const [elWidth, elHeight] = getComputedSize(refs.eleRef.value)
-      width.value = props.w !== 'auto' ? <number>props.w : elWidth
-      height.value = props.h !== 'auto' ? <number>props.h : elHeight
+      width.value = elWidth
+      height.value = elHeight
       right.value = parentWidth.value - width.value - left.value
       bottom.value = parentHeight.value - height.value - top.value
     }
@@ -274,7 +266,7 @@ export const useDraggable = (
     }
   })
   watch(() => props.active,
-    (active, prevActive) => {
+    (active) => {
       enabled.value = active
       if (active) {
         emit('activated')
@@ -283,13 +275,13 @@ export const useDraggable = (
       }
     })
   watch(() => props.z,
-    (value, oldValue) => {
+    (value) => {
       if (value >= 0 || value === 'auto') {
         zIndex.value = value
       }
     })
   watch(() => props.x,
-    (value, oldValue) => {
+    (value) => {
       if (dragging.value) {
         return
       }
@@ -301,7 +293,7 @@ export const useDraggable = (
       moveHorizontally(value)
     })
   watch(() => props.y,
-    (value, oldValue) => {
+    (value) => {
       if (dragging.value) {
         return
       }

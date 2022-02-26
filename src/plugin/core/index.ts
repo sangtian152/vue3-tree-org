@@ -5,7 +5,7 @@ import log from '@/utils/log'
 import type { App } from 'vue'
 
 export default {
-  async install (app: App) {
+  async install (app: App):Promise<void> {
     // 设置为 false 以阻止 vue 在启动时生成生产提示
     // app.config.productionTip = false
 

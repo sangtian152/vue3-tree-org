@@ -10,9 +10,7 @@ export const useTree = (
   const left = ref(0)
   const top = ref(0)
   const autoDragging = ref(false)
-  let dragging = false
   function onDrag (x: number, y: number) {
-    dragging = true
     autoDragging.value = false
     left.value = x
     top.value = y
@@ -20,7 +18,6 @@ export const useTree = (
   }
   function onDragStop (x: number, y: number) {
     // 防止拖拽出边界
-    dragging = false
     const zoom = refs.zoomRef.value as HTMLElement
     const orgchart = refs.treeRef.value as HTMLElement
     const maxX = zoom.clientWidth / 2
@@ -56,12 +53,14 @@ export const useTree = (
       parenNode.value = data
     }
     emit('on-node-mouseenter', e, data)
+    return true
   }
   function nodeMouseleave (e: MouseEvent, data: INode) {
     if (nodeMoving.value) {
       parenNode.value = null
     }
     emit('on-node-mouseleave', e, data)
+    return true
   }
   const contextmenu = ref(false)
   const menuX = ref(0)
@@ -79,7 +78,7 @@ export const useTree = (
   }
   const scale = ref(1)
   function zoomWheel (e: WheelEvent) {
-    if(!props.scalable) return
+    if (!props.scalable) return
     e.preventDefault()
     // 鼠标滚轮缩放
     if (e.deltaY > 0) {
@@ -90,7 +89,7 @@ export const useTree = (
     emit('on-zoom', scale.value)
   }
   function zoomOrgchart (zoom:number) {
-    if(!props.scalable) return
+    if (!props.scalable) return
     const value = Number((Number(scale.value) + zoom).toFixed(1))
     if (zoom > 0) {
       scale.value = Math.min(3, value)
@@ -106,7 +105,6 @@ export const useTree = (
   function autoDrag (el: HTMLElement, lf: number, tp: number) {
     // 计算偏移量，保持根节点相对页面位置不变
     autoDragging.value = true
-    dragging = false
     const x = el.offsetLeft - lf
     const y = el.offsetTop - tp
     left.value -= x
