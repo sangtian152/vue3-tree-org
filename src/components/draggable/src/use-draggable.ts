@@ -139,7 +139,6 @@ export const useDraggable = (
       mouseClickPosition.right = right.value
       mouseClickPosition.top = top.value
       mouseClickPosition.bottom = bottom.value
-      console.log(mouseClickPosition)
       if (props.parent) {
         bounds = calcDragLimits()
       }
