@@ -33,7 +33,7 @@ export const config:UserConfig = {
   lang: 'zh-CN',
   title: 'vue3-tree-org',
   base: '/vue3-tree-org/',
-  description: 'Just playing around',
+  description: '基于vue3.x的组织架构图',
   // 主题和它的配置
   theme: '@vuepress/theme-default',
   alias: {
