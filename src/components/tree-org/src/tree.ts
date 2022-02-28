@@ -79,7 +79,9 @@ export const treeProps = buildProps({
   nodeDraging: Function,
   nodeDragEnd: Function,
   horizontal: Boolean,
-  selectedKey: String,
+  selectedKey: {
+    type: [Array, String, Number]
+  },
   collapsable: Boolean,
   renderContent: Function,
   labelStyle: Object,

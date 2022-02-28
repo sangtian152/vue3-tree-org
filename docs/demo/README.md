@@ -73,8 +73,9 @@ menuTree
 | define-menus  | 自定义右键菜单，接受包含name和command属性的对象数组 | Array   |  —  |   [{ name: '复制文本', command: 'copy' },{ name: '新增节点', command: 'add' },{ name: '编辑节点', command: 'edit' },{ name: '删除节点', command: 'delete' }]   |
 | render-content     | 渲染函数   | Function  |  —   |   —   |
 | label-style     | 自定义label标签的样式   | Object  |  —   |   —    |
-| label-className     | 自定义label节点的样式名   | [Function, String]  |  —   |   —   |
-| selected-className  | 自定义选择节点的样式名   | [Function, String]  |  —   |   —   |
+| label-class-name     | 自定义label节点的样式名   | [Function, String]  |  —   |   —   |
+| selected-key  | 选中的节点id 或 选中节点id的数组   | [Array, Number, String]  |  —   |   —   |
+| selected-class-name  | 自定义选择节点的样式名   | [Function, String]  |  —   |   —   |
 | click-delay  | 单机事件延迟（毫秒），解决双击鼠标时同时触发单击事件问题   | Number  |  —   |   260   |
 
 ```

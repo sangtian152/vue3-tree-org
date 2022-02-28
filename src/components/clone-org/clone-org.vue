@@ -4,12 +4,12 @@
       <tree-org-node
         :data="data"
         :props="props"
-        :is-clone="false"
+        :isClone="false"
         :horizontal="horizontal"
-        :label-style="labelStyle"
+        :labelStyle="labelStyle"
         :collapsable="collapsable"
-        :render-content="renderContent"
-        :label-class-name="labelClassName"
+        :renderContent="renderContent"
+        :labelClassName="labelClassName"
       >
         <template v-slot:default="{node}">
           <slot :node="node"></slot>
@@ -41,9 +41,6 @@ const cloneorgProps = buildProps({
   renderContent: Function,
   labelStyle: Object,
   labelClassName: {
-    type: [Function, String]
-  },
-  selectedClassName: {
     type: [Function, String]
   }
 } as const)

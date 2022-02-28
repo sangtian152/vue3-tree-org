@@ -168,14 +168,21 @@ command相同则执行事件相同，应避免重复</p>
 <td>—</td>
 </tr>
 <tr>
-<td>label-className</td>
+<td>label-class-name</td>
 <td>自定义label节点的样式名</td>
 <td>[Function, String]</td>
 <td>—</td>
 <td>—</td>
 </tr>
 <tr>
-<td>selected-className</td>
+<td>selected-key</td>
+<td>选中的节点id 或 选中节点id的数组</td>
+<td>[Array, Number, String]</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>selected-class-name</td>
 <td>自定义选择节点的样式名</td>
 <td>[Function, String]</td>
 <td>—</td>

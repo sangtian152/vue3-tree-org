@@ -101,7 +101,6 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
 
   const cls = ['tree-org-node__inner']
   let { labelStyle, labelClassName, selectedClassName, selectedKey } = attrs
-
   if (typeof labelClassName === 'function') {
     labelClassName = labelClassName(data)
   }
@@ -112,8 +111,10 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
   if (typeof selectedClassName === 'function') {
     selectedClassName = selectedClassName(data)
   }
-
-  selectedClassName && selectedKey && data[selectedKey] && cls.push(selectedClassName)
+  if (selectedKey !== undefined) {
+    selectedKey = Array.isArray(selectedKey) ? selectedKey : [selectedKey]
+  }
+  selectedClassName && selectedKey && selectedKey.includes(data[defaultProps.id]) && cls.push(selectedClassName)
   const nodeLabelClass = ['tree-org-node__content']
   if (root) {
     nodeLabelClass.push('is-root')
