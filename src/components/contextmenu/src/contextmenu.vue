@@ -55,36 +55,3 @@ export default defineComponent({
 
 })
 </script>
-<style lang="scss" scoped>
-.zm-tree-contextmenu {
-  position: fixed;
-  top: 100px;
-  left: 100px;
-  z-index: 100;
-  background: #fff;
-  padding: 10px 0;
-  overflow: hidden;
-  border: 1px solid #ddd;
-  box-shadow: 0px 2px 10px 0px rgba(29, 29, 31, 0.1);
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  li {
-    font-size: 12px;
-    padding: 3px 10px;
-    cursor: pointer;
-    list-style-type: none;
-    &:hover {
-      color: #2d8cf0;
-      background: #f0faff;
-    }
-  }
-  .copy-textarea {
-    position: absolute;
-    top: -100px;
-    left: -100px;
-  }
-}
-</style>

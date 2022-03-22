@@ -51,12 +51,3 @@ export default defineComponent({
   props: cloneorgProps
 })
 </script>
-<style lang="scss" scoped>
-  .clone-tree-org{
-    opacity: 0;
-    position: fixed;
-    top:0;
-    left:0;
-    z-index:1000;
-  }
-</style>

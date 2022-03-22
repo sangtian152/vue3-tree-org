@@ -81,7 +81,7 @@ export const useTree = (
     if (!props.scalable) return
     e.preventDefault()
     // 鼠标滚轮缩放
-    if (e.deltaY > 0) {
+    if (e.deltaY < 0) {
       zoomOrgchart(0.1)
     } else {
       zoomOrgchart(-0.1)

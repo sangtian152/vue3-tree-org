@@ -41,6 +41,6 @@ export const contextmenuEmits = {
   contextmenu: (arg:{node: INode, command:string|null}) => isObject(arg),
   opened: () => true,
   closed: () => true,
-  [UPDATE_MODEL_EVENT]: (value: boolean):boolean => typeof value === 'boolean'
+  'update:modelValue': (value: boolean):boolean => typeof value === 'boolean'
 }
 export type ContextmenuEmits = typeof contextmenuEmits

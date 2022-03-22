@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["dep:element-plus_es_components_base_style_css"],
-  "sourcesContent": ["\nexport * from \"../../../../node_modules/element-plus/es/components/base/style/css.mjs\""],
-  "mappings": ";;;;;;;AAAA;AAAA;",
-  "names": []
-}

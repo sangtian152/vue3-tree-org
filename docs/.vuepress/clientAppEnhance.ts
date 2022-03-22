@@ -5,6 +5,7 @@ import ZmTreeOrg from '@/index'
 import { ElMessage } from 'element-plus'
 
 import '@docs/theme'
+import '@/styles/index.scss'
 
 export default defineClientAppEnhance(({ app }) => {
     app.config.globalProperties.$message = ElMessage

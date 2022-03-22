@@ -35,10 +35,3 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="scss" scoped>
-  .zm-draggable {
-    touch-action: none;
-    position: absolute;
-    box-sizing: border-box;
-  }
-</style>

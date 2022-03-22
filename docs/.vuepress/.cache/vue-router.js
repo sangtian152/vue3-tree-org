@@ -1,6 +1,6 @@
 import {
   setupDevtoolsPlugin
-} from "./chunk-BIVWRNDE.js";
+} from "./chunk-URM4RCGM.js";
 import {
   computed,
   defineComponent,
@@ -18,12 +18,11 @@ import {
   unref,
   watch,
   watchEffect
-} from "./chunk-7AQNVV35.js";
-import "./chunk-CYEDY7PC.js";
+} from "./chunk-7MJQMNMH.js";
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-EMKRM5AF.js";
+} from "./chunk-WCBWMRKB.js";
 
 // dep:vue-router
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -219,7 +218,7 @@ function getScrollKey(path, delta) {
   const position = history.state ? history.state.position - delta : -1;
   return position + path;
 }
-var scrollPositions = new Map();
+var scrollPositions = /* @__PURE__ */ new Map();
 function saveScrollPosition(key, scrollPosition) {
   scrollPositions.set(key, scrollPosition);
 }
@@ -820,7 +819,7 @@ function tokenizePath(path) {
 function createRouteRecordMatcher(record, parent, options) {
   const parser = tokensToParser(tokenizePath(record.path), options);
   if (true) {
-    const existingKeys = new Set();
+    const existingKeys = /* @__PURE__ */ new Set();
     for (const key of parser.keys) {
       if (existingKeys.has(key.name))
         warn(`Found duplicated params with name "${key.name}" for path "${record.path}". Only the last one will be available on "$route.params".`);
@@ -841,7 +840,7 @@ function createRouteRecordMatcher(record, parent, options) {
 }
 function createRouterMatcher(routes, globalOptions) {
   const matchers = [];
-  const matcherMap = new Map();
+  const matcherMap = /* @__PURE__ */ new Map();
   globalOptions = mergeOptions({ strict: false, end: true, sensitive: false }, globalOptions);
   function getRecordMatcher(name) {
     return matcherMap.get(name);
@@ -1006,8 +1005,8 @@ function normalizeRouteRecord(record) {
     props: normalizeRecordProps(record),
     children: record.children || [],
     instances: {},
-    leaveGuards: new Set(),
-    updateGuards: new Set(),
+    leaveGuards: /* @__PURE__ */ new Set(),
+    updateGuards: /* @__PURE__ */ new Set(),
     enterCallbacks: {},
     components: "components" in record ? record.components || {} : { default: record.component }
   };
@@ -2251,7 +2250,7 @@ ${JSON.stringify(newTargetLocation, null, 2)}
   }
   const go = (delta) => routerHistory.go(delta);
   let started;
-  const installedApps = new Set();
+  const installedApps = /* @__PURE__ */ new Set();
   const router = {
     currentRoute,
     addRoute,

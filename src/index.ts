@@ -4,8 +4,7 @@ import corePlugin from './plugin/core'
 import ZmTreeOrg from './components/tree-org'
 
 import type { App } from 'vue'
-
-import '@/styles/index.scss'
+// import '@/styles/index.scss'
 const components = [
   ZmTreeOrg
 ]

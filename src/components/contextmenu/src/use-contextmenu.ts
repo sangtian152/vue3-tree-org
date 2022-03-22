@@ -1,5 +1,6 @@
-import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
 import log from '@/utils/log'
+import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
+import { UPDATE_MODEL_EVENT } from '@/utils/constants'
 import type { SetupContext } from 'vue'
 import type { ContextmenuEmits, ContextmenuProps } from './contextmenus'
 import type { IRefs, IKeysObject, INode } from '@/utils/types'
@@ -67,7 +68,7 @@ export const useContextmenu = (
           break
       }
       emit('contextmenu', { command, node: defaultProps.node })
-      emit('update:modelValue', false)
+      emit(UPDATE_MODEL_EVENT, false)
     }
   }
   function handleCopy () {

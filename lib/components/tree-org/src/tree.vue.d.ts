@@ -1,0 +1,222 @@
+declare const _default: import("vue").DefineComponent<{
+    readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, () => {
+        id: string;
+        pid: string;
+        label: string;
+        expand: string;
+        children: string;
+    }, unknown>;
+    readonly toolBar: import("../../../utils/props").BuildPropReturn<readonly [ObjectConstructor, BooleanConstructor], unknown, unknown, () => {
+        expand: boolean;
+        scale: boolean;
+        zoom: boolean;
+        restore: boolean;
+        fullscreen: boolean;
+    }, unknown>;
+    readonly disabled: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, false, unknown>;
+    readonly scalable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly draggable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly draggableOnNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, false, unknown>;
+    readonly nodeDraggable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly nodeDragStart: FunctionConstructor;
+    readonly nodeDraging: FunctionConstructor;
+    readonly nodeDragEnd: FunctionConstructor;
+    readonly horizontal: BooleanConstructor;
+    readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;
+    readonly collapsable: BooleanConstructor;
+    readonly renderContent: FunctionConstructor;
+    readonly labelStyle: ObjectConstructor;
+    readonly labelClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
+    readonly selectedClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
+    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
+        name: string;
+        command: string;
+    }[], unknown>;
+    readonly nodeAdd: FunctionConstructor;
+    readonly nodeDelete: FunctionConstructor;
+    readonly nodeEdit: FunctionConstructor;
+    readonly nodeCopy: FunctionConstructor;
+}, {
+    keys: {
+        id: string;
+        pid: string;
+        label: string;
+        expand: string;
+        children: string;
+    };
+    left: import("vue").Ref<number>;
+    top: import("vue").Ref<number>;
+    menuX: import("vue").Ref<number>;
+    menuY: import("vue").Ref<number>;
+    nodeMoving: import("vue").Ref<boolean>;
+    zoomStyle: import("vue").ComputedRef<{
+        width: string;
+        height: string;
+        transform: string;
+    }>;
+    tools: {
+        visible: boolean;
+        data: {
+            expand: boolean;
+            scale: boolean;
+            zoom: boolean;
+            restore: boolean;
+            fullscreen: boolean;
+        };
+    };
+    zoomPercent: import("vue").ComputedRef<string>;
+    dragCancel: import("vue").ComputedRef<"" | ".tree-org-node-label">;
+    expandTitle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
+    fullTiltle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
+    nodeargs: import("vue").ComputedRef<{
+        drag: boolean;
+        dragData: {
+            keys: {
+                id: string;
+                pid: string;
+                label: string;
+                expand: string;
+                children: string;
+            };
+            nodeMoving: import("vue").Ref<boolean>;
+            parenNode: {
+                value: {
+                    [x: string]: any;
+                } | null;
+            };
+            cloneNodeDrag: boolean;
+            onlyOneNode: boolean;
+            contextmenu: import("vue").Ref<boolean>;
+            cloneData: {
+                data: {};
+            };
+        };
+        handleStart: Function | undefined;
+        handleMove: Function | undefined;
+        handleEnd: Function | undefined;
+    }>;
+    expanded: import("vue").Ref<boolean>;
+    fullscreen: import("vue").Ref<boolean>;
+    autoDragging: import("vue").Ref<boolean>;
+    contextmenu: import("vue").Ref<boolean>;
+    menuData: {
+        data: {
+            [x: string]: any;
+        };
+    };
+    cloneData: {
+        data: {};
+    };
+    zoomWheel: (e: WheelEvent) => void;
+    onDrag: (x: number, y: number) => void;
+    onDragStop: (x: number, y: number) => void;
+    expandChange: () => void;
+    handleFullscreen: () => void;
+    zoomOrgchart: (zoom: number) => void;
+    restoreOrgchart: () => void;
+    handleExpand: (e: MouseEvent, data: Record<string, any>) => void;
+    nodeMouseenter: (e: MouseEvent, data: Record<string, any>) => boolean;
+    nodeMouseleave: (e: MouseEvent, data: Record<string, any>) => boolean;
+    nodeContextmenu: (e: MouseEvent, data: Record<string, any>) => void;
+    handleBlur: (e: MouseEvent, data: Record<string, any>) => void;
+    handleClick: (e: MouseEvent, data: Record<string, any>) => void;
+    handleDblclick: (e: MouseEvent, data: Record<string, any>) => void;
+    eleRef: import("vue").Ref<HTMLElement | undefined>;
+    treeRef: import("vue").Ref<HTMLElement | undefined>;
+    zoomRef: import("vue").Ref<HTMLElement | undefined>;
+    treeData: {
+        [x: string]: any;
+    };
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
+    'on-drag': ({ x, y }: Record<string, number>) => boolean;
+    'on-drag-stop': ({ x, y }: Record<string, number>) => boolean;
+    'on-zoom': (val: number) => boolean;
+    'on-expand': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-blur': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-click': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-dblclick': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-mouseenter': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-mouseleave': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-contextmenu': (data: any) => boolean;
+    'on-node-copy': (str: string) => boolean;
+    'on-node-delete': (node: Record<string, any>) => boolean;
+    'on-node-focus': (e: MouseEvent, data: Record<string, any>) => boolean;
+}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, () => {
+        id: string;
+        pid: string;
+        label: string;
+        expand: string;
+        children: string;
+    }, unknown>;
+    readonly toolBar: import("../../../utils/props").BuildPropReturn<readonly [ObjectConstructor, BooleanConstructor], unknown, unknown, () => {
+        expand: boolean;
+        scale: boolean;
+        zoom: boolean;
+        restore: boolean;
+        fullscreen: boolean;
+    }, unknown>;
+    readonly disabled: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, false, unknown>;
+    readonly scalable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly draggable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly draggableOnNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, false, unknown>;
+    readonly nodeDraggable: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
+    readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly nodeDragStart: FunctionConstructor;
+    readonly nodeDraging: FunctionConstructor;
+    readonly nodeDragEnd: FunctionConstructor;
+    readonly horizontal: BooleanConstructor;
+    readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;
+    readonly collapsable: BooleanConstructor;
+    readonly renderContent: FunctionConstructor;
+    readonly labelStyle: ObjectConstructor;
+    readonly labelClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
+    readonly selectedClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
+    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
+        name: string;
+        command: string;
+    }[], unknown>;
+    readonly nodeAdd: FunctionConstructor;
+    readonly nodeDelete: FunctionConstructor;
+    readonly nodeEdit: FunctionConstructor;
+    readonly nodeCopy: FunctionConstructor;
+}>> & {
+    "onOn-drag"?: ((args_0: Record<string, number>) => any) | undefined;
+    "onOn-drag-stop"?: ((args_0: Record<string, number>) => any) | undefined;
+    "onOn-zoom"?: ((val: number) => any) | undefined;
+    "onOn-expand"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-blur"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-click"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-dblclick"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-mouseenter"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-mouseleave"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-contextmenu"?: ((data: any) => any) | undefined;
+    "onOn-node-copy"?: ((str: string) => any) | undefined;
+    "onOn-node-delete"?: ((node: Record<string, any>) => any) | undefined;
+    "onOn-node-focus"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+}, {
+    props: Partial<import("../../../utils/types").IKeysObject>;
+    toolBar: boolean | Record<string, any>;
+    disabled: boolean;
+    scalable: boolean;
+    draggable: boolean;
+    draggableOnNode: boolean;
+    nodeDraggable: boolean;
+    cloneNodeDrag: boolean;
+    onlyOneNode: boolean;
+    clickDelay: number;
+    horizontal: boolean;
+    selectedKey: string | number | unknown[];
+    collapsable: boolean;
+    labelClassName: string | Function;
+    selectedClassName: string | Function;
+    defineMenus: import("../../../utils/types").IMenu[];
+}>;
+export default _default;
