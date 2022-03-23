@@ -2,14 +2,6 @@ module.exports = {
   publicPath: '',
   outputDir: 'dist',
   assetsDir: 'static',
-  // 将entry指向examples
-  pages: {
-    index: {
-      entry: 'demo/main.js',
-      template: 'public/index.html',
-      filename: 'index.html'
-    }
-  },
   // 为packages目录添加babel-loader处理
   chainWebpack: config => {
     config.module
