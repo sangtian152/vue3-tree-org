@@ -35,10 +35,14 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
   const defaultProps = attrs.props
   const children = data[defaultProps.children]
   // const show = resolveDirective('v-show')
+  if (data[defaultProps.expand] === undefined && data.$$level < attrs.defaultExpandLevel) {
+    data[defaultProps.expand] = true
+  }
+  const isExpand = data[defaultProps.expand]
   // 如果是叶子节点则追加leaf事件
   if (isLeaf(data, defaultProps.children)) {
     cls.push('is-leaf')
-  } else if (attrs.collapsable && !data[defaultProps.expand]) { // 追加是否展开class
+  } else if (attrs.collapsable && !isExpand) { // 追加是否展开class
     cls.push('collapsed')
   }
   if (data.moving) {
@@ -46,9 +50,8 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
   }
   // 渲染label块
   childNodes.push(renderLabel(h, data, context, root))
-
-  if (!attrs.collapsable || data[defaultProps.expand]) {
-    childNodes.push(renderChildren(h, children, context))
+  if (!attrs.collapsable || isExpand) {
+    childNodes.push(renderChildren(h, children, context, data.$$level))
   }
   return withDirectives(h('div', {
     class: cls,
@@ -175,9 +178,10 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
 }
 
 // 创建 node 子节点
-export const renderChildren = (h:any, list:any, context:any) => {
+export const renderChildren = (h:any, list:any, context:any, level:number) => {
   if (Array.isArray(list) && list.length) {
     const children = list.map(item => {
+      item.$$level = level + 1
       return renderNode(h, item, context, false)
     })
 
@@ -191,6 +195,7 @@ export const renderChildren = (h:any, list:any, context:any) => {
 export const TreeOrgNode = (props: any, context: any) => {
   if (!props.data) return ''
   props.data.root = !props.isClone
+  props.data.$$level = 0
   return renderNode(h, props.data, context, true)
 }
 TreeOrgNode.directives = {

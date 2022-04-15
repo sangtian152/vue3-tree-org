@@ -55,10 +55,11 @@ menuTree
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | data     | 数据源,必须传入   | Object  |  —   |   —   |
-| props    | 结构map参考   | Object  |  —   |  {id: 'id', pid: 'pid', label: 'label', expand: 'expand',children: 'children'  }  |
+| props    | 配置选项，具体看下表   | Object  |  —   |  {id: 'id', pid: 'pid', label: 'label', expand: 'expand',children: 'children'  }  |
 | toolBar    | 工具栏   | [Object, Boolean] |  —   |  {scale: true, restore: true, expand: true, zoom: true, fullscreen: true,  }  |
 | horizontal     | 是否是横向   | Boolean  | true,false  |  false  |
 | collapsable     | 是否可以展开收起节点   | Boolean  | true,false  |  false  |
+| default-expand-level     | 默认展开层级（如果层级内有节点展开属性值为false，该节点不会默认展开）   | Number  | ——  |  ——  |
 | disabled     | 禁止编辑，设为true后，所有节点不可新增下级、编辑和删除，单个节点禁止编辑，可将节点属性设置disabled为true   | Boolean  | true,false  |  true  |
 | scalable     | 架构图是否可缩放   | Boolean  | true,false  |  true  |
 | draggable     | 架构图是否可拖拽，单个节点禁止拖拽，可将节点属性设置noDragging为true   | Boolean  | true,false  |  true  |
@@ -84,6 +85,15 @@ menuTree
 或者通过props指定id和pid属性
 2.由于节点拖拽功能阻止了节点文本选中，所以，在右键菜单中提供了复制节点文本功能。
 ```
+
+### Props
+| 参数      | 说明    | 类型      | 可选值  | 默认值      |
+|---------- |-------- |---------- |-------------  |-------- |
+| label | 指定节点标签为节点对象的某个属性值 | String | —  |— |
+| children | 指定子树为节点对象的某个属性值 | String | —  |— |
+| id | 指定节点唯一标识为节点对象的某个属性值 | String | —  |— |
+| pid | 指定父级节点唯一标识为节点对象的某个属性值 | String | —  |— |
+| expand | 指定节点是否展开为节点对象的某个属性值 | String | —  |— |
 
 ### Events
 

@@ -75,6 +75,7 @@ export const treeProps = buildProps({
     type: Number,
     default: 260
   },
+  defaultExpandLevel: Number,
   nodeDragStart: Function,
   nodeDraging: Function,
   nodeDragEnd: Function,

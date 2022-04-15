@@ -28,6 +28,7 @@
             :collapsable="collapsable"
             :renderContent="renderContent"
             :selectedKey="selectedKey"
+            :defaultExpandLevel="defaultExpandLevel"
             :selectedClassName="selectedClassName"
             :labelClassName="labelClassName"
             :vNodedrag="nodeargs"

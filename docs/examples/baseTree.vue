@@ -20,6 +20,7 @@
           :label-style="style"
           :node-draggable="true"
           :only-one-node="onlyOneNode"
+          :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
           :node-draging="nodeDragMove"
           :node-drag-end="nodeDragEnd"

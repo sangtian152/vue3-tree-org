@@ -1,7 +1,17 @@
 {
-  "hash": "8be478f7",
-  "browserHash": "22782e73",
+  "hash": "b1338406",
+  "browserHash": "3ac15895",
   "optimized": {
+    "@vue/shared": {
+      "file": "D:/web project/vue3-tree-org/docs/.vuepress/.cache/@vue_shared.js",
+      "src": "D:/web project/vue3-tree-org/node_modules/@vue/shared/dist/shared.esm-bundler.js",
+      "needsInterop": false
+    },
+    "element-plus": {
+      "file": "D:/web project/vue3-tree-org/docs/.vuepress/.cache/element-plus.js",
+      "src": "D:/web project/vue3-tree-org/node_modules/element-plus/es/index.mjs",
+      "needsInterop": false
+    },
     "vue": {
       "file": "D:/web project/vue3-tree-org/docs/.vuepress/.cache/vue.js",
       "src": "D:/web project/vue3-tree-org/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js",

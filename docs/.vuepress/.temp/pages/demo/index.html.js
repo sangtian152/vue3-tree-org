@@ -20,6 +20,12 @@ export const data = {
     },
     {
       "level": 3,
+      "title": "Props",
+      "slug": "props",
+      "children": []
+    },
+    {
+      "level": 3,
       "title": "Events",
       "slug": "events",
       "children": []

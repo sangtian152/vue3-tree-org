@@ -28,6 +28,7 @@ export declare const treeProps: {
     readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;

@@ -8,6 +8,7 @@
             :node-draggable="true"
             :scalable="false"
             :only-one-node="onlyOneNode"
+            :default-expand-level="1"
             :clone-node-drag="cloneNodeDrag"
             @on-contextmenu="onMenus"
             @on-node-click="onNodeClick"
