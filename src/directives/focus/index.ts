@@ -2,7 +2,12 @@ interface IBinding {
   value: any;
 }
 export default {
-  beforeMount (el: HTMLElement, { value }:IBinding):void {
+  mounted: function (el: HTMLElement, { value }:IBinding):void {
+    if (value) {
+      el.focus()
+    }
+  },
+  updated (el: HTMLElement, { value }:IBinding):void {
     if (value) {
       el.focus()
     }

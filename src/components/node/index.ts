@@ -1,6 +1,7 @@
 // 功能插件
 import log from '@/utils/log'
 import drag from '@/directives/drag'
+import focus from '@/directives/focus'
 import { vShow, h, resolveDirective, withDirectives } from 'vue'
 import type { DirectiveArguments } from 'vue'
 import type { INode } from '@/utils/types'
@@ -200,6 +201,7 @@ export const TreeOrgNode = (props: any, context: any) => {
 }
 TreeOrgNode.directives = {
   // 自定义指令
+  focus,
   nodedrag: drag
 }
 export default TreeOrgNode
