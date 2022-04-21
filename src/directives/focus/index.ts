@@ -1,8 +1,8 @@
-interface IBinding {
+type IBinding = {
   value: any;
 }
 export default {
-  mounted: function (el: HTMLElement, { value }:IBinding):void {
+  mounted (el: HTMLElement, { value }:IBinding):void {
     if (value) {
       el.focus()
     }

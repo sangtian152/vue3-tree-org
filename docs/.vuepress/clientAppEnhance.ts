@@ -1,12 +1,11 @@
 import { defineClientAppEnhance } from '@vuepress/client'
 import DemoBlock from '@docs/components/demo-block.vue'
 import Demo from '@docs/page/index.vue'
-import {Vue3TreeOrg} from '@/index'
+import { Vue3TreeOrg } from '@/index'
 import { ElMessage } from 'element-plus'
 
 import '@docs/theme'
 import '@/styles/index.scss'
-console.log(Vue3TreeOrg, 9)
 export default defineClientAppEnhance(({ app }) => {
     app.config.globalProperties.$message = ElMessage
     app.component('DemoBlock', DemoBlock)
