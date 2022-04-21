@@ -1,12 +1,12 @@
 // 核心插件
 import corePlugin from './plugin/core'
 // 组件
-import ZmTreeOrg from './components/tree-org'
+import Vue3TreeOrg from './components/tree-org'
 
 import type { App } from 'vue'
 // import '@/styles/index.scss'
 const components = [
-  ZmTreeOrg
+  Vue3TreeOrg
 ]
 
 const install = function (app: App):void {
@@ -29,5 +29,5 @@ const install = function (app: App):void {
 }
 
 export default {
-  install, ZmTreeOrg
+  install, Vue3TreeOrg
 }
