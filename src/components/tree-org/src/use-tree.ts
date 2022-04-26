@@ -257,6 +257,11 @@ export const useTree = (
         onDragStop(left.value, top.value)
       })
     })
+  const treeData = ref(props.data)
+  watch(() => props.data,
+    () => {
+      treeData.value = props.data
+    })
   const tools = reactive({
     visible: true,
     data: {
@@ -290,6 +295,7 @@ export const useTree = (
     nodeargs,
     expanded,
     fullscreen,
+    treeData,
     autoDragging,
     contextmenu,
     menuData,

@@ -22,6 +22,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;
@@ -101,6 +102,9 @@ declare const _default: import("vue").DefineComponent<{
     }>;
     expanded: import("vue").Ref<boolean>;
     fullscreen: import("vue").Ref<boolean>;
+    treeData: import("vue").Ref<{
+        [x: string]: any;
+    }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
     menuData: {
@@ -128,9 +132,6 @@ declare const _default: import("vue").DefineComponent<{
     eleRef: import("vue").Ref<HTMLElement | undefined>;
     treeRef: import("vue").Ref<HTMLElement | undefined>;
     zoomRef: import("vue").Ref<HTMLElement | undefined>;
-    treeData: {
-        [x: string]: any;
-    };
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     'on-drag': ({ x, y }: Record<string, number>) => boolean;
     'on-drag-stop': ({ x, y }: Record<string, number>) => boolean;
@@ -169,6 +170,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;

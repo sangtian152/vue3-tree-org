@@ -127,7 +127,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref } from 'vue'
 import TreeOrgNode from '@/components/node'
 import Tools from '@/components/tools'
 import Draggable from '@/components/draggable'
@@ -154,13 +154,11 @@ export default defineComponent({
     const eleRef = ref<HTMLElement>()
     const treeRef = ref<HTMLElement>()
     const zoomRef = ref<HTMLElement>()
-    const treeData = reactive(props.data)
     const treeOrg = useTree(props, ctx, { eleRef, treeRef, zoomRef })
     return {
       eleRef,
       treeRef,
       zoomRef,
-      treeData,
       ...treeOrg
     }
   }

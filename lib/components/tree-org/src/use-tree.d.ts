@@ -62,6 +62,9 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     }>;
     expanded: import("vue").Ref<boolean>;
     fullscreen: import("vue").Ref<boolean>;
+    treeData: import("vue").Ref<{
+        [x: string]: any;
+    }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
     menuData: {
