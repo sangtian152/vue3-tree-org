@@ -154,8 +154,8 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
     }
   }
   // texterea event handles
-  const focusHandler = attrs.onOnNodeFocus
-  const blurHandler = attrs.onOnNodeBlur
+  const focusHandler = attrs.onNodeFocus
+  const blurHandler = attrs.onNodeBlur
   const vFocus = resolveDirective('focus')
   const directives = <DirectiveArguments>[[vShow, data.focused]]
   if (vFocus) {
