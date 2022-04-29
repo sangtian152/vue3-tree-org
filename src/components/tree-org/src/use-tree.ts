@@ -242,10 +242,10 @@ export const useTree = (
   })
   const cloneData = reactive({ data: {} })
   const nodeargs = computed(() => {
-    const { cloneNodeDrag, onlyOneNode } = props
+    const { cloneNodeDrag, onlyOneNode,data } = props
     return {
       drag: props.nodeDraggable,
-      dragData: { keys, nodeMoving, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData },
+      dragData: { keys, nodeMoving, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData,data },
       handleStart: props.nodeDragStart,
       handleMove: props.nodeDraging,
       handleEnd: props.nodeDragEnd
