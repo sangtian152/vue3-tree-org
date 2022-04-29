@@ -55,6 +55,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
             cloneData: {
                 data: {};
             };
+            data: Record<string, any>;
         };
         handleStart: Function | undefined;
         handleMove: Function | undefined;
