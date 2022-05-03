@@ -1,8 +1,8 @@
 import { isObject } from '@/utils/utils'
-import type { IContext, INode, IKeysObject } from '@/utils/types'
+import type { IContext, INode, INodeData, IKeysObject } from '@/utils/types'
 import type { ObjectDirective, DirectiveBinding } from 'vue'
 // 递归遍历处理数据
-const recurseData = function (data: INode | INode[], keys: IKeysObject, cb: { (item: INode): void; }) {
+const recurseData = function (data: INodeData | INodeData[], keys: IKeysObject, cb: { (item:INodeData): void; }) {
   const { children } = keys
   if (isObject(data)) {
     fn(data)
@@ -11,7 +11,7 @@ const recurseData = function (data: INode | INode[], keys: IKeysObject, cb: { (i
       fn(data[i])
     }
   }
-  function fn (obj: INode) {
+  function fn (obj:INodeData) {
     cb(obj)
     if (Array.isArray(obj[children])) {
       const list = obj[children]
@@ -22,7 +22,7 @@ const recurseData = function (data: INode | INode[], keys: IKeysObject, cb: { (i
   }
 }
 // 获取父级节点
-const getNodeById = function (node: INode, keys: IKeysObject, value: string): any {
+const getNodeById = function (node: INodeData, keys: IKeysObject, value: string): any {
   const { id, children } = keys
   if (node[id] === value) {
     return node
@@ -38,7 +38,7 @@ const getNodeById = function (node: INode, keys: IKeysObject, value: string): an
   }
 }
 // 移除节点
-const removeNode = function (node: INode, context: IContext) {
+const removeNode = function (node: INodeData, context: IContext) {
   const { keys, data, onlyOneNode } = context
   const { id, pid, children } = keys
   const oldPaNode = getNodeById(data, keys, node[pid])
@@ -55,7 +55,7 @@ const removeNode = function (node: INode, context: IContext) {
   const childNodes = node[children]
   if (onlyOneNode && index !== undefined && childNodes) {
     node[children] = []
-    childNodes.forEach((it: INode) => {
+    childNodes.forEach((it: INodeData) => {
       it[pid] = oldPaNode[id]
     })
     oldPaNode[children].splice(index, 0, ...childNodes)
@@ -67,11 +67,9 @@ const addChildNode = function (node: INode, context: IContext) {
   if (parenNode.value) {
     const { keys } = context
     const { id, pid } = keys
-    const parentData = parenNode.value
-    const nodeClone = JSON.parse(JSON.stringify(node))
-    if (nodeClone.root) {
-      nodeClone.root = undefined
-    }
+    const parentData = parenNode.value.$$data
+    const nodeClone = JSON.parse(JSON.stringify(node.$$data))
+
     if (!cloneNodeDrag) {
       // 如果拖拽节点
       removeNode(nodeClone, context)
@@ -79,7 +77,7 @@ const addChildNode = function (node: INode, context: IContext) {
       parentData.children ? parentData.children.push(nodeClone) : parentData.children = [].concat(nodeClone)
     } else {
       // 如果拷贝并拖拽节点
-      recurseData(nodeClone, keys, function (item: INode) {
+      recurseData(nodeClone, keys, function (item: INodeData) {
         if (typeof item[id] === 'string' &&
           item[id].indexOf('clone-node') !== -1) {
           item[id] = `clone-node-${item[id]}`
@@ -113,11 +111,12 @@ const drag:ObjectDirective = {
       const { keys, onlyOneNode } = instance
       if (onlyOneNode) { // 如果是仅移动当前节点
         const { children } = keys
-        const cloneNode = { ...node }
+        console.log(node, 114)
+        const cloneNode = { ...node.$$data }
         cloneNode[children] = []
-        instance.cloneData.data = cloneNode
+        instance.cloneData.value = cloneNode
       } else {
-        instance.cloneData.data = node
+        instance.cloneData.value = node.$$data
       }
     }
     function handleDownCb (e: MouseEvent) {

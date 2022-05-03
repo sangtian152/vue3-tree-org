@@ -3,7 +3,7 @@ import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
 import { UPDATE_MODEL_EVENT } from '@/utils/constants'
 import type { SetupContext } from 'vue'
 import type { ContextmenuEmits, ContextmenuProps } from './contextmenus'
-import type { IRefs, IKeysObject, INode } from '@/utils/types'
+import type { IRefs, IKeysObject, INode, INodeData } from '@/utils/types'
 export const useContextmenu = (
   defaultProps: ContextmenuProps,
   { emit }: SetupContext<ContextmenuEmits>,
@@ -11,7 +11,7 @@ export const useContextmenu = (
 ) => {
   const copyText = ref('')
   // 递归遍历实现
-  function getNodeById (data: INode, key: string, value: any): INode | undefined {
+  function getNodeById (data: INodeData, key: string, value: any): INodeData | undefined {
     if (data[key] === value) {
       return data
     } else if (Array.isArray(data.children)) {
@@ -29,21 +29,21 @@ export const useContextmenu = (
   function handleDelete () {
     const { props, data, node } = defaultProps
     if (defaultProps.nodeDelete) {
-      defaultProps.nodeDelete(node)
+      defaultProps.nodeDelete(node.$$data)
       return
     }
-    if (node.root) {
+    if (node.$$root) {
       log.pretty('[提示] ', '根节点不允许删除', 'danger')
       return
     }
-    const { id, pid, children } = (props as IKeysObject)
-    const oldPaNode = getNodeById(data, id, node[pid])
+    const { id, children } = (props as IKeysObject)
+    const oldPaNode = getNodeById(data, id, node.pid)
     if (oldPaNode) {
       const list = oldPaNode[children]
       for (let i = 0, len = list.length; i < len; i++) {
-        if (list[i][id] === node[id]) {
+        if (list[i][id] === node.id) {
           list.splice(i, 1)
-          emit('onNodeDelete', node)
+          emit('onNodeDelete', node.$$data, node)
           break
         }
       }
@@ -67,16 +67,16 @@ export const useContextmenu = (
           handleDelete()
           break
       }
-      emit('contextmenu', { command, node: defaultProps.node })
+      emit('contextmenu', { command, node: defaultProps.node, data: defaultProps.node.$$data })
       emit(UPDATE_MODEL_EVENT, false)
     }
   }
   function handleCopy () {
     if (defaultProps.nodeCopy) {
-      defaultProps.nodeCopy(defaultProps.node)
+      defaultProps.nodeCopy(defaultProps.node.$$data)
       return
     }
-    copyText.value = defaultProps.node[(defaultProps.props as IKeysObject).label]
+    copyText.value = defaultProps.node.label
     nextTick(() => {
       if (refs.inputRef && refs.inputRef.value) {
         refs.inputRef && refs.inputRef.value.select() // 选中文本
@@ -93,33 +93,35 @@ export const useContextmenu = (
   }
   function handleAdd () {
     if (defaultProps.nodeAdd) {
-      defaultProps.nodeAdd(defaultProps.node)
+      defaultProps.nodeAdd(defaultProps.node.$$data)
       return
     }
     const { id, pid, label, expand, children } = <IKeysObject>defaultProps.props
     const { node } = defaultProps
     const json = {
       [id]: String(new Date().getTime()),
-      [pid]: node[id],
+      [pid]: node.id,
       [label]: '',
       [expand]: false,
       [children]: [],
       newNode: true,
       focused: true
     }
-    if (Array.isArray(node[children])) {
-      node[children].push(json)
+    if (Array.isArray(node.children)) {
+      node.$$data[children].push(json)
     } else {
-      node[children] = [json]
+      node.$$data[children] = [json]
     }
+    emit('onNodeFocus', json)
   }
   function handleEdit () {
     const { nodeEdit, node } = defaultProps
     if (nodeEdit) {
-      nodeEdit(node)
+      nodeEdit(node.$$data)
       return
     }
-    node.focused = true
+    // node.focused = true
+    emit('onNodeFocus', node.$$data)
   }
   function handleClose (e: MouseEvent) {
     if (defaultProps.modelValue) {

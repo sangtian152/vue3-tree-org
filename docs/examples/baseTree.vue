@@ -33,11 +33,18 @@
 </template>
 <script>
 import { ElSwitch, ElColorPicker, ElMessage } from 'element-plus'
+import { ref } from 'vue'
 export default {
   name: "baseTree",
   components: {
     ElSwitch,
     ElColorPicker
+  },
+  setup() {
+    const cloneNodeDrag = ref(true)
+    return {
+      cloneNodeDrag
+    }
   },
   data() {
     return {
@@ -66,7 +73,6 @@ export default {
       horizontal: false,
       collapsable: true,
       onlyOneNode: true,
-      cloneNodeDrag: true,
       expandAll: true,
       disaled: false,
       style: {

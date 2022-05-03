@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue';
-import type { INode, IMenu, IMousePosition } from '@/utils/types';
+import type { INode, INodeData, IMenu, IMousePosition } from '@/utils/types';
 export declare const menus: {
     name: string;
     command: string;
@@ -53,15 +53,15 @@ export declare const treeEmits: {
     'on-drag': ({ x, y }: IMousePosition) => boolean;
     'on-drag-stop': ({ x, y }: IMousePosition) => boolean;
     'on-zoom': (val: number) => boolean;
-    'on-expand': (e: MouseEvent, data: INode) => boolean;
-    'on-node-blur': (e: MouseEvent, data: INode) => boolean;
-    'on-node-click': (e: MouseEvent, data: INode) => boolean;
-    'on-node-dblclick': (e: MouseEvent, data: INode) => boolean;
-    'on-node-mouseenter': (e: MouseEvent, data: INode) => boolean;
-    'on-node-mouseleave': (e: MouseEvent, data: INode) => boolean;
+    'on-expand': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-blur': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-click': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-dblclick': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-mouseenter': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-mouseleave': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
     'on-node-delete': (node: INode) => boolean;
-    'on-node-focus': (e: MouseEvent, data: INode) => boolean;
+    'on-node-focus': (e: MouseEvent, data: INodeData, node: INode) => boolean;
 };
 export declare type TreeEmits = typeof treeEmits;

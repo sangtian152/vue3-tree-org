@@ -32,6 +32,7 @@
             :selectedClassName="selectedClassName"
             :labelClassName="labelClassName"
             :vNodedrag="nodeargs"
+            :focused="focusedId"
             @on-expand="handleExpand"
             @node-click="handleClick"
             @node-dblclick="handleDblclick"
@@ -73,7 +74,7 @@
       v-if="nodeDraggable"
       v-model="nodeMoving"
       :props="keys"
-      :data="cloneData.data"
+      :data="cloneData"
       :horizontal="horizontal"
       :label-style="labelStyle"
       :collapsable="collapsable"
@@ -98,7 +99,7 @@
       v-model="contextmenu"
       :x="menuX"
       :y="menuY"
-      :node="menuData.data"
+      :node="menuData"
       :data="data"
       :props="keys"
       :menus="defineMenus"
@@ -112,6 +113,7 @@
           $emit('on-contextmenu', arg);
         }
       "
+      @on-node-focus="nodeFocus"
       @on-node-copy="
         (txt) => {
           $emit('on-node-copy', txt);

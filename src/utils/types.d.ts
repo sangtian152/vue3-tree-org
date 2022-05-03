@@ -10,7 +10,27 @@ export interface IContext {
     cloneNodeDrag?: any;
     keys?: any;
 }
-export type INode = Record<string, any>
+
+export type INodeData = Record<string, any>
+
+export interface INode {
+    id: number|string,
+    pid: number|string,
+    label: string,
+    expand: boolean,
+    $$data: INodeData
+    $$level: number,
+    $$root?: boolean,
+    $$focused?:boolean,
+    hidden?: boolean,
+    disabled?: boolean,
+    moving?: boolean,
+    focused?: boolean,
+    style?: data.style,
+    className?: string,
+    children?: INode[],
+}
+
 
 export type IBounds = Record<string, number>
 

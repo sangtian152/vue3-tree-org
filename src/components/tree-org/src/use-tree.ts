@@ -1,6 +1,6 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
 import type { SetupContext } from 'vue'
-import type { INode, IRefs } from '@/utils/types'
+import type { INode, INodeData, IRefs } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
 export const useTree = (
   props: TreeProps,
@@ -50,33 +50,31 @@ export const useTree = (
   }
   const nodeMoving = ref(false)
   const parenNode = reactive({ value: <INode | null>{} })
-  function nodeMouseenter (e: MouseEvent, data: INode) {
+  function nodeMouseenter (e: MouseEvent, node: INode) {
     if (nodeMoving.value) {
-      parenNode.value = data
+      parenNode.value = node
     }
-    emit('on-node-mouseenter', e, data)
+    emit('on-node-mouseenter', e, node.$$data, node)
     return true
   }
-  function nodeMouseleave (e: MouseEvent, data: INode) {
+  function nodeMouseleave (e: MouseEvent, node: INode) {
     if (nodeMoving.value) {
       parenNode.value = null
     }
-    emit('on-node-mouseleave', e, data)
+    emit('on-node-mouseleave', e, node.$$data, node)
     return true
   }
   const contextmenu = ref(false)
   const menuX = ref(0)
   const menuY = ref(0)
-  const menuData = reactive({
-    data: {} as INode
-  })
-  function nodeContextmenu (e: MouseEvent, data: INode) {
+  const menuData = ref({} as INode)
+  function nodeContextmenu (e: MouseEvent, node: INode) {
     e.stopPropagation()
     e.preventDefault()
     contextmenu.value = true
     menuX.value = e.clientX
     menuY.value = e.clientY
-    menuData.data = data
+    menuData.value = node
   }
   const scale = ref(1)
   function zoomWheel (e: WheelEvent) {
@@ -114,39 +112,41 @@ export const useTree = (
     preventOutOfBounds(left.value, top.value)
   }
   let timer: any
-  function handleClick (e: MouseEvent, data: INode) {
+  function handleClick (e: MouseEvent, node: INode) {
     // 取消上次延时未执行的方法
     clearTimeout(timer)
     // 执行延时
     timer = setTimeout(() => {
       // 此处为单击事件要执行的代码
-      emit('on-node-click', e, data)
+      emit('on-node-click', e, node.$$data, node)
     }, props.clickDelay)
   }
-  function handleDblclick (e: MouseEvent, data: INode) {
+  function handleDblclick (e: MouseEvent, node: INode) {
     // 取消上次延时未执行的方法
     clearTimeout(timer)
     // 此处为单击事件要执行的代码
-    emit('on-node-dblclick', e, data)
+    emit('on-node-dblclick', e, node.$$data, node)
   }
-  function handleExpand (e: MouseEvent, data: INode) {
+  function handleExpand (e: MouseEvent, node: INode) {
     e.stopPropagation()
     const el = document.querySelector('.is-root') as HTMLElement
     if (el) {
       const left = el.offsetLeft
       const top = el.offsetTop
-      if ('expand' in data) {
-        data.expand = !data.expand
-        if (!data.expand && data.children) {
-          collapse(data.children)
+      const data = node.$$data
+      const { expand, children } = keys
+      if (expand in data) {
+        data[expand] = !data[expand]
+        if (!data[expand] && data[children]) {
+          collapse(data[children])
         }
       } else {
-        data.expand = true
+        data[expand] = true
       }
       nextTick(() => {
         autoDrag(el, left, top)
       })
-      emit('on-expand', e, data)
+      emit('on-expand', e, node.$$data, node)
     }
   }
   const keys = reactive(Object.assign({
@@ -157,9 +157,9 @@ export const useTree = (
     children: 'children'
   }, props.props))
 
-  function handleBlur (e: MouseEvent, data: INode) {
-    const { children, id, label } = keys
-    const childNodes = menuData.data[children] || []
+  function handleBlur (e: MouseEvent, node: INode) {
+    const { id, label } = keys
+    const childNodes = menuData.value.children || []
     for (let i = childNodes.length; i > 0; i--) {
       const item = childNodes[i - 1]
       if (item[id] === '' && item[label] === '') {
@@ -167,7 +167,8 @@ export const useTree = (
         break
       }
     }
-    emit('on-node-blur', e, data)
+    focusedId.value = null
+    emit('on-node-blur', e, node.$$data, node)
   }
   const fullscreen = ref(false)
   function handleFullscreen () {
@@ -192,11 +193,12 @@ export const useTree = (
     }
   }
   function collapse (list: Array<INode>) {
+    const { expand, children } = keys
     list.forEach((child) => {
-      if (child.expand) {
-        child.expand = false
+      if (child[expand]) {
+        child[expand] = false
       }
-      child.children && collapse(child.children)
+      child[children] && collapse(child[children])
     })
   }
   const expanded = ref(false)
@@ -209,21 +211,27 @@ export const useTree = (
       })
     }
   }
-  function toggleExpand (data: INode, val: boolean) {
+  function toggleExpand (data: INodeData, val: boolean) {
+    const { expand, children } = keys
     if (Array.isArray(data)) {
       data.forEach((item) => {
-        item.expand = val
-        if (item.children) {
-          toggleExpand(item.children, val)
+        item[expand] = val
+        if (item[children]) {
+          toggleExpand(item[children], val)
         }
       })
     } else {
-      data.expand = val
-      if (data.children) {
-        toggleExpand(data.children, val)
+      data[expand] = val
+      if (data[children]) {
+        toggleExpand(data[children], val)
       }
     }
   }
+  const focusedId = ref(null)
+  function nodeFocus (data: INodeData) {
+    focusedId.value = data[keys.id]
+  }
+
   const zoomStyle = computed(() => {
     return {
       width: `${100 / scale.value}%`,
@@ -243,7 +251,7 @@ export const useTree = (
   const fullTiltle = computed(() => {
     return expanded.value ? '收起全部节点' : '展开全部节点'
   })
-  const cloneData = reactive({ data: {} })
+  const cloneData = ref({})
   const nodeargs = computed(() => {
     const { cloneNodeDrag, onlyOneNode, data } = props
     return {
@@ -303,6 +311,7 @@ export const useTree = (
     contextmenu,
     menuData,
     cloneData,
+    focusedId,
     zoomWheel,
     onDrag,
     onDragStop,
@@ -316,6 +325,7 @@ export const useTree = (
     nodeContextmenu,
     handleBlur,
     handleClick,
+    nodeFocus,
     handleDblclick
   }
 }

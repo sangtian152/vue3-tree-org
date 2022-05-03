@@ -1,5 +1,5 @@
 import type { SetupContext } from 'vue';
-import type { INode, IRefs } from '@/utils/types';
+import type { INode, INodeData, IRefs } from '@/utils/types';
 import type { TreeEmits, TreeProps } from './tree';
 export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmits>, refs: IRefs) => {
     keys: {
@@ -46,15 +46,29 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
             nodeMoving: import("vue").Ref<boolean>;
             parenNode: {
                 value: {
-                    [x: string]: any;
+                    id: string | number;
+                    pid: string | number;
+                    label: string;
+                    expand: boolean;
+                    $$data: {
+                        [x: string]: any;
+                    };
+                    $$level: number;
+                    $$root?: boolean | undefined;
+                    $$focused?: boolean | undefined;
+                    hidden?: boolean | undefined;
+                    disabled?: boolean | undefined;
+                    moving?: boolean | undefined;
+                    focused?: boolean | undefined;
+                    style?: any;
+                    className?: string | undefined;
+                    children?: any[] | undefined;
                 } | null;
             };
             cloneNodeDrag: boolean;
             onlyOneNode: boolean;
             contextmenu: import("vue").Ref<boolean>;
-            cloneData: {
-                data: {};
-            };
+            cloneData: import("vue").Ref<{}>;
             data: Record<string, any>;
         };
         handleStart: Function | undefined;
@@ -68,14 +82,27 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
-    menuData: {
-        data: {
+    menuData: import("vue").Ref<{
+        id: string | number;
+        pid: string | number;
+        label: string;
+        expand: boolean;
+        $$data: {
             [x: string]: any;
         };
-    };
-    cloneData: {
-        data: {};
-    };
+        $$level: number;
+        $$root?: boolean | undefined;
+        $$focused?: boolean | undefined;
+        hidden?: boolean | undefined;
+        disabled?: boolean | undefined;
+        moving?: boolean | undefined;
+        focused?: boolean | undefined;
+        style?: any;
+        className?: string | undefined;
+        children?: any[] | undefined;
+    }>;
+    cloneData: import("vue").Ref<{}>;
+    focusedId: import("vue").Ref<null>;
     zoomWheel: (e: WheelEvent) => void;
     onDrag: (x: number, y: number) => void;
     onDragStop: (x: number, y: number) => void;
@@ -83,11 +110,12 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     handleFullscreen: () => void;
     zoomOrgchart: (zoom: number) => void;
     restoreOrgchart: () => void;
-    handleExpand: (e: MouseEvent, data: INode) => void;
-    nodeMouseenter: (e: MouseEvent, data: INode) => boolean;
-    nodeMouseleave: (e: MouseEvent, data: INode) => boolean;
-    nodeContextmenu: (e: MouseEvent, data: INode) => void;
-    handleBlur: (e: MouseEvent, data: INode) => void;
-    handleClick: (e: MouseEvent, data: INode) => void;
-    handleDblclick: (e: MouseEvent, data: INode) => void;
+    handleExpand: (e: MouseEvent, node: INode) => void;
+    nodeMouseenter: (e: MouseEvent, node: INode) => boolean;
+    nodeMouseleave: (e: MouseEvent, node: INode) => boolean;
+    nodeContextmenu: (e: MouseEvent, node: INode) => void;
+    handleBlur: (e: MouseEvent, node: INode) => void;
+    handleClick: (e: MouseEvent, node: INode) => void;
+    nodeFocus: (data: INodeData) => void;
+    handleDblclick: (e: MouseEvent, node: INode) => void;
 };

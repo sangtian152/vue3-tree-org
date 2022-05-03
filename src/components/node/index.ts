@@ -2,9 +2,9 @@
 import log from '@/utils/log'
 import drag from '@/directives/drag'
 import focus from '@/directives/focus'
-import { vShow, h, resolveDirective, withDirectives } from 'vue'
+import { vShow, h, reactive, resolveDirective, withDirectives } from 'vue'
 import type { DirectiveArguments } from 'vue'
-import type { INode } from '@/utils/types'
+import type { INode, INodeData } from '@/utils/types'
 
 const EVENTS = {
   onClick: 'onNodeClick',
@@ -14,12 +14,12 @@ const EVENTS = {
   onMouseleave: 'onNodeMouseleave'
 }
 
-function createListener (handler:any, data:INode) {
+function createListener (handler:any, node:INode) {
   if (typeof handler === 'function') {
     return function (e:MouseEvent) {
       const target = e.target as HTMLElement
       if (target.className.indexOf('org-tree-node-btn') > -1) return
-      handler(e, data)
+      handler(e, node)
     }
   }
 }
@@ -28,20 +28,37 @@ const isLeaf = (data:INode, prop:string) => {
   return !(Array.isArray(data[prop]) && data[prop].length > 0)
 }
 
+const data2node = (data:INodeData, level:number, context:any):INode => {
+  const { id, label, pid, expand, children } = context.attrs.props
+  let cloneData = {}
+  Object.keys(data).map(key => {
+    if(['hidden', 'disabled', 'className', 'style'].includes(key))
+    cloneData[key] = data[key]
+  })
+  return {
+    ...cloneData,
+    id: data[id],
+    label: data[label],
+    pid: data[pid],
+    expand: data[expand],
+    children: data[children],
+    $$level: level,
+    $$data: data,
+    $$focused: context.attrs.focused === data[id]
+  }
+}
 // 创建 node 节点
 export const renderNode = (h:any, data:INode, context:any, root:boolean):any => {
   const { attrs } = context
   const cls = ['tree-org-node']
   const childNodes = []
-  const defaultProps = attrs.props
-  const children = data[defaultProps.children]
-  // const show = resolveDirective('v-show')
-  if (data[defaultProps.expand] === undefined && data.$$level < attrs.defaultExpandLevel) {
-    data[defaultProps.expand] = true
+  const { expand, $$level, children, id } = data
+  if (expand === undefined && $$level < attrs.defaultExpandLevel) {
+    data.expand = true
   }
-  const isExpand = data[defaultProps.expand]
+  const isExpand = data.expand
   // 如果是叶子节点则追加leaf事件
-  if (isLeaf(data, defaultProps.children)) {
+  if (isLeaf(data, 'children')) {
     cls.push('is-leaf')
   } else if (attrs.collapsable && !isExpand) { // 追加是否展开class
     cls.push('collapsed')
@@ -52,81 +69,80 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
   // 渲染label块
   childNodes.push(renderLabel(h, data, context, root))
   if (!attrs.collapsable || isExpand) {
-    childNodes.push(renderChildren(h, children, context, data.$$level))
+    childNodes.push(renderChildren(h, children, context, $$level))
   }
   return withDirectives(h('div', {
     class: cls,
-    key: data[defaultProps.id]
+    key: id
   }, childNodes), [[vShow, !data.hidden]])
 }
 
 // 创建展开折叠按钮
-export const renderBtn = (h:any, data:INode, context:any) => {
+export const renderBtn = (h:any, node:INode, context:any) => {
   const { attrs } = context
   const expandHandler = attrs.onOnExpand
   const cls = ['tree-org-node__expand']
-  const defaultProps = attrs.props
-  if (data[defaultProps.expand]) {
+  if (node.expand) {
     cls.push('expanded')
   }
   const children = []
   if (context.slots.expand) {
-    children.push(context.slots.expand({ node: data }))
+    children.push(context.slots.expand({ node }))
   } else {
     children.push(h('span', { class: 'tree-org-node__expand-btn' }))
   }
   return h('span', {
     class: cls,
-    onClick: (e:MouseEvent) => { e.stopPropagation(); expandHandler && expandHandler(e, data) }
+    onClick: (e:MouseEvent) => { e.stopPropagation(); expandHandler && expandHandler(e, node) }
   }, children)
 }
 
 // 创建 label 节点
-export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
+export const renderLabel = (h:any, node:INode, context:any, root:boolean) => {
   const { attrs } = context
   const defaultProps = attrs.props
-  const label = data[defaultProps.label]
+  const { label } = node
   const renderContent = attrs.renderContent
   // const { directives } = context.data
 
   const childNodes = []
   if (context.slots.default) {
-    childNodes.push(context.slots.default({ node: data }))
+    childNodes.push(context.slots.default({ node }))
   } else if (typeof renderContent === 'function') {
     log.warning('scoped-slot header is easier to use. We recommend users to use scoped-slot header.')
-    const vnode = renderContent(h, data)
+    const vnode = renderContent(h, node)
     vnode && childNodes.push(vnode)
   } else {
     childNodes.push(label)
   }
-  if (attrs.collapsable && !isLeaf(data, defaultProps.children)) {
-    childNodes.push(renderBtn(h, data, context))
+  if (attrs.collapsable && !isLeaf(node, 'children')) {
+    childNodes.push(renderBtn(h, node, context))
   }
 
   const cls = ['tree-org-node__inner']
   let { labelStyle, labelClassName, selectedClassName, selectedKey } = attrs
   if (typeof labelClassName === 'function') {
-    labelClassName = labelClassName(data)
+    labelClassName = labelClassName(node)
   }
 
   labelClassName && cls.push(labelClassName)
-  data.className && cls.push(data.className)
+  node.className && cls.push(node.className)
   // add selected class and key from props
   if (typeof selectedClassName === 'function') {
-    selectedClassName = selectedClassName(data)
+    selectedClassName = selectedClassName(node)
   }
   if (selectedKey !== undefined) {
     selectedKey = Array.isArray(selectedKey) ? selectedKey : [selectedKey]
   }
-  selectedClassName && selectedKey && selectedKey.includes(data[defaultProps.id]) && cls.push(selectedClassName)
+  selectedClassName && selectedKey && selectedKey.includes(node[defaultProps.id]) && cls.push(selectedClassName)
   const nodeLabelClass = ['tree-org-node__content']
   if (root) {
     nodeLabelClass.push('is-root')
   }
-  if (!data[defaultProps.label]) {
+  if (!node.label) {
     nodeLabelClass.push('is-empty')
   }
-  if (data.focused) {
+  if (node.focused) {
     nodeLabelClass.push('is-edit')
   }
   // directives
@@ -140,7 +156,7 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
   const vNodedrag = resolveDirective('nodedrag')
   const cloneDirs = <DirectiveArguments>[]
   if (attrs.vNodedrag && vNodedrag && !root) {
-    cloneDirs.push([vNodedrag, Object.assign({ node: data }, attrs.vNodedrag), '', { l: true, t: true }])
+    cloneDirs.push([vNodedrag, Object.assign({ node: node }, attrs.vNodedrag), '', { l: true, t: true }])
   }
   // event handlers
   const NODEEVENTS = {}
@@ -149,7 +165,7 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
       const EVENT = EVENTS[EKEY]
       const handler = attrs[EVENT]
       if (handler) {
-        NODEEVENTS[EKEY] = createListener(handler, data)
+        NODEEVENTS[EKEY] = createListener(handler, node)
       }
     }
   }
@@ -157,23 +173,23 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
   const focusHandler = attrs.onNodeFocus
   const blurHandler = attrs.onNodeBlur
   const vFocus = resolveDirective('focus')
-  const directives = <DirectiveArguments>[[vShow, data.focused]]
+  const directives = <DirectiveArguments>[[vShow, node.$$focused]]
   if (vFocus) {
-    directives.push([vFocus, data.focused])
+    directives.push([vFocus, node.focused])
   }
   return h('div', {
     class: nodeLabelClass
   }, [withDirectives(h('div', {
     class: cls,
-    style: data.style ? data.style : labelStyle,
+    style: node.style ? node.style : labelStyle,
     ...NODEEVENTS
   }, childNodes), cloneDirs), withDirectives(h('textarea', {
     class: 'tree-org-node__textarea',
     placeholder: '请输入节点名称',
-    value: data[defaultProps.label],
-    onFocus: (e:MouseEvent) => focusHandler && focusHandler(e, data),
-    onInput: (event:InputEvent) => { data[defaultProps.label] = (<HTMLInputElement>event.target).value },
-    onBlur: (e:MouseEvent) => { data.focused = false; blurHandler && blurHandler(e, data) },
+    value: node.label,
+    onFocus: (e:MouseEvent) => focusHandler && focusHandler(e, node),
+    onInput: (event:InputEvent) => { node.$$data.label = (<HTMLInputElement>event.target).value },
+    onBlur: (e:MouseEvent) => { node.focused = false; blurHandler && blurHandler(e, node) },
     onClick: (e:MouseEvent) => e.stopPropagation()
   }), directives)])
 }
@@ -182,8 +198,9 @@ export const renderLabel = (h:any, data:INode, context:any, root:boolean) => {
 export const renderChildren = (h:any, list:any, context:any, level:number) => {
   if (Array.isArray(list) && list.length) {
     const children = list.map(item => {
-      item.$$level = level + 1
-      return renderNode(h, item, context, false)
+      // item.$$level = level + 1
+      const nodeData = data2node(item, level + 1, context)
+      return renderNode(h, nodeData, context, false)
     })
 
     return h('div', {
@@ -195,9 +212,9 @@ export const renderChildren = (h:any, list:any, context:any, level:number) => {
 
 export const TreeOrgNode = (props: any, context: any) => {
   if (!props.data) return ''
-  props.data.root = !props.isClone
-  props.data.$$level = 0
-  return renderNode(h, props.data, context, true)
+  const nodeData = data2node(props.data, 0, context)
+  nodeData.$$root = !props.isClone
+  return renderNode(h, nodeData, context, true)
 }
 TreeOrgNode.directives = {
   // 自定义指令

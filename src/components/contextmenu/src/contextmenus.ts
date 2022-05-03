@@ -1,9 +1,8 @@
 import { buildProps, definePropType } from '@/utils/props'
 import { isObject, isString } from '@/utils/utils'
-import { UPDATE_MODEL_EVENT } from '@/utils/constants'
 
 import type { ExtractPropTypes } from 'vue'
-import type { INode, IKeysProps, IMenu } from '@/utils/types'
+import type { INodeData, IKeysProps, IMenu, INode } from '@/utils/types'
 
 export const contextmenuProps = buildProps({
   modelValue: {
@@ -15,7 +14,7 @@ export const contextmenuProps = buildProps({
     required: true
   },
   node: {
-    type: Object,
+    type: definePropType<INode>(Object),
     required: true
   },
   props: {
@@ -36,9 +35,10 @@ export const contextmenuProps = buildProps({
 export type ContextmenuProps = ExtractPropTypes<typeof contextmenuProps>
 
 export const contextmenuEmits = {
-  onNodeDelete: (data: INode) => isObject(data),
+  onNodeDelete: (data:INodeData, node:INode) => isObject(data) && isObject(node),
   onNodeCopy: (str: string) => isString(str),
-  contextmenu: (arg:{node: INode, command:string|null}) => isObject(arg),
+  contextmenu: (arg:{node: INode, data: INodeData, command:string|null}) => isObject(arg),
+  onNodeFocus: (data:INodeData) => isObject(data),
   opened: () => true,
   closed: () => true,
   'update:modelValue': (value: boolean):boolean => typeof value === 'boolean'
