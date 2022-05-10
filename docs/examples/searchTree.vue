@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 400px;">
+    <div class="tree-wrap" style="height: 400px;">
         <div class="search-box">
             <span>搜索：</span>
             <input type="text" v-model="keyword" placeholder="请输入搜索内容" @keydown.enter="filter" />
@@ -16,6 +16,7 @@
             :default-expand-level="1"
             :filter-node-method="filterNodeMethod"
             :clone-node-drag="cloneNodeDrag"
+            @on-restore="restore"
             @on-contextmenu="onMenus"
             @on-node-click="onNodeClick"
         />
@@ -64,6 +65,9 @@ export default {
     onMenus({ node, command }) {
       console.log(node, command);
     },
+    restore() {
+        console.log('restore')
+    },
     filter(){
         this.$refs.tree.filter(this.keyword)
     },
@@ -82,8 +86,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.tree-wrap {
+    position: relative;
+    padding-top: 52px;
+}
 .search-box {
-    padding: 10px 15px;
+    padding: 8px 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
     input {
         width: 200px;
         height: 32px;

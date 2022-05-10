@@ -110,6 +110,7 @@ export type TreeProps = ExtractPropTypes<typeof treeProps>
 export const treeEmits = {
   'on-drag': ({ x, y }: IMousePosition) => isNumber(x) && isNumber(y),
   'on-drag-stop': ({ x, y }: IMousePosition) => isNumber(x) && isNumber(y),
+  'on-restore': () => true,
   'on-zoom': (val: number) => isNumber(val),
   'on-expand': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
   'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data),

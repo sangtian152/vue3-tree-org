@@ -53,6 +53,7 @@ export declare type TreeProps = ExtractPropTypes<typeof treeProps>;
 export declare const treeEmits: {
     'on-drag': ({ x, y }: IMousePosition) => boolean;
     'on-drag-stop': ({ x, y }: IMousePosition) => boolean;
+    'on-restore': () => boolean;
     'on-zoom': (val: number) => boolean;
     'on-expand': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => boolean;

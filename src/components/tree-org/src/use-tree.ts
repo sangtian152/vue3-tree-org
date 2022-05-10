@@ -101,6 +101,7 @@ export const useTree = (
     scale.value = 1
     left.value = 0
     top.value = 0
+    emit('on-restore')
   }
   function autoDrag (el: HTMLElement, lf: number, tp: number) {
     // 计算偏移量，保持根节点相对页面位置不变
