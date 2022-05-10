@@ -22,6 +22,7 @@ export interface INode {
     $$level: number,
     $$root?: boolean,
     $$focused?:boolean,
+    isLeaf?: boolean,
     hidden?: boolean,
     disabled?: boolean,
     moving?: boolean,
@@ -30,7 +31,6 @@ export interface INode {
     className?: string,
     children?: INode[],
 }
-
 
 export type IBounds = Record<string, number>
 

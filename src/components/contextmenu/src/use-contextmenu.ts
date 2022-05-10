@@ -3,7 +3,7 @@ import { ref, nextTick, computed, onMounted, onUnmounted } from 'vue'
 import { UPDATE_MODEL_EVENT } from '@/utils/constants'
 import type { SetupContext } from 'vue'
 import type { ContextmenuEmits, ContextmenuProps } from './contextmenus'
-import type { IRefs, IKeysObject, INode, INodeData } from '@/utils/types'
+import type { IRefs, IKeysObject, INodeData } from '@/utils/types'
 export const useContextmenu = (
   defaultProps: ContextmenuProps,
   { emit }: SetupContext<ContextmenuEmits>,
@@ -120,7 +120,7 @@ export const useContextmenu = (
       nodeEdit(node.$$data)
       return
     }
-    // node.focused = true
+    node.$$focused = true
     emit('onNodeFocus', node.$$data)
   }
   function handleClose (e: MouseEvent) {

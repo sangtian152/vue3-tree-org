@@ -133,21 +133,39 @@ export const useTree = (
     if (el) {
       const left = el.offsetLeft
       const top = el.offsetTop
-      const data = node.$$data
-      const { expand, children } = keys
-      if (expand in data) {
-        data[expand] = !data[expand]
-        if (!data[expand] && data[children]) {
-          collapse(data[children])
-        }
-      } else {
-        data[expand] = true
+      node.expand = !node.expand
+      if (!node.expand && node.children) {
+        collapse(node.children)
       }
       nextTick(() => {
         autoDrag(el, left, top)
       })
       emit('on-expand', e, node.$$data, node)
     }
+  }
+  function filter (value: any) {
+    const filterNodeMethod = props.filterNodeMethod
+    if (!filterNodeMethod) throw new Error('[Tree] filterNodeMethod is required when filter')
+    const traverse = function (node: INodeData) {
+      const childNodes = (node.children as Array<INodeData>) || []
+
+      childNodes.forEach((child) => {
+        child.$$hidden = !filterNodeMethod.call(child, value, child)
+        traverse(child)
+      })
+
+      if (node.$$hidden && childNodes.length) {
+        let unHidden = true
+        unHidden = childNodes.some(child => !child.$$hidden)
+
+        node.$$hidden = !unHidden
+      }
+      if (!value) return
+
+      if (!node.$$hidden && node.children) node.expand = true
+    }
+
+    traverse(treeData.value)
   }
   const keys = reactive(Object.assign({
     id: 'id',
@@ -157,7 +175,7 @@ export const useTree = (
     children: 'children'
   }, props.props))
 
-  function handleBlur (e: MouseEvent, node: INode) {
+  function handleBlur (e: MouseEvent, data: INodeData, node: INode) {
     const { id, label } = keys
     const childNodes = menuData.value.children || []
     for (let i = childNodes.length; i > 0; i--) {
@@ -167,8 +185,7 @@ export const useTree = (
         break
       }
     }
-    focusedId.value = null
-    emit('on-node-blur', e, node.$$data, node)
+    emit('on-node-blur', e, data, node)
   }
   const fullscreen = ref(false)
   function handleFullscreen () {
@@ -204,34 +221,32 @@ export const useTree = (
   const expanded = ref(false)
   function expandChange () {
     expanded.value = !expanded.value
-    toggleExpand(props.data, expanded.value)
+    toggleExpand(treeData.value, expanded.value)
     if (!expanded.value) {
       nextTick(() => {
         onDragStop(left.value, top.value)
       })
     }
   }
-  function toggleExpand (data: INodeData, val: boolean) {
-    const { expand, children } = keys
+  function toggleExpand (data: INode | Array<INode>, val: boolean) {
     if (Array.isArray(data)) {
       data.forEach((item) => {
-        item[expand] = val
-        if (item[children]) {
-          toggleExpand(item[children], val)
+        item.expand = val
+        if (item.children) {
+          toggleExpand(item.children, val)
         }
       })
     } else {
-      data[expand] = val
-      if (data[children]) {
-        toggleExpand(data[children], val)
+      data.expand = val
+      if (data.children) {
+        toggleExpand(data.children, val)
       }
     }
   }
-  const focusedId = ref(null)
-  function nodeFocus (data: INodeData) {
-    focusedId.value = data[keys.id]
-  }
 
+  function setData (data: INodeData) {
+    treeData.value = initNodes(data)
+  }
   const zoomStyle = computed(() => {
     return {
       width: `${100 / scale.value}%`,
@@ -268,10 +283,39 @@ export const useTree = (
         onDragStop(left.value, top.value)
       })
     })
-  const treeData = ref(props.data)
+  function initNodes (nodeData: INodeData) {
+    const data2node = (data: INodeData, level: number): INode => {
+      const { id, label, pid, expand, children } = keys
+      const cloneData = {}
+      Object.keys(data).map(key => {
+        if (['hidden', 'disabled', 'className', 'style'].includes(key)) {
+          cloneData[key] = data[key]
+        }
+      })
+      const childNodes = (data[children] as Array<INodeData>)
+      const childLevel = level + 1
+      return {
+        ...cloneData,
+        id: data[id],
+        label: data[label],
+        pid: data[pid],
+        expand: data[expand],
+        children: childNodes ? childNodes.map(child => {
+          return data2node(child, childLevel)
+        }) : undefined,
+        $$level: level,
+        $$data: data,
+        $$focused: data.focused || false
+      }
+    }
+    return data2node(nodeData, 0)
+  }
+  const treeData = ref(initNodes(props.data))
   watch(() => props.data,
     () => {
-      treeData.value = props.data
+      setData(props.data)
+    }, {
+      deep: true
     })
   const tools = reactive({
     visible: true,
@@ -311,7 +355,8 @@ export const useTree = (
     contextmenu,
     menuData,
     cloneData,
-    focusedId,
+    filter,
+    setData,
     zoomWheel,
     onDrag,
     onDragStop,
@@ -325,7 +370,6 @@ export const useTree = (
     nodeContextmenu,
     handleBlur,
     handleClick,
-    nodeFocus,
     handleDblclick
   }
 }

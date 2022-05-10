@@ -47,6 +47,7 @@ export declare const treeProps: {
     readonly nodeDelete: FunctionConstructor;
     readonly nodeEdit: FunctionConstructor;
     readonly nodeCopy: FunctionConstructor;
+    readonly filterNodeMethod: FunctionConstructor;
 };
 export declare type TreeProps = ExtractPropTypes<typeof treeProps>;
 export declare const treeEmits: {
@@ -54,7 +55,7 @@ export declare const treeEmits: {
     'on-drag-stop': ({ x, y }: IMousePosition) => boolean;
     'on-zoom': (val: number) => boolean;
     'on-expand': (e: MouseEvent, data: INodeData, node: INode) => boolean;
-    'on-node-blur': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => boolean;
     'on-node-click': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-node-dblclick': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-node-mouseenter': (e: MouseEvent, data: INodeData, node: INode) => boolean;
@@ -62,6 +63,6 @@ export declare const treeEmits: {
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
     'on-node-delete': (node: INode) => boolean;
-    'on-node-focus': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => boolean;
 };
 export declare type TreeEmits = typeof treeEmits;

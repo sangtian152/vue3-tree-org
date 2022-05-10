@@ -2,9 +2,9 @@
 import log from '@/utils/log'
 import drag from '@/directives/drag'
 import focus from '@/directives/focus'
-import { vShow, h, reactive, resolveDirective, withDirectives } from 'vue'
+import { vShow, h, resolveDirective, withDirectives } from 'vue'
 import type { DirectiveArguments } from 'vue'
-import type { INode, INodeData } from '@/utils/types'
+import type { INode } from '@/utils/types'
 
 const EVENTS = {
   onClick: 'onNodeClick',
@@ -25,30 +25,11 @@ function createListener (handler:any, node:INode) {
 }
 // 判断是否叶子节点
 const isLeaf = (data:INode, prop:string) => {
-  return !(Array.isArray(data[prop]) && data[prop].length > 0)
+  return !(Array.isArray(data[prop]) && data[prop].length > 0) || data.isLeaf
 }
 
-const data2node = (data:INodeData, level:number, context:any):INode => {
-  const { id, label, pid, expand, children } = context.attrs.props
-  let cloneData = {}
-  Object.keys(data).map(key => {
-    if(['hidden', 'disabled', 'className', 'style'].includes(key))
-    cloneData[key] = data[key]
-  })
-  return {
-    ...cloneData,
-    id: data[id],
-    label: data[label],
-    pid: data[pid],
-    expand: data[expand],
-    children: data[children],
-    $$level: level,
-    $$data: data,
-    $$focused: context.attrs.focused === data[id]
-  }
-}
 // 创建 node 节点
-export const renderNode = (h:any, data:INode, context:any, root:boolean):any => {
+export const renderNode = (h:any, data:INode, context:any):any => {
   const { attrs } = context
   const cls = ['tree-org-node']
   const childNodes = []
@@ -67,9 +48,9 @@ export const renderNode = (h:any, data:INode, context:any, root:boolean):any => 
     cls.push('tree-org-node__moving')
   }
   // 渲染label块
-  childNodes.push(renderLabel(h, data, context, root))
+  childNodes.push(renderLabel(h, data, context))
   if (!attrs.collapsable || isExpand) {
-    childNodes.push(renderChildren(h, children, context, $$level))
+    childNodes.push(renderChildren(h, children, context))
   }
   return withDirectives(h('div', {
     class: cls,
@@ -98,13 +79,12 @@ export const renderBtn = (h:any, node:INode, context:any) => {
 }
 
 // 创建 label 节点
-export const renderLabel = (h:any, node:INode, context:any, root:boolean) => {
+export const renderLabel = (h:any, node:INode, context:any) => {
   const { attrs } = context
   const defaultProps = attrs.props
-  const { label } = node
   const renderContent = attrs.renderContent
   // const { directives } = context.data
-
+  const { label } = node
   const childNodes = []
   if (context.slots.default) {
     childNodes.push(context.slots.default({ node }))
@@ -134,28 +114,20 @@ export const renderLabel = (h:any, node:INode, context:any, root:boolean) => {
   if (selectedKey !== undefined) {
     selectedKey = Array.isArray(selectedKey) ? selectedKey : [selectedKey]
   }
-  selectedClassName && selectedKey && selectedKey.includes(node[defaultProps.id]) && cls.push(selectedClassName)
+  selectedClassName && selectedKey && selectedKey.includes(node.id) && cls.push(selectedClassName)
   const nodeLabelClass = ['tree-org-node__content']
-  if (root) {
+  if (node.$$root) {
     nodeLabelClass.push('is-root')
   }
   if (!node.label) {
     nodeLabelClass.push('is-empty')
   }
-  if (node.focused) {
+  if (node.$$focused) {
     nodeLabelClass.push('is-edit')
   }
-  // directives
-  // let cloneDirs
-  // if (Array.isArray(directives)) {
-  //   cloneDirs = directives.map(item => {
-  //     const newValue = Object.assign({ node: data }, item.value)
-  //     return Object.assign({ ...item }, { value: newValue })
-  //   })
-  // }
   const vNodedrag = resolveDirective('nodedrag')
   const cloneDirs = <DirectiveArguments>[]
-  if (attrs.vNodedrag && vNodedrag && !root) {
+  if (attrs.vNodedrag && vNodedrag && !node.$$root) {
     cloneDirs.push([vNodedrag, Object.assign({ node: node }, attrs.vNodedrag), '', { l: true, t: true }])
   }
   // event handlers
@@ -175,7 +147,7 @@ export const renderLabel = (h:any, node:INode, context:any, root:boolean) => {
   const vFocus = resolveDirective('focus')
   const directives = <DirectiveArguments>[[vShow, node.$$focused]]
   if (vFocus) {
-    directives.push([vFocus, node.focused])
+    directives.push([vFocus, node.$$focused])
   }
   return h('div', {
     class: nodeLabelClass
@@ -187,20 +159,23 @@ export const renderLabel = (h:any, node:INode, context:any, root:boolean) => {
     class: 'tree-org-node__textarea',
     placeholder: '请输入节点名称',
     value: node.label,
-    onFocus: (e:MouseEvent) => focusHandler && focusHandler(e, node),
-    onInput: (event:InputEvent) => { node.$$data.label = (<HTMLInputElement>event.target).value },
-    onBlur: (e:MouseEvent) => { node.focused = false; blurHandler && blurHandler(e, node) },
+    onFocus: (e:FocusEvent) => { focusHandler && focusHandler(e, node.$$data, node) },
+    onInput: (event:InputEvent) => { node.label = (<HTMLInputElement>event.target).value },
+    onBlur: (e:FocusEvent) => {
+      if (node.$$data.focused !== undefined) node.$$data.focused = false
+      node.$$data[defaultProps.label] = (<HTMLInputElement>e.target).value
+      node.$$focused = false
+      blurHandler && blurHandler(e, node.$$data, node)
+    },
     onClick: (e:MouseEvent) => e.stopPropagation()
   }), directives)])
 }
 
 // 创建 node 子节点
-export const renderChildren = (h:any, list:any, context:any, level:number) => {
+export const renderChildren = (h:any, list:any, context:any) => {
   if (Array.isArray(list) && list.length) {
-    const children = list.map(item => {
-      // item.$$level = level + 1
-      const nodeData = data2node(item, level + 1, context)
-      return renderNode(h, nodeData, context, false)
+    const children = list.filter(item => !item.$$hidden).map(item => {
+      return renderNode(h, item, context)
     })
 
     return h('div', {
@@ -212,9 +187,8 @@ export const renderChildren = (h:any, list:any, context:any, level:number) => {
 
 export const TreeOrgNode = (props: any, context: any) => {
   if (!props.data) return ''
-  const nodeData = data2node(props.data, 0, context)
-  nodeData.$$root = !props.isClone
-  return renderNode(h, nodeData, context, true)
+  props.data.$$root = !props.isClone
+  return renderNode(h, props.data, context)
 }
 TreeOrgNode.directives = {
   // 自定义指令

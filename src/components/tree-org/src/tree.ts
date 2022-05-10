@@ -101,25 +101,26 @@ export const treeProps = buildProps({
   nodeAdd: Function,
   nodeDelete: Function,
   nodeEdit: Function,
-  nodeCopy: Function
+  nodeCopy: Function,
+  filterNodeMethod: Function
 } as const)
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
 
 export const treeEmits = {
-  'on-drag': ({ x, y }:IMousePosition) => isNumber(x) && isNumber(y),
-  'on-drag-stop': ({ x, y }:IMousePosition) => isNumber(x) && isNumber(y),
-  'on-zoom': (val:number) => isNumber(val),
-  'on-expand': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
-  'on-node-blur': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data),
-  'on-node-click': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data),
-  'on-node-dblclick': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data),
-  'on-node-mouseenter': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data),
-  'on-node-mouseleave': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data),
+  'on-drag': ({ x, y }: IMousePosition) => isNumber(x) && isNumber(y),
+  'on-drag-stop': ({ x, y }: IMousePosition) => isNumber(x) && isNumber(y),
+  'on-zoom': (val: number) => isNumber(val),
+  'on-expand': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
+  'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data),
+  'on-node-click': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
+  'on-node-dblclick': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
+  'on-node-mouseenter': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
+  'on-node-mouseleave': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
   'on-contextmenu': (data: any) => isObject(data),
   'on-node-copy': (str: string) => isString(str),
   'on-node-delete': (node: INode) => isObject(node),
-  'on-node-focus': (e:MouseEvent, data:INodeData, node:INode) => e instanceof MouseEvent && isObject(node)  && isObject(data)
+  'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data)
 
 }
 export type TreeEmits = typeof treeEmits

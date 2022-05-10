@@ -56,6 +56,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
                     $$level: number;
                     $$root?: boolean | undefined;
                     $$focused?: boolean | undefined;
+                    isLeaf?: boolean | undefined;
                     hidden?: boolean | undefined;
                     disabled?: boolean | undefined;
                     moving?: boolean | undefined;
@@ -78,7 +79,24 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     expanded: import("vue").Ref<boolean>;
     fullscreen: import("vue").Ref<boolean>;
     treeData: import("vue").Ref<{
-        [x: string]: any;
+        id: string | number;
+        pid: string | number;
+        label: string;
+        expand: boolean;
+        $$data: {
+            [x: string]: any;
+        };
+        $$level: number;
+        $$root?: boolean | undefined;
+        $$focused?: boolean | undefined;
+        isLeaf?: boolean | undefined;
+        hidden?: boolean | undefined;
+        disabled?: boolean | undefined;
+        moving?: boolean | undefined;
+        focused?: boolean | undefined;
+        style?: any;
+        className?: string | undefined;
+        children?: any[] | undefined;
     }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
@@ -93,6 +111,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         $$level: number;
         $$root?: boolean | undefined;
         $$focused?: boolean | undefined;
+        isLeaf?: boolean | undefined;
         hidden?: boolean | undefined;
         disabled?: boolean | undefined;
         moving?: boolean | undefined;
@@ -102,7 +121,8 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         children?: any[] | undefined;
     }>;
     cloneData: import("vue").Ref<{}>;
-    focusedId: import("vue").Ref<null>;
+    filter: (value: any) => void;
+    setData: (data: INodeData) => void;
     zoomWheel: (e: WheelEvent) => void;
     onDrag: (x: number, y: number) => void;
     onDragStop: (x: number, y: number) => void;
@@ -114,8 +134,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     nodeMouseenter: (e: MouseEvent, node: INode) => boolean;
     nodeMouseleave: (e: MouseEvent, node: INode) => boolean;
     nodeContextmenu: (e: MouseEvent, node: INode) => void;
-    handleBlur: (e: MouseEvent, node: INode) => void;
+    handleBlur: (e: MouseEvent, data: INodeData, node: INode) => void;
     handleClick: (e: MouseEvent, node: INode) => void;
-    nodeFocus: (data: INodeData) => void;
     handleDblclick: (e: MouseEvent, node: INode) => void;
 };

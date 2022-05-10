@@ -32,7 +32,6 @@
             :selectedClassName="selectedClassName"
             :labelClassName="labelClassName"
             :vNodedrag="nodeargs"
-            :focused="focusedId"
             @on-expand="handleExpand"
             @node-click="handleClick"
             @node-dblclick="handleDblclick"
@@ -40,8 +39,8 @@
             @node-mouseleave="nodeMouseleave"
             @node-contextmenu="nodeContextmenu"
             @node-focus="
-              (e, data) => {
-                $emit('on-node-focus', e, data);
+              (e, data, node) => {
+                $emit('on-node-focus', e, data, node);
               }
             "
             @node-blur="handleBlur"
@@ -113,7 +112,6 @@
           $emit('on-contextmenu', arg);
         }
       "
-      @on-node-focus="nodeFocus"
       @on-node-copy="
         (txt) => {
           $emit('on-node-copy', txt);

@@ -32,6 +32,12 @@ export const data = {
     },
     {
       "level": 3,
+      "title": "Methods",
+      "slug": "methods",
+      "children": []
+    },
+    {
+      "level": 3,
       "title": "Slot",
       "slug": "slot",
       "children": []
