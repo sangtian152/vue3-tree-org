@@ -199,7 +199,7 @@
     float: none;
     padding-top: 0;
     padding-left: 20px;
-
+    
     &.is-leaf, &.collapsed {
       padding-top: 10px;
       padding-bottom: 10px;
@@ -240,6 +240,7 @@
   .tree-org-node__content {
     display: table-cell;
     vertical-align: middle;
+    padding: 5px 0;
   }
 
   &.collapsable .tree-org-node.collapsed {
@@ -271,6 +272,7 @@
 
   .tree-org-node__children {
     display: table-cell;
+    vertical-align: middle;
     padding-top: 0;
     padding-left: 20px;
 
