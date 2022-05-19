@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from 'vue'
 export default defineComponent({
   props: {
     scale: String,
@@ -77,15 +77,31 @@ export default defineComponent({
         emit('onRestore')
       }
     }
-    function handleFullscreen () {
+    function handleFullscreen (e) {
       fullscreen.value = !fullscreen.value
-      emit('onFullscreen')
+      emit('onFullscreen', e)
+    }
+    function isFullScreen () {
+      return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
+    }
+    function onResize () {
+      // 如果当前非全屏，但是 fullscreen 为true，说明是esc退出全屏
+      if (!isFullScreen() && fullscreen.value) {
+        // 全屏下按键esc后要执行的动作
+        handleFullscreen('esc')
+      }
     }
     const expandTitle = computed(() => {
       return expanded.value ? '全部收起' : '全部展开'
     })
     const fullTiltle = computed(() => {
       return fullscreen.value ? '退出全屏' : '全屏'
+    })
+    onMounted(() => {
+      window.addEventListener('resize', onResize)
+    })
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', onResize)
     })
     return {
       expanded,

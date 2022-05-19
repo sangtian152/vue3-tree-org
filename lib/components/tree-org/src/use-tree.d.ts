@@ -127,7 +127,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     onDrag: (x: number, y: number) => void;
     onDragStop: (x: number, y: number) => void;
     expandChange: () => void;
-    handleFullscreen: () => void;
+    handleFullscreen: (e: String) => void;
     zoomOrgchart: (zoom: number) => void;
     restoreOrgchart: () => void;
     handleExpand: (e: MouseEvent, node: INode) => void;

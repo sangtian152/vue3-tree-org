@@ -189,8 +189,11 @@ export const useTree = (
     emit('on-node-blur', e, data, node)
   }
   const fullscreen = ref(false)
-  function handleFullscreen () {
+  function handleFullscreen (e:String) {
     fullscreen.value = !fullscreen.value
+    if (e === 'esc') {
+      return
+    }
     if (fullscreen.value) {
       launchIntoFullscreen()
     } else {
