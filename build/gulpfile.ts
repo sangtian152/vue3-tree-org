@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { src, dest, series } from 'gulp';
+import { src, dest, series, task } from 'gulp';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import rename from "gulp-rename";
@@ -20,6 +20,11 @@ function moveDir() {
     });
   })
 }
+function copyIcon() {
+  const sourcePath = resolvePath('src/styles/iconfont/*')
+  const targetPath = resolvePath('lib/iconfont')
+  return src(sourcePath).pipe(dest(targetPath))
+}
 // 构建scss
 function buildscss(){
   const sass = gulpSass(dartSass)
@@ -30,5 +35,5 @@ function buildscss(){
     .pipe(rename('vue3-tree-org.css'))
     .pipe(dest(targetPath))
 };
-const build = series(buildFull, buildscss, moveDir)
+const build = series(buildFull, buildscss, copyIcon, moveDir)
 export default build

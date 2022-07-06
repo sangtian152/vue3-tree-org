@@ -45,14 +45,14 @@
             "
             @node-blur="handleBlur"
           >
-          <template v-slot:default="{node}">
+          <template v-if="defaultSlot" v-slot:default="{node}">
             <slot :node="node">
               <div class="tree-org-node__text">
                 <span>{{ node.label }}</span>
               </div>
             </slot>
           </template>
-          <template v-slot:expand="{node}">
+          <template v-if="expandSlot" v-slot:expand="{node}">
             <slot name="expand" :node="node">
               <span class="tree-org-node__expand-btn"></span>
             </slot>
@@ -80,14 +80,14 @@
       :render-content="renderContent"
       :label-class-name="labelClassName"
     >
-      <template v-slot:default="{node}">
+      <template v-if="defaultSlot" v-slot:default="{node}">
         <slot :node="node">
           <div class="tree-org-node__text">
             <span>{{ node[keys.label] }}</span>
           </div>
         </slot>
       </template>
-      <template v-slot:expand="{node}">
+      <template v-if="expandSlot" v-slot:expand="{node}">
         <slot name="expand" :node="node">
           <span class="tree-org-node__expand-btn"></span>
         </slot>
@@ -151,6 +151,8 @@ export default defineComponent({
   props: treeProps,
   emits: treeEmits,
   setup (props, ctx) {
+    const defaultSlot = !!ctx.slots.default
+    const expandSlot = !!ctx.slots.expand
     const eleRef = ref<HTMLElement>()
     const treeRef = ref<HTMLElement>()
     const zoomRef = ref<HTMLElement>()
@@ -159,6 +161,8 @@ export default defineComponent({
       eleRef,
       treeRef,
       zoomRef,
+      defaultSlot,
+      expandSlot,
       ...treeOrg
     }
   }

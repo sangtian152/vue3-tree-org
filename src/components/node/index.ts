@@ -93,7 +93,9 @@ export const renderLabel = (h:any, node:INode, context:any) => {
     const vnode = renderContent(h, node)
     vnode && childNodes.push(vnode)
   } else {
-    childNodes.push(label)
+    childNodes.push(h('div', {
+      class: 'tree-org-node__text'
+    }, label))
   }
   if (attrs.collapsable && !isLeaf(node, 'children')) {
     childNodes.push(renderBtn(h, node, context))

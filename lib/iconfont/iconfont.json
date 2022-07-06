@@ -1,0 +1,58 @@
+{
+  "id": "2201426",
+  "name": "zm-tree-org",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4503659",
+      "name": "copy",
+      "font_class": "copy",
+      "unicode": "e6c0",
+      "unicode_decimal": 59072
+    },
+    {
+      "icon_id": "17575467",
+      "name": "code",
+      "font_class": "code",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "549603",
+      "name": "question",
+      "font_class": "question",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "18203827",
+      "name": "fullscreen",
+      "font_class": "fullscreen",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "18203828",
+      "name": "unfullscreen",
+      "font_class": "unfullscreen",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "18203743",
+      "name": "collapse",
+      "font_class": "collapse",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "18203744",
+      "name": "expand",
+      "font_class": "expand",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    }
+  ]
+}

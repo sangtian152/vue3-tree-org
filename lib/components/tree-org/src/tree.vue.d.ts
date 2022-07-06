@@ -41,6 +41,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly nodeDelete: FunctionConstructor;
     readonly nodeEdit: FunctionConstructor;
     readonly nodeCopy: FunctionConstructor;
+    readonly filterNodeMethod: FunctionConstructor;
 }, {
     keys: {
         id: string;
@@ -86,15 +87,31 @@ declare const _default: import("vue").DefineComponent<{
             nodeMoving: import("vue").Ref<boolean>;
             parenNode: {
                 value: {
-                    [x: string]: any;
+                    id: string | number;
+                    pid: string | number;
+                    label: string;
+                    expand: boolean;
+                    $$data: {
+                        [x: string]: any;
+                    };
+                    $$level: number;
+                    $$root?: boolean | undefined;
+                    $$focused?: boolean | undefined;
+                    isLeaf?: boolean | undefined;
+                    hidden?: boolean | undefined;
+                    disabled?: boolean | undefined;
+                    moving?: boolean | undefined;
+                    focused?: boolean | undefined;
+                    style?: any;
+                    className?: string | undefined;
+                    children?: any[] | undefined;
                 } | null;
             };
             cloneNodeDrag: boolean;
             onlyOneNode: boolean;
             contextmenu: import("vue").Ref<boolean>;
-            cloneData: {
-                data: {};
-            };
+            cloneData: import("vue").Ref<{}>;
+            data: Record<string, any>;
         };
         handleStart: Function | undefined;
         handleMove: Function | undefined;
@@ -103,49 +120,84 @@ declare const _default: import("vue").DefineComponent<{
     expanded: import("vue").Ref<boolean>;
     fullscreen: import("vue").Ref<boolean>;
     treeData: import("vue").Ref<{
-        [x: string]: any;
+        id: string | number;
+        pid: string | number;
+        label: string;
+        expand: boolean;
+        $$data: {
+            [x: string]: any;
+        };
+        $$level: number;
+        $$root?: boolean | undefined;
+        $$focused?: boolean | undefined;
+        isLeaf?: boolean | undefined;
+        hidden?: boolean | undefined;
+        disabled?: boolean | undefined;
+        moving?: boolean | undefined;
+        focused?: boolean | undefined;
+        style?: any;
+        className?: string | undefined;
+        children?: any[] | undefined;
     }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
-    menuData: {
-        data: {
+    menuData: import("vue").Ref<{
+        id: string | number;
+        pid: string | number;
+        label: string;
+        expand: boolean;
+        $$data: {
             [x: string]: any;
         };
-    };
-    cloneData: {
-        data: {};
-    };
+        $$level: number;
+        $$root?: boolean | undefined;
+        $$focused?: boolean | undefined;
+        isLeaf?: boolean | undefined;
+        hidden?: boolean | undefined;
+        disabled?: boolean | undefined;
+        moving?: boolean | undefined;
+        focused?: boolean | undefined;
+        style?: any;
+        className?: string | undefined;
+        children?: any[] | undefined;
+    }>;
+    cloneData: import("vue").Ref<{}>;
+    filter: (value: any) => void;
+    setData: (data: Record<string, any>) => void;
     zoomWheel: (e: WheelEvent) => void;
     onDrag: (x: number, y: number) => void;
     onDragStop: (x: number, y: number) => void;
     expandChange: () => void;
-    handleFullscreen: () => void;
+    handleFullscreen: (e: string) => void;
     zoomOrgchart: (zoom: number) => void;
     restoreOrgchart: () => void;
-    handleExpand: (e: MouseEvent, data: Record<string, any>) => void;
-    nodeMouseenter: (e: MouseEvent, data: Record<string, any>) => boolean;
-    nodeMouseleave: (e: MouseEvent, data: Record<string, any>) => boolean;
-    nodeContextmenu: (e: MouseEvent, data: Record<string, any>) => void;
-    handleBlur: (e: MouseEvent, data: Record<string, any>) => void;
-    handleClick: (e: MouseEvent, data: Record<string, any>) => void;
-    handleDblclick: (e: MouseEvent, data: Record<string, any>) => void;
+    handleExpand: (e: MouseEvent, node: import("../../../utils/types").INode) => void;
+    nodeMouseenter: (e: MouseEvent, node: import("../../../utils/types").INode) => boolean;
+    nodeMouseleave: (e: MouseEvent, node: import("../../../utils/types").INode) => boolean;
+    nodeContextmenu: (e: MouseEvent, node: import("../../../utils/types").INode) => void;
+    handleBlur: (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => void;
+    handleClick: (e: MouseEvent, node: import("../../../utils/types").INode) => void;
+    handleDblclick: (e: MouseEvent, node: import("../../../utils/types").INode) => void;
     eleRef: import("vue").Ref<HTMLElement | undefined>;
     treeRef: import("vue").Ref<HTMLElement | undefined>;
     zoomRef: import("vue").Ref<HTMLElement | undefined>;
+    defaultSlot: boolean;
+    expandSlot: boolean;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     'on-drag': ({ x, y }: Record<string, number>) => boolean;
     'on-drag-stop': ({ x, y }: Record<string, number>) => boolean;
+    'on-restore': () => boolean;
     'on-zoom': (val: number) => boolean;
-    'on-expand': (e: MouseEvent, data: Record<string, any>) => boolean;
-    'on-node-blur': (e: MouseEvent, data: Record<string, any>) => boolean;
-    'on-node-click': (e: MouseEvent, data: Record<string, any>) => boolean;
-    'on-node-dblclick': (e: MouseEvent, data: Record<string, any>) => boolean;
-    'on-node-mouseenter': (e: MouseEvent, data: Record<string, any>) => boolean;
-    'on-node-mouseleave': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-expand': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-node-blur': (e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-node-click': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-node-dblclick': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-node-mouseenter': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-node-mouseleave': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
-    'on-node-delete': (node: Record<string, any>) => boolean;
-    'on-node-focus': (e: MouseEvent, data: Record<string, any>) => boolean;
+    'on-node-delete': (node: import("../../../utils/types").INode) => boolean;
+    'on-node-focus': (e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
     readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, () => {
@@ -189,20 +241,22 @@ declare const _default: import("vue").DefineComponent<{
     readonly nodeDelete: FunctionConstructor;
     readonly nodeEdit: FunctionConstructor;
     readonly nodeCopy: FunctionConstructor;
+    readonly filterNodeMethod: FunctionConstructor;
 }>> & {
     "onOn-drag"?: ((args_0: Record<string, number>) => any) | undefined;
     "onOn-drag-stop"?: ((args_0: Record<string, number>) => any) | undefined;
+    "onOn-restore"?: (() => any) | undefined;
     "onOn-zoom"?: ((val: number) => any) | undefined;
-    "onOn-expand"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
-    "onOn-node-blur"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
-    "onOn-node-click"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
-    "onOn-node-dblclick"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
-    "onOn-node-mouseenter"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
-    "onOn-node-mouseleave"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-expand"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-blur"?: ((e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-click"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-dblclick"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-mouseenter"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-mouseleave"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
     "onOn-contextmenu"?: ((data: any) => any) | undefined;
     "onOn-node-copy"?: ((str: string) => any) | undefined;
-    "onOn-node-delete"?: ((node: Record<string, any>) => any) | undefined;
-    "onOn-node-focus"?: ((e: MouseEvent, data: Record<string, any>) => any) | undefined;
+    "onOn-node-delete"?: ((node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-node-focus"?: ((e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
 }, {
     props: Partial<import("../../../utils/types").IKeysObject>;
     toolBar: boolean | Record<string, any>;
