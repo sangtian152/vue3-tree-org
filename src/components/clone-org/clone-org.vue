@@ -1,6 +1,10 @@
 <template>
   <teleport to="body">
-    <div v-show="modelValue" id="clone-tree-org" class="clone-tree-org tree-org">
+    <div
+      v-show="modelValue"
+      id="clone-tree-org"
+      class="clone-tree-org tree-org"
+      :class="{ horizontal, collapsable }">
       <tree-org-node
         :data="data"
         :props="props"
@@ -11,10 +15,10 @@
         :renderContent="renderContent"
         :labelClassName="labelClassName"
       >
-        <template v-slot:default="{node}">
+        <template v-if="defaultSlot" v-slot:default="{node}">
           <slot :node="node"></slot>
         </template>
-        <template v-slot:expand="{node}">
+        <template v-if="expandSlot" v-slot:expand="{node}">
           <slot name="expand" :node="node"></slot>
         </template>
       </tree-org-node>
@@ -48,6 +52,14 @@ export default defineComponent({
   components: {
     TreeOrgNode: TreeOrgNode
   },
-  props: cloneorgProps
+  props: cloneorgProps,
+  setup (props, ctx) {
+    const defaultSlot = !!ctx.slots.default
+    const expandSlot = !!ctx.slots.expand
+    return {
+      defaultSlot,
+      expandSlot
+    }
+  }
 })
 </script>
