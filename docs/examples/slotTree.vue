@@ -17,6 +17,7 @@
             <template v-slot="{node}">
                 <div class="tree-org-node__text node-label">
                     <div class="custom-content">自定义内容</div>
+                    {{node.$$data}}
                     <div>节点名称：{{node.label}}</div>
                 </div>
             </template>

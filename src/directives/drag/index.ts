@@ -111,7 +111,6 @@ const drag:ObjectDirective = {
       const { keys, onlyOneNode } = instance
       if (onlyOneNode) { // 如果是仅移动当前节点
         const { children } = keys
-        console.log(node, 114)
         const cloneNode = { ...node.$$data }
         cloneNode[children] = []
         instance.cloneData.value = cloneNode

@@ -26,6 +26,7 @@
           :node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
+          @on-node-dblclick="onNodeDblclick"
           @on-node-click="onNodeClick"
         />
       </div>
@@ -96,6 +97,9 @@ export default {
     },
     nodeDragEnd(data, isSelf) {
       console.log(data, isSelf);
+    },
+    onNodeDblclick() {
+      console.log('onNodeDblclick')
     },
     onNodeClick(e, data) {
       ElMessage.info(data.label);

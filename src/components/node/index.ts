@@ -8,7 +8,7 @@ import type { INode } from '@/utils/types'
 
 const EVENTS = {
   onClick: 'onNodeClick',
-  onDblclick: 'onNodeDbclick',
+  onDblclick: 'onNodeDblclick',
   onContextmenu: 'onNodeContextmenu',
   onMouseenter: 'onNodeMouseenter',
   onMouseleave: 'onNodeMouseleave'
