@@ -14,8 +14,14 @@ export const data = {
     }
   ],
   "git": {
-    "updatedTime": null,
-    "contributors": []
+    "updatedTime": 1658302149000,
+    "contributors": [
+      {
+        "name": "sangtian152",
+        "email": "jzyazn@sina.cn",
+        "commits": 1
+      }
+    ]
   },
   "filePathRelative": "other/README.md"
 }

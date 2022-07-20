@@ -104,6 +104,7 @@ const drag:ObjectDirective = {
     let cloneTree: HTMLElement | null
     let screenX = 0; let screenY = 0
     function initData (e: MouseEvent) { // 初始化拖动数据
+      e.stopPropagation()
       screenX = e.screenX
       screenY = e.screenY
       offsetLeft = 0
@@ -119,7 +120,6 @@ const drag:ObjectDirective = {
       }
     }
     function handleDownCb (e: MouseEvent) {
-      e.stopPropagation()
       const target = e.target as HTMLElement
       if (drag === false ||
         e.button !== 0 ||

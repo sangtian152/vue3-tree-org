@@ -262,7 +262,7 @@ export const useTree = (
     return `${Math.round(scale.value * 100)}%`
   })
   const dragCancel = computed(() => {
-    return props.draggableOnNode || !props.nodeDraggable ? '' : '.tree-org-node-label'
+    return props.draggableOnNode && !props.nodeDraggable ? '' : '.tree-org-node__inner'
   })
   const expandTitle = computed(() => {
     return expanded.value ? '收起全部节点' : '展开全部节点'
