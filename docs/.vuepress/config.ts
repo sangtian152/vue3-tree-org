@@ -60,6 +60,10 @@ export const config:UserConfig = {
         {
             text: '示例',
             link: '/demo/',
+        },
+        {
+            text: '其他',
+            link: '/other/',
         }
     ]
   },
