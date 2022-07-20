@@ -41,3 +41,9 @@ app.mount('#app')
 
 [说明文档](https://sangtian152.github.io/vue3-tree-org/guide/#%E4%BB%8B%E7%BB%8D).
 
+
+### 友情链接
+[虚拟树控件-virtual-tree](https://gitee.com/sangtian152/virtual-tree).  
+[图片加水印-watermark](https://gitee.com/sangtian152/watermark).  
+[html生成pdf-html2pdf](https://gitee.com/sangtian152/html2pdf).  
+[签名控件-zm-sign](https://gitee.com/sangtian152/zm-sign).  
