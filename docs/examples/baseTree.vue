@@ -18,8 +18,6 @@
           :horizontal="horizontal"
           :collapsable="collapsable"
           :label-style="style"
-          :node-draggable="false"
-          :draggable-on-node="false"
           :only-one-node="onlyOneNode"
           :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
