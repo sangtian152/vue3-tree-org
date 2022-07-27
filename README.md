@@ -1,5 +1,14 @@
 # vue3-tree-org
 
+![npm](https://img.shields.io/npm/dm/vue3-tree-org) 
+![npm](https://img.shields.io/npm/v/vue3-tree-org) 
+![NPM](https://img.shields.io/npm/l/vue3-tree-org) 
+[![star](https://gitee.com/sangtian152/vue3-tree-org/badge/star.svg?theme=white)](https://gitee.com/sangtian152/vue3-tree-org/stargazers) 
+[![fork](https://gitee.com/sangtian152/vue3-tree-org/badge/fork.svg?theme=white)](https://gitee.com/sangtian152/vue3-tree-org/members) 
+![GitHub Repo stars](https://img.shields.io/github/stars/sangtian152/vue3-tree-org?style=social) 
+![GitHub forks](https://img.shields.io/github/forks/sangtian152/vue3-tree-org?style=social)
+
+
 ### 介绍
 一个基于vue3.x的简易版组织架构图，vue2.x版本请访问[zm-tree-org](https://sangtian152.gitee.io/zm-tree-org)
 - 架构图支持拖拽和通过鼠标滚轮缩放
