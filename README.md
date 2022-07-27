@@ -1,8 +1,8 @@
 # vue3-tree-org
 
-![npm](https://img.shields.io/npm/dm/vue3-tree-org) 
 ![npm](https://img.shields.io/npm/v/vue3-tree-org) 
-![NPM](https://img.shields.io/npm/l/vue3-tree-org) 
+![npm](https://img.shields.io/npm/dm/vue3-tree-org) 
+![NPM](https://img.shields.io/npm/l/vue3-tree-org)  
 [![star](https://gitee.com/sangtian152/vue3-tree-org/badge/star.svg?theme=white)](https://gitee.com/sangtian152/vue3-tree-org/stargazers) 
 [![fork](https://gitee.com/sangtian152/vue3-tree-org/badge/fork.svg?theme=white)](https://gitee.com/sangtian152/vue3-tree-org/members) 
 ![GitHub Repo stars](https://img.shields.io/github/stars/sangtian152/vue3-tree-org?style=social) 
