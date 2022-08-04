@@ -67,7 +67,7 @@ const copyCode = async () => {
           placement="top"
         >
           <div class="op-btn" @click="copyCode">
-              <span class="iconfont icon-copy"></span>
+              <span class="treefont icon-copy"></span>
           </div>
         </el-tooltip>
         <el-tooltip
@@ -76,7 +76,7 @@ const copyCode = async () => {
           placement="top"
         >
           <div class="op-btn" @click="setSourceVisible">
-            <span class="iconfont icon-code"></span>
+            <span class="treefont icon-code"></span>
           </div>
         </el-tooltip>
       </div>

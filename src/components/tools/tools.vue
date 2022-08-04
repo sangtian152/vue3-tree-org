@@ -9,7 +9,7 @@
     >
       <span class="zm-tree-svg">
         <i
-          :class="['iconfont', expanded ? 'icon-collapse' : 'icon-expand']"
+          :class="['treefont', expanded ? 'icon-collapse' : 'icon-expand']"
         ></i>
       </span>
     </div>
@@ -46,7 +46,7 @@
       <span class="zm-tree-svg">
         <i
           :class="[
-            'iconfont',
+            'treefont',
             fullscreen ? 'icon-unfullscreen' : 'icon-fullscreen',
           ]"
         ></i>
