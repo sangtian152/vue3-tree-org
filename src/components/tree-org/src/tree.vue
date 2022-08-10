@@ -94,14 +94,14 @@
       </template>
     </clone-org>
     <Contextmenu
-      v-if="defineMenus.length"
+      v-if="nodeMenus.length"
       v-model="contextmenu"
       :x="menuX"
       :y="menuY"
       :node="menuData"
       :data="data"
       :props="keys"
-      :menus="defineMenus"
+      :menus="nodeMenus"
       :disabled="disabled"
       :node-add="nodeAdd"
       :node-delete="nodeDelete"

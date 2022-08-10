@@ -2,7 +2,7 @@ import { buildProps, definePropType } from '@/utils/props'
 import { isNumber, isObject, isString } from '@/utils/utils'
 
 import type { ExtractPropTypes } from 'vue'
-import type { INode, INodeData, IMenu, IKeysProps, IMousePosition } from '@/utils/types'
+import type { INode, INodeData, IMenu, IKeysProps, IMousePosition, DefineMenus } from '@/utils/types'
 export const menus = [
   { name: '复制文本', command: 'copy' },
   { name: '新增节点', command: 'add' },
@@ -93,7 +93,7 @@ export const treeProps = buildProps({
     type: [Function, String]
   },
   defineMenus: {
-    type: definePropType<IMenu[]>(Array),
+    type: definePropType<IMenu[] | DefineMenus>([Array, Function]),
     default () {
       return menus
     }

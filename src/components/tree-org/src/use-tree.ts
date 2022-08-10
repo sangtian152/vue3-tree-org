@@ -1,6 +1,6 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
 import type { SetupContext } from 'vue'
-import type { INode, INodeData, IRefs } from '@/utils/types'
+import type { IMenu, INode, INodeData, IRefs } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
 export const useTree = (
   props: TreeProps,
@@ -68,9 +68,16 @@ export const useTree = (
   const menuX = ref(0)
   const menuY = ref(0)
   const menuData = ref({} as INode)
+  const nodeMenus = ref([] as IMenu[])
   function nodeContextmenu (e: MouseEvent, node: INode) {
     e.stopPropagation()
     e.preventDefault()
+    const { defineMenus } = props
+    if (Array.isArray(defineMenus)) {
+      nodeMenus.value = defineMenus
+    } else if (typeof defineMenus === 'function') {
+      nodeMenus.value = defineMenus(e, node)
+    }
     contextmenu.value = true
     menuX.value = e.clientX
     menuY.value = e.clientY
@@ -357,6 +364,7 @@ export const useTree = (
     treeData,
     autoDragging,
     contextmenu,
+    nodeMenus,
     menuData,
     cloneData,
     filter,

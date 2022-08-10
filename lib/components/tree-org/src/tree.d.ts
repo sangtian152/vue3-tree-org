@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue';
-import type { INode, INodeData, IMenu, IMousePosition } from '@/utils/types';
+import type { INode, INodeData, IMenu, IMousePosition, DefineMenus } from '@/utils/types';
 export declare const menus: {
     name: string;
     command: string;
@@ -39,7 +39,7 @@ export declare const treeProps: {
     readonly labelStyle: ObjectConstructor;
     readonly labelClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
     readonly selectedClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
-    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<IMenu[]>, unknown, unknown, () => {
+    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<DefineMenus | IMenu[]>, unknown, unknown, () => {
         name: string;
         command: string;
     }[], unknown>;

@@ -79,7 +79,7 @@ searchTree
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-copy  | 复制节点文本，覆盖默认复制节点文本行为（参数当前节点node） | Function   |  —   |   —   |
-| define-menus  | 自定义右键菜单，接受包含name和command属性的对象数组 | Array   |  —  |   [{ name: '复制文本', command: 'copy' },{ name: '新增节点', command: 'add' },{ name: '编辑节点', command: 'edit' },{ name: '删除节点', command: 'delete' }]   |
+| define-menus  | 自定义右键菜单，接受包含name和command属性的对象数组，或者一个返回值为包含name和command属性的对象数组的函数（参数MouseEvent和node） | Array, Function   |  —  |   [{ name: '复制文本', command: 'copy' },{ name: '新增节点', command: 'add' },{ name: '编辑节点', command: 'edit' },{ name: '删除节点', command: 'delete' }]   |
 | render-content     | 渲染函数   | Function  |  —   |   —   |
 | label-style     | 自定义label标签的样式   | Object  |  —   |   —    |
 | label-class-name     | 自定义label节点的样式名   | [Function, String]  |  —   |   —   |

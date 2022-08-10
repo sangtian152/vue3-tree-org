@@ -100,6 +100,10 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
+    nodeMenus: import("vue").Ref<{
+        name: string;
+        command: string;
+    }[]>;
     menuData: import("vue").Ref<{
         id: string | number;
         pid: string | number;

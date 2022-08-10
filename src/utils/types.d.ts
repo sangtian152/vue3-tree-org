@@ -50,3 +50,5 @@ export interface IKeysObject {
 }
 
 export type IKeysProps = Partial<IKeysObject>
+
+export type DefineMenus = (e: MouseEvent, node: INode) => IMenu[]

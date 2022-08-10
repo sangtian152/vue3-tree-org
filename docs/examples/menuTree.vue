@@ -47,12 +47,12 @@ export default {
       onlyOneNode: true,
       cloneNodeDrag: true,
       expandAll: true,
-      defineMenus:[
+      /* defineMenus:[
           { name:'复制', command: 'copy' },
           { name:'新建', command: 'add' },
           { name:'编辑', command: 'edit' },
           { name:'自定义', command: 'defind' },
-      ],
+      ], */
       style: {
         background: "#fff",
         color: "#5e6d82",
@@ -60,6 +60,21 @@ export default {
     };
   },
   methods: {
+    defineMenus(e, node) {
+      if (node.disabled) {
+        return [
+            { name:'复制', command: 'copy' },
+            { name:'自定义', command: 'defind' },
+        ]
+      } else {
+        return [
+            { name:'复制', command: 'copy' },
+            { name:'新建', command: 'add' },
+            { name:'编辑', command: 'edit' },
+            { name:'自定义', command: 'defind' },
+        ]
+      }
+    },
     onMenus({ node, command }) {
       console.log(node, command);
     },
