@@ -56,6 +56,7 @@ export declare const treeEmits: {
     'on-restore': () => boolean;
     'on-zoom': (val: number) => boolean;
     'on-expand': (e: MouseEvent, data: INodeData, node: INode) => boolean;
+    'on-expand-all': (bool: boolean) => boolean;
     'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => boolean;
     'on-node-click': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-node-dblclick': (e: MouseEvent, data: INodeData, node: INode) => boolean;

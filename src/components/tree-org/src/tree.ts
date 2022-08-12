@@ -113,6 +113,7 @@ export const treeEmits = {
   'on-restore': () => true,
   'on-zoom': (val: number) => isNumber(val),
   'on-expand': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
+  'on-expand-all': (bool: boolean) => typeof bool === 'boolean',
   'on-node-blur': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data),
   'on-node-click': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
   'on-node-dblclick': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),

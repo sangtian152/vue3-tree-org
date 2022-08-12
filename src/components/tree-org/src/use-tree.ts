@@ -233,6 +233,7 @@ export const useTree = (
   function expandChange () {
     expanded.value = !expanded.value
     toggleExpand(treeData.value, expanded.value)
+    emit('on-expand-all', expanded.value)
     if (!expanded.value) {
       nextTick(() => {
         onDragStop(left.value, top.value)

@@ -108,6 +108,7 @@ searchTree
 | 事件名      | 说明    | 返回值      |
 |---------- |-------- |---------- |
 | on-expand | 节点展开事件，注意，展开节点时如监听了label点击事件，则需要阻止冒泡 e.stopPropagation()  | e, data  |
+| on-expand-all | 全部展开/收起事件  | boolean  |
 | on-node-click | 节点点击事件  | e, data  |
 | on-node-dblclick | 节点双击事件  | e, data  |
 | on-node-focus | 节点获取焦点事件  | e, data  |

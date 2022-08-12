@@ -25,6 +25,7 @@
           :node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
+          @on-expand-all="onExpandAll"
           @on-node-dblclick="onNodeDblclick"
           @on-node-click="onNodeClick"
         />
@@ -90,6 +91,9 @@ export default {
     },
     onExpand(e, data) {
       console.log(e, data);
+    },
+    onExpandAll(b) {
+      console.log(b)
     },
     nodeDragMove(data) {
       console.log(data);
