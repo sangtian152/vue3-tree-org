@@ -44,12 +44,12 @@ export const data = {
     }
   ],
   "git": {
-    "updatedTime": 1652187461000,
+    "updatedTime": 1660117916000,
     "contributors": [
       {
         "name": "sangtian152",
         "email": "jzyazn@sina.cn",
-        "commits": 8
+        "commits": 9
       }
     ]
   },
