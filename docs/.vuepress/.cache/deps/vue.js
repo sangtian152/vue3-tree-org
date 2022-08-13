@@ -14,10 +14,9 @@ import {
   VueElement,
   callWithAsyncErrorHandling,
   callWithErrorHandling,
-  camelize,
-  capitalize,
   cloneVNode,
   compatUtils,
+  compile,
   computed,
   createApp,
   createBaseVNode,
@@ -65,9 +64,6 @@ import {
   mergeDefaults,
   mergeProps,
   nextTick,
-  normalizeClass,
-  normalizeProps,
-  normalizeStyle,
   onActivated,
   onBeforeMount,
   onBeforeUnmount,
@@ -108,8 +104,6 @@ import {
   ssrContextKey,
   ssrUtils,
   stop,
-  toDisplayString,
-  toHandlerKey,
   toHandlers,
   toRaw,
   toRef,
@@ -143,11 +137,20 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-WGU5RFFQ.js";
+} from "./chunk-5LRQAAYT.js";
+import {
+  camelize,
+  capitalize,
+  normalizeClass,
+  normalizeProps,
+  normalizeStyle,
+  toDisplayString,
+  toHandlerKey
+} from "./chunk-QJ7KY34X.js";
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-TEWQWOMZ.js";
+} from "./chunk-QSR5EZYE.js";
 
 // dep:vue
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -172,6 +175,7 @@ export {
   capitalize,
   cloneVNode,
   compatUtils,
+  compile,
   computed,
   createApp,
   createBlock,

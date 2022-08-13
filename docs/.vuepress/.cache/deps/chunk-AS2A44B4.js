@@ -1,7 +1,32 @@
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-TEWQWOMZ.js";
+} from "./chunk-QSR5EZYE.js";
+
+// node_modules/@vue/devtools-api/lib/esm/time.js
+init_define_EXTERNAL_LINK_ICON_LOCALES();
+init_define_MZ_ZOOM_OPTIONS();
+var supported;
+var perf;
+function isPerformanceSupported() {
+  var _a;
+  if (supported !== void 0) {
+    return supported;
+  }
+  if (typeof window !== "undefined" && window.performance) {
+    supported = true;
+    perf = window.performance;
+  } else if (typeof global !== "undefined" && ((_a = global.perf_hooks) === null || _a === void 0 ? void 0 : _a.performance)) {
+    supported = true;
+    perf = global.perf_hooks.performance;
+  } else {
+    supported = false;
+  }
+  return supported;
+}
+function now() {
+  return isPerformanceSupported() ? perf.now() : Date.now();
+}
 
 // node_modules/@vue/devtools-api/lib/esm/index.js
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -59,6 +84,9 @@ var ApiProxy = class {
         } catch (e) {
         }
         currentSettings = value;
+      },
+      now() {
+        return now();
       }
     };
     if (hook) {
@@ -157,16 +185,17 @@ init_define_MZ_ZOOM_OPTIONS();
 
 // node_modules/@vue/devtools-api/lib/esm/index.js
 function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
+  const descriptor = pluginDescriptor;
   const target = getTarget();
   const hook = getDevtoolsGlobalHook();
-  const enableProxy = isProxyAvailable && pluginDescriptor.enableEarlyProxy;
+  const enableProxy = isProxyAvailable && descriptor.enableEarlyProxy;
   if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
     hook.emit(HOOK_SETUP, pluginDescriptor, setupFn);
   } else {
-    const proxy = enableProxy ? new ApiProxy(pluginDescriptor, hook) : null;
+    const proxy = enableProxy ? new ApiProxy(descriptor, hook) : null;
     const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
     list.push({
-      pluginDescriptor,
+      pluginDescriptor: descriptor,
       setupFn,
       proxy
     });
@@ -176,6 +205,8 @@ function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
 }
 
 export {
+  isPerformanceSupported,
+  now,
   setupDevtoolsPlugin
 };
-//# sourceMappingURL=chunk-3OOH5IJB.js.map
+//# sourceMappingURL=chunk-AS2A44B4.js.map

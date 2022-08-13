@@ -1,7 +1,7 @@
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-TEWQWOMZ.js";
+} from "./chunk-QSR5EZYE.js";
 
 // node_modules/@vue/shared/dist/shared.esm-bundler.js
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -241,6 +241,11 @@ function looseEqual(a, b) {
   if (aValidType || bValidType) {
     return aValidType && bValidType ? a.getTime() === b.getTime() : false;
   }
+  aValidType = isSymbol(a);
+  bValidType = isSymbol(b);
+  if (aValidType || bValidType) {
+    return a === b;
+  }
   aValidType = isArray(a);
   bValidType = isArray(b);
   if (aValidType || bValidType) {
@@ -271,7 +276,7 @@ function looseIndexOf(arr, val) {
   return arr.findIndex((item) => looseEqual(item, val));
 }
 var toDisplayString = (val) => {
-  return val == null ? "" : isArray(val) || isObject(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
+  return isString(val) ? val : val == null ? "" : isArray(val) || isObject(val) && (val.toString === objectToString || !isFunction(val.toString)) ? JSON.stringify(val, replacer, 2) : String(val);
 };
 var replacer = (_key, val) => {
   if (val && val.__v_isRef) {
@@ -312,7 +317,7 @@ var hasOwn = (val, key) => hasOwnProperty.call(val, key);
 var isArray = Array.isArray;
 var isMap = (val) => toTypeString(val) === "[object Map]";
 var isSet = (val) => toTypeString(val) === "[object Set]";
-var isDate = (val) => val instanceof Date;
+var isDate = (val) => toTypeString(val) === "[object Date]";
 var isFunction = (val) => typeof val === "function";
 var isString = (val) => typeof val === "string";
 var isSymbol = (val) => typeof val === "symbol";
@@ -327,7 +332,10 @@ var toRawType = (value) => {
 };
 var isPlainObject = (val) => toTypeString(val) === "[object Object]";
 var isIntegerKey = (key) => isString(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
-var isReservedProp = makeMap(",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted");
+var isReservedProp = makeMap(
+  ",key,ref,ref_for,ref_key,onVnodeBeforeMount,onVnodeMounted,onVnodeBeforeUpdate,onVnodeUpdated,onVnodeBeforeUnmount,onVnodeUnmounted"
+);
+var isBuiltInDirective = makeMap("bind,cloak,else-if,else,for,html,if,model,on,once,pre,show,slot,text,memo");
 var cacheStringFunction = (fn) => {
   const cache = /* @__PURE__ */ Object.create(null);
   return (str) => {
@@ -364,6 +372,10 @@ var _globalThis;
 var getGlobalThis = () => {
   return _globalThis || (_globalThis = typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {});
 };
+var identRE = /^[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*$/;
+function genPropsAccessExp(name) {
+  return identRE.test(name) ? `__props.${name}` : `__props[${JSON.stringify(name)}]`;
+}
 
 export {
   makeMap,
@@ -416,6 +428,7 @@ export {
   isPlainObject,
   isIntegerKey,
   isReservedProp,
+  isBuiltInDirective,
   camelize,
   hyphenate,
   capitalize,
@@ -424,6 +437,7 @@ export {
   invokeArrayFns,
   def,
   toNumber,
-  getGlobalThis
+  getGlobalThis,
+  genPropsAccessExp
 };
-//# sourceMappingURL=chunk-R4PQVQVF.js.map
+//# sourceMappingURL=chunk-QJ7KY34X.js.map

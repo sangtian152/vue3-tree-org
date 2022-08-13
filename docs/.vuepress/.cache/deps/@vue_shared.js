@@ -10,6 +10,7 @@ import {
   escapeHtml,
   escapeHtmlComment,
   extend,
+  genPropsAccessExp,
   generateCodeFrame,
   getGlobalThis,
   hasChanged,
@@ -19,6 +20,7 @@ import {
   invokeArrayFns,
   isArray,
   isBooleanAttr,
+  isBuiltInDirective,
   isDate,
   isFunction,
   isGloballyWhitelisted,
@@ -58,11 +60,11 @@ import {
   toNumber,
   toRawType,
   toTypeString
-} from "./chunk-R4PQVQVF.js";
+} from "./chunk-QJ7KY34X.js";
 import {
   init_define_EXTERNAL_LINK_ICON_LOCALES,
   init_define_MZ_ZOOM_OPTIONS
-} from "./chunk-TEWQWOMZ.js";
+} from "./chunk-QSR5EZYE.js";
 
 // dep:@vue_shared
 init_define_EXTERNAL_LINK_ICON_LOCALES();
@@ -79,6 +81,7 @@ export {
   escapeHtml,
   escapeHtmlComment,
   extend,
+  genPropsAccessExp,
   generateCodeFrame,
   getGlobalThis,
   hasChanged,
@@ -88,6 +91,7 @@ export {
   invokeArrayFns,
   isArray,
   isBooleanAttr,
+  isBuiltInDirective,
   isDate,
   isFunction,
   isGloballyWhitelisted,

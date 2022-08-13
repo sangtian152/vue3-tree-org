@@ -1,6 +1,7 @@
 import { mdPlugin } from './config/plugins'
 const { path } = require('@vuepress/utils')
-import type { UserConfig } from 'vitepress'
+// import type { UserConfig } from 'vitepress'
+const { defaultTheme } = require('@vuepress/theme-default')
 
 const buildTransformers = () => {
     const transformer = () => {
@@ -28,45 +29,44 @@ const buildTransformers = () => {
     return transformers
   }
 
-export const config:UserConfig = {
+export const config = {
     // 站点配置
   lang: 'zh-CN',
   title: 'vue3-tree-org',
   base: '/vue3-tree-org/',
   description: '基于vue3.x的组织架构图',
   // 主题和它的配置
-  theme: '@vuepress/theme-default',
+  theme: defaultTheme({
+      logo: 'https://vuejs.org/images/logo.png',
+      plugins: [
+          [
+            '@vuepress/register-components',
+            {
+              componentDir: './components'
+            }
+          ]
+      ],
+      sidebar: [
+          {
+              text: '介绍',
+              link: '/guide/',
+          },
+          {
+              text: '示例',
+              link: '/demo/',
+          },
+          {
+              text: '其他',
+              link: '/other/',
+          }
+      ]
+  }),
   alias: {
     '@': path.resolve(__dirname, '..', '../src'),
     '@docs': path.resolve(__dirname, './'),
     '@examples': path.resolve(__dirname, '../examples'),
   },
   extendsMarkdown:(md: any) => mdPlugin(md),
-  themeConfig: {
-    logo: 'https://vuejs.org/images/logo.png',
-    plugins: [
-        [
-          '@vuepress/register-components',
-          {
-            componentDir: './components'
-          }
-        ]
-    ],
-    sidebar: [
-        {
-            text: '介绍',
-            link: '/guide/',
-        },
-        {
-            text: '示例',
-            link: '/demo/',
-        },
-        {
-            text: '其他',
-            link: '/other/',
-        }
-    ]
-  },
   vue: {
     template: {
       ssr: true,
