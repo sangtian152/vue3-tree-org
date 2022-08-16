@@ -78,6 +78,7 @@ export const treeProps = buildProps({
   defaultExpandLevel: Number,
   nodeDragStart: Function,
   nodeDraging: Function,
+  beforeDragEnd: Function,
   nodeDragEnd: Function,
   horizontal: Boolean,
   selectedKey: {

@@ -22,10 +22,10 @@ declare const _default: import("vue").DefineComponent<{
     readonly labelStyle: ObjectConstructor;
     readonly labelClassName: import("../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
 }>>, {
-    props: Partial<import("../../utils/types").IKeysObject>;
-    modelValue: boolean;
-    horizontal: boolean;
-    collapsable: boolean;
-    labelClassName: string | Function;
+    readonly props: Partial<import("../../utils/types").IKeysObject>;
+    readonly modelValue: boolean;
+    readonly horizontal: boolean;
+    readonly collapsable: boolean;
+    readonly labelClassName: string | Function;
 }>;
 export default _default;

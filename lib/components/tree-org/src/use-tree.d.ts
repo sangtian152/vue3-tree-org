@@ -50,9 +50,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
                     pid: string | number;
                     label: string;
                     expand: boolean;
-                    $$data: {
-                        [x: string]: any;
-                    };
+                    $$data: Record<string, any>;
                     $$level: number;
                     $$root?: boolean | undefined;
                     $$focused?: boolean | undefined;
@@ -74,6 +72,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         };
         handleStart: Function | undefined;
         handleMove: Function | undefined;
+        beforeDragEnd: Function | undefined;
         handleEnd: Function | undefined;
     }>;
     expanded: import("vue").Ref<boolean>;
@@ -83,9 +82,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         pid: string | number;
         label: string;
         expand: boolean;
-        $$data: {
-            [x: string]: any;
-        };
+        $$data: Record<string, any>;
         $$level: number;
         $$root?: boolean | undefined;
         $$focused?: boolean | undefined;
@@ -109,9 +106,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         pid: string | number;
         label: string;
         expand: boolean;
-        $$data: {
-            [x: string]: any;
-        };
+        $$data: Record<string, any>;
         $$level: number;
         $$root?: boolean | undefined;
         $$focused?: boolean | undefined;

@@ -25,6 +25,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
+    readonly beforeDragEnd: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;
     readonly horizontal: BooleanConstructor;
     readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;
@@ -33,7 +34,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly labelStyle: ObjectConstructor;
     readonly labelClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
     readonly selectedClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
-    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
+    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").DefineMenus | import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
         name: string;
         command: string;
     }[], unknown>;
@@ -71,7 +72,7 @@ declare const _default: import("vue").DefineComponent<{
         };
     };
     zoomPercent: import("vue").ComputedRef<string>;
-    dragCancel: import("vue").ComputedRef<"" | ".tree-org-node-label">;
+    dragCancel: import("vue").ComputedRef<"" | ".tree-org-node__content:not(.is-root)>.tree-org-node__inner">;
     expandTitle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     fullTiltle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     nodeargs: import("vue").ComputedRef<{
@@ -91,9 +92,7 @@ declare const _default: import("vue").DefineComponent<{
                     pid: string | number;
                     label: string;
                     expand: boolean;
-                    $$data: {
-                        [x: string]: any;
-                    };
+                    $$data: Record<string, any>;
                     $$level: number;
                     $$root?: boolean | undefined;
                     $$focused?: boolean | undefined;
@@ -115,6 +114,7 @@ declare const _default: import("vue").DefineComponent<{
         };
         handleStart: Function | undefined;
         handleMove: Function | undefined;
+        beforeDragEnd: Function | undefined;
         handleEnd: Function | undefined;
     }>;
     expanded: import("vue").Ref<boolean>;
@@ -124,9 +124,7 @@ declare const _default: import("vue").DefineComponent<{
         pid: string | number;
         label: string;
         expand: boolean;
-        $$data: {
-            [x: string]: any;
-        };
+        $$data: Record<string, any>;
         $$level: number;
         $$root?: boolean | undefined;
         $$focused?: boolean | undefined;
@@ -141,14 +139,16 @@ declare const _default: import("vue").DefineComponent<{
     }>;
     autoDragging: import("vue").Ref<boolean>;
     contextmenu: import("vue").Ref<boolean>;
+    nodeMenus: import("vue").Ref<{
+        name: string;
+        command: string;
+    }[]>;
     menuData: import("vue").Ref<{
         id: string | number;
         pid: string | number;
         label: string;
         expand: boolean;
-        $$data: {
-            [x: string]: any;
-        };
+        $$data: Record<string, any>;
         $$level: number;
         $$root?: boolean | undefined;
         $$focused?: boolean | undefined;
@@ -189,6 +189,7 @@ declare const _default: import("vue").DefineComponent<{
     'on-restore': () => boolean;
     'on-zoom': (val: number) => boolean;
     'on-expand': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
+    'on-expand-all': (bool: boolean) => boolean;
     'on-node-blur': (e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
     'on-node-click': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
     'on-node-dblclick': (e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
@@ -225,6 +226,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
+    readonly beforeDragEnd: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;
     readonly horizontal: BooleanConstructor;
     readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;
@@ -233,7 +235,7 @@ declare const _default: import("vue").DefineComponent<{
     readonly labelStyle: ObjectConstructor;
     readonly labelClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
     readonly selectedClassName: import("../../../utils/props").BuildPropReturn<readonly [FunctionConstructor, StringConstructor], unknown, unknown, unknown, unknown>;
-    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
+    readonly defineMenus: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").DefineMenus | import("../../../utils/types").IMenu[]>, unknown, unknown, () => {
         name: string;
         command: string;
     }[], unknown>;
@@ -248,6 +250,7 @@ declare const _default: import("vue").DefineComponent<{
     "onOn-restore"?: (() => any) | undefined;
     "onOn-zoom"?: ((val: number) => any) | undefined;
     "onOn-expand"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
+    "onOn-expand-all"?: ((bool: boolean) => any) | undefined;
     "onOn-node-blur"?: ((e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
     "onOn-node-click"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
     "onOn-node-dblclick"?: ((e: MouseEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
@@ -258,21 +261,21 @@ declare const _default: import("vue").DefineComponent<{
     "onOn-node-delete"?: ((node: import("../../../utils/types").INode) => any) | undefined;
     "onOn-node-focus"?: ((e: FocusEvent, data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
 }, {
-    props: Partial<import("../../../utils/types").IKeysObject>;
-    toolBar: boolean | Record<string, any>;
-    disabled: boolean;
-    scalable: boolean;
-    draggable: boolean;
-    draggableOnNode: boolean;
-    nodeDraggable: boolean;
-    cloneNodeDrag: boolean;
-    onlyOneNode: boolean;
-    clickDelay: number;
-    horizontal: boolean;
-    selectedKey: string | number | unknown[];
-    collapsable: boolean;
-    labelClassName: string | Function;
-    selectedClassName: string | Function;
-    defineMenus: import("../../../utils/types").IMenu[];
+    readonly props: Partial<import("../../../utils/types").IKeysObject>;
+    readonly toolBar: boolean | Record<string, any>;
+    readonly disabled: boolean;
+    readonly scalable: boolean;
+    readonly draggable: boolean;
+    readonly draggableOnNode: boolean;
+    readonly nodeDraggable: boolean;
+    readonly cloneNodeDrag: boolean;
+    readonly onlyOneNode: boolean;
+    readonly clickDelay: number;
+    readonly horizontal: boolean;
+    readonly selectedKey: string | number | unknown[];
+    readonly collapsable: boolean;
+    readonly labelClassName: string | Function;
+    readonly selectedClassName: string | Function;
+    readonly defineMenus: import("../../../utils/types").DefineMenus | import("../../../utils/types").IMenu[];
 }>;
 export default _default;

@@ -75,6 +75,10 @@ searchTree
 | node-draggable     | 节点是否可拖拽   | Boolean  | true,false  |  true  |
 | clone-node-drag     | 是否拷贝节点拖拽   | Boolean  | true,false  |  true  |
 | only-one-node     | 是否仅拖动当前节点，如果true，仅拖动当前节点，子节点自动添加到当前节点父节点，如果false，则当前节点及子节点一起拖动   | Boolean  | true,false  |  true  |
+| node-drag-start  | 节点拖拽开始（参数当前节点node）  | Function   |  —   |   —   |
+| node-draging  | 节点拖拽（参数当前节点node）  | Function   |  —   |   —   |
+| before-drag-end  | 节点拖拽开始结束（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽  | Function   |  —   |   —   |
+| node-drag-end  | 节点拖拽开始结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf）  | Function   |  —   |   —   |
 | node-add  | 自定义节点新增，覆盖默认新增行为（参数当前节点node）  | Function   |  —   |   —   |
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |

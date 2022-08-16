@@ -22,6 +22,7 @@
           :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
           :node-draging="nodeDragMove"
+          :before-drag-end="beforeDragEnd"
           :node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
@@ -97,6 +98,15 @@ export default {
     },
     nodeDragMove(data) {
       console.log(data);
+    },
+    beforeDragEnd(node, targetNode) {
+      return new Promise((resolve, reject) => {
+        if (node.id === targetNode.id) {
+          reject()
+        } else {
+          resolve()
+        }
+      })
     },
     nodeDragEnd(data, isSelf) {
       console.log(data, isSelf);

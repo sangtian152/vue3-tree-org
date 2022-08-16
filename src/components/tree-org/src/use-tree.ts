@@ -286,6 +286,7 @@ export const useTree = (
       dragData: { keys, nodeMoving, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
       handleStart: props.nodeDragStart,
       handleMove: props.nodeDraging,
+      beforeDragEnd: props.beforeDragEnd,
       handleEnd: props.nodeDragEnd
     }
   })

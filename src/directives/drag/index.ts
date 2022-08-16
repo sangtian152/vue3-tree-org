@@ -95,7 +95,7 @@ const addChildNode = function (node: INode, context: IContext) {
 const drag:ObjectDirective = {
   beforeMount (el: HTMLElement, binding: DirectiveBinding) {
     const { l, t } = binding.modifiers
-    const { drag, dragData, node, handleStart, handleMove, handleEnd } = binding.value
+    const { drag, dragData, node, handleStart, handleMove, beforeDragEnd, handleEnd } = binding.value
     const { value }:{value: any } = binding
     const instance = { ...dragData }
     el.addEventListener('mousedown', handleDownCb)
@@ -186,10 +186,27 @@ const drag:ObjectDirective = {
       if (!hasRender) {
         return
       }
+      if (typeof beforeDragEnd === 'function') {
+        const before = beforeDragEnd(node, instance.parenNode.value)
+        if (before && before.then) {
+          before.then(() => {
+            doDragEnd(e)
+          })
+        } else if (before !== false) {
+          doDragEnd(e)
+        }
+      } else {
+        doDragEnd(e)
+      }
+      resetDrag()
+    }
+    function resetDrag () {
       hasRender = false
       cloneTree = null
       node.moving = false
       instance.nodeMoving.value = false
+    }
+    function doDragEnd (e: MouseEvent) {
       const movingNode = document.querySelector('.tree-org-node__moving')
       if (movingNode && movingNode.contains(e.target as HTMLElement)) {
         handleEmit('end', true)

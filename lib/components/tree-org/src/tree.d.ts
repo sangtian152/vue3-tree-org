@@ -31,6 +31,7 @@ export declare const treeProps: {
     readonly defaultExpandLevel: NumberConstructor;
     readonly nodeDragStart: FunctionConstructor;
     readonly nodeDraging: FunctionConstructor;
+    readonly beforeDragEnd: FunctionConstructor;
     readonly nodeDragEnd: FunctionConstructor;
     readonly horizontal: BooleanConstructor;
     readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;

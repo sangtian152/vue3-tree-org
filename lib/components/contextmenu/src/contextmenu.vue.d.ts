@@ -1,7 +1,7 @@
 declare const _default: import("vue").DefineComponent<{
     readonly modelValue: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, unknown, true>;
     readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
-    readonly node: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly node: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").INode>, unknown, unknown, unknown, true>;
     readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, unknown, unknown>;
     readonly x: NumberConstructor;
     readonly y: NumberConstructor;
@@ -27,19 +27,21 @@ declare const _default: import("vue").DefineComponent<{
     copyText: import("vue").Ref<string>;
     oldData: {};
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    onNodeDelete: (data: Record<string, any>) => boolean;
+    onNodeDelete: (data: Record<string, any>, node: import("../../../utils/types").INode) => boolean;
     onNodeCopy: (str: string) => boolean;
     contextmenu: (arg: {
-        node: Record<string, any>;
+        node: import("../../../utils/types").INode;
+        data: Record<string, any>;
         command: string | null;
     }) => boolean;
+    onNodeFocus: (data: Record<string, any>) => boolean;
     opened: () => boolean;
     closed: () => boolean;
     'update:modelValue': (value: boolean) => boolean;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     readonly modelValue: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, unknown, true>;
     readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
-    readonly node: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly node: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<import("../../../utils/types").INode>, unknown, unknown, unknown, true>;
     readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, unknown, unknown>;
     readonly x: NumberConstructor;
     readonly y: NumberConstructor;
@@ -51,17 +53,19 @@ declare const _default: import("vue").DefineComponent<{
     readonly disabled: BooleanConstructor;
 }>> & {
     onContextmenu?: ((arg: {
-        node: Record<string, any>;
+        node: import("../../../utils/types").INode;
+        data: Record<string, any>;
         command: string | null;
     }) => any) | undefined;
-    onOnNodeDelete?: ((data: Record<string, any>) => any) | undefined;
+    onOnNodeDelete?: ((data: Record<string, any>, node: import("../../../utils/types").INode) => any) | undefined;
     onOnNodeCopy?: ((str: string) => any) | undefined;
+    onOnNodeFocus?: ((data: Record<string, any>) => any) | undefined;
     onOpened?: (() => any) | undefined;
     onClosed?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }, {
-    props: Partial<import("../../../utils/types").IKeysObject>;
-    menus: import("../../../utils/types").IMenu[];
-    disabled: boolean;
+    readonly props: Partial<import("../../../utils/types").IKeysObject>;
+    readonly menus: import("../../../utils/types").IMenu[];
+    readonly disabled: boolean;
 }>;
 export default _default;
