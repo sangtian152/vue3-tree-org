@@ -76,7 +76,7 @@ export const useTree = (
     if (Array.isArray(defineMenus)) {
       nodeMenus.value = defineMenus
     } else if (typeof defineMenus === 'function') {
-      nodeMenus.value = defineMenus(e, node)
+      nodeMenus.value = defineMenus(e, node) || []
     }
     contextmenu.value = true
     menuX.value = e.clientX
