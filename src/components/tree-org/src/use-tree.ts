@@ -2,6 +2,7 @@ import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
 import type { SetupContext } from 'vue'
 import type { IMenu, INode, INodeData, IRefs } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
+import { stopClick } from '@/store'
 export const useTree = (
   props: TreeProps,
   { emit }: SetupContext<TreeEmits>,
@@ -11,6 +12,7 @@ export const useTree = (
   const top = ref(0)
   const autoDragging = ref(false)
   function onDrag (x: number, y: number) {
+    stopClick.set(true)
     autoDragging.value = false
     left.value = x
     top.value = y
@@ -46,6 +48,9 @@ export const useTree = (
   }
   function onDragStop (x: number, y: number) {
     preventOutOfBounds(x, y)
+    setTimeout(() => {
+      stopClick.set(false)
+    }, 200)
     emit('on-drag-stop', { x, y })
   }
   const nodeMoving = ref(false)
@@ -120,7 +125,13 @@ export const useTree = (
     preventOutOfBounds(left.value, top.value)
   }
   let timer: any
+  
   function handleClick (e: MouseEvent, node: INode) {
+    // 由于鼠标事件执行顺序
+    // mouseover--> mousedown-->mouseup-->click -->mouseout
+    // 拖拽时会触发node-click
+    // 通过 stopClick 判断，如果执行了拖拽，则不再执行node-click
+    if (stopClick.get()) return
     // 取消上次延时未执行的方法
     clearTimeout(timer)
     // 执行延时
@@ -283,7 +294,7 @@ export const useTree = (
     const { cloneNodeDrag, onlyOneNode, data } = props
     return {
       drag: props.nodeDraggable,
-      dragData: { keys, nodeMoving, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
+      dragData: { keys, nodeMoving, stopClick, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
       handleStart: props.nodeDragStart,
       handleMove: props.nodeDraging,
       beforeDragEnd: props.beforeDragEnd,

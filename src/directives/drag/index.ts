@@ -1,6 +1,7 @@
 import { isObject } from '@/utils/utils'
 import type { IContext, INode, INodeData, IKeysObject } from '@/utils/types'
 import type { ObjectDirective, DirectiveBinding } from 'vue'
+import { stopClick } from '@/store'
 // 递归遍历处理数据
 const recurseData = function (data: INodeData | INodeData[], keys: IKeysObject, cb: { (item:INodeData): void; }) {
   const { children } = keys
@@ -134,6 +135,7 @@ const drag:ObjectDirective = {
       handleEmit('start')
     }
     function moveStart (e: MouseEvent) {
+      stopClick.set(true)
       instance.nodeMoving.value = true
       node.moving = true
       let ndom:any = el
@@ -205,6 +207,9 @@ const drag:ObjectDirective = {
       cloneTree = null
       node.moving = false
       instance.nodeMoving.value = false
+      setTimeout(() => {
+        stopClick.set(false)
+      }, 200)
     }
     function doDragEnd (e: MouseEvent) {
       const movingNode = document.querySelector('.tree-org-node__moving')

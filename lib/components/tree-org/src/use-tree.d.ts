@@ -44,6 +44,10 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
                 children: string;
             };
             nodeMoving: import("vue").Ref<boolean>;
+            stopClick: {
+                get: () => boolean;
+                set: (val: boolean) => void;
+            };
             parenNode: {
                 value: {
                     id: string | number;

@@ -86,6 +86,10 @@ declare const _default: import("vue").DefineComponent<{
                 children: string;
             };
             nodeMoving: import("vue").Ref<boolean>;
+            stopClick: {
+                get: () => boolean;
+                set: (val: boolean) => void;
+            };
             parenNode: {
                 value: {
                     id: string | number;
