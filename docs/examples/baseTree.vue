@@ -21,9 +21,9 @@
           :only-one-node="onlyOneNode"
           :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
-          :node-draging="nodeDragMove"
           :before-drag-end="beforeDragEnd"
-          :node-drag-end="nodeDragEnd"
+          @on-node-drag="nodeDragMove"
+          @on-node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
           @on-expand-all="onExpandAll"
@@ -101,6 +101,7 @@ export default {
     },
     beforeDragEnd(node, targetNode) {
       return new Promise((resolve, reject) => {
+        if (!targetNode) reject()
         if (node.id === targetNode.id) {
           reject()
         } else {

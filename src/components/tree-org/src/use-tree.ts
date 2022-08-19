@@ -295,10 +295,8 @@ export const useTree = (
     return {
       drag: props.nodeDraggable,
       dragData: { keys, nodeMoving, stopClick, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
-      handleStart: props.nodeDragStart,
-      handleMove: props.nodeDraging,
       beforeDragEnd: props.beforeDragEnd,
-      handleEnd: props.nodeDragEnd
+      emit: emit
     }
   })
   watch(() => props.horizontal,

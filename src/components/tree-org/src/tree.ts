@@ -123,6 +123,9 @@ export const treeEmits = {
   'on-contextmenu': (data: any) => isObject(data),
   'on-node-copy': (str: string) => isString(str),
   'on-node-delete': (node: INode) => isObject(node),
+  'on-node-drag-start': (node: INode) => isObject(node),
+  'on-node-drag': (node: INode) => isObject(node),
+  'on-node-drag-end': (node: INode, targetNode: INode) => isObject(node) && isObject(targetNode),
   'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data)
 
 }
