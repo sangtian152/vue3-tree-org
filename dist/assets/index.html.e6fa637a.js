@@ -1,7 +1,0 @@
-import{_ as c,o as i,c as r,a as s,w as a,b as e,d as n,r as l}from"./app.670920f3.js";const d={},u=e("h3",{id:"\u5B89\u88C5",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#\u5B89\u88C5","aria-hidden":"true"},"#"),n(" \u5B89\u88C5")],-1),m=e("div",{class:"language-bash ext-sh line-numbers-mode"},[e("pre",{class:"language-bash"},[e("code",null,[e("span",{class:"token comment"},"# install in your project"),n(`
-`),e("span",{class:"token function"},"yarn"),n(),e("span",{class:"token function"},"add"),n(` vue3-tree-org
-
-`)])]),e("div",{class:"line-numbers","aria-hidden":"true"},[e("div",{class:"line-number"}),e("div",{class:"line-number"}),e("div",{class:"line-number"})])],-1),_=e("div",{class:"language-bash ext-sh line-numbers-mode"},[e("pre",{class:"language-bash"},[e("code",null,[e("span",{class:"token comment"},"# install in your project"),n(`
-`),e("span",{class:"token function"},"npm"),n(),e("span",{class:"token function"},"install"),n(` -S vue3-tree-org
-
-`)])]),e("div",{class:"line-numbers","aria-hidden":"true"},[e("div",{class:"line-number"}),e("div",{class:"line-number"}),e("div",{class:"line-number"})])],-1);function p(h,v){const t=l("CodeGroupItem"),o=l("CodeGroup");return i(),r("div",null,[u,s(o,null,{default:a(()=>[s(t,{title:"YARN",active:""},{default:a(()=>[m]),_:1}),s(t,{title:"NPM"},{default:a(()=>[_]),_:1})]),_:1})])}var f=c(d,[["render",p],["__file","index.html.vue"]]);export{f as default};
