@@ -151,14 +151,14 @@ command相同则执行事件相同，应避免重复</p>
 </tr>
 <tr>
 <td>before-drag-end</td>
-<td>节点拖拽开始结束（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽</td>
+<td>节点拖拽结束前钩子（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽</td>
 <td>Function</td>
 <td>—</td>
 <td>—</td>
 </tr>
 <tr>
 <td>node-drag-end</td>
-<td>节点拖拽开始结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf）</td>
+<td>节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf）</td>
 <td>Function</td>
 <td>—</td>
 <td>—</td>
