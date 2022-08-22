@@ -136,15 +136,15 @@ command相同则执行事件相同，应避免重复</p>
 <td>true</td>
 </tr>
 <tr>
-<td>node-drag-start</td>
-<td>节点拖拽开始（参数当前节点node），4.0版本后将废弃此属性，改为on-node-drag-start事件</td>
+<td><span style="color:red">node-drag-start</span></td>
+<td>节点拖拽开始（参数当前节点node），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag-start事件</span></td>
 <td>Function</td>
 <td>—</td>
 <td>—</td>
 </tr>
 <tr>
-<td>node-draging</td>
-<td>节点拖拽（参数当前节点node），4.0版本后将废弃此属性，改为on-node-drag事件</td>
+<td><span style="color:red">node-draging</span></td>
+<td>节点拖拽（参数当前节点node），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag事件</span></td>
 <td>Function</td>
 <td>—</td>
 <td>—</td>
@@ -157,8 +157,8 @@ command相同则执行事件相同，应避免重复</p>
 <td>—</td>
 </tr>
 <tr>
-<td>node-drag-end</td>
-<td>节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），4.0版本后将废弃此属性，改为on-node-drag-end事件</td>
+<td><span style="color:red">node-drag-end</span></td>
+<td>节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag-end事件</span></td>
 <td>Function</td>
 <td>—</td>
 <td>—</td>
