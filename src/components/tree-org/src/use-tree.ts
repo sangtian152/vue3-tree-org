@@ -125,7 +125,6 @@ export const useTree = (
     preventOutOfBounds(left.value, top.value)
   }
   let timer: any
-  
   function handleClick (e: MouseEvent, node: INode) {
     // 由于鼠标事件执行顺序
     // mouseover--> mousedown-->mouseup-->click -->mouseout

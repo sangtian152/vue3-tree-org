@@ -74,7 +74,7 @@ export const renderBtn = (h:any, node:INode, context:any) => {
   }
   return h('span', {
     class: cls,
-    onDblclick: (e:MouseEvent) => { e.stopPropagation(); },
+    onDblclick: (e:MouseEvent) => { e.stopPropagation() },
     onClick: (e:MouseEvent) => { e.stopPropagation(); expandHandler && expandHandler(e, node) }
   }, children)
 }

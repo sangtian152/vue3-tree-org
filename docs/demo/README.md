@@ -75,10 +75,10 @@ searchTree
 | node-draggable     | 节点是否可拖拽   | Boolean  | true,false  |  true  |
 | clone-node-drag     | 是否拷贝节点拖拽   | Boolean  | true,false  |  true  |
 | only-one-node     | 是否仅拖动当前节点，如果true，仅拖动当前节点，子节点自动添加到当前节点父节点，如果false，则当前节点及子节点一起拖动   | Boolean  | true,false  |  true  |
-| node-drag-start  | 节点拖拽开始（参数当前节点node），4.0版本将废弃此属性，改为on-node-drag-start事件  | Function   |  —   |   —   |
-| node-draging  | 节点拖拽（参数当前节点node），4.0版本将废弃此属性，改为on-node-drag事件  | Function   |  —   |   —   |
-| before-drag-end  | 节点拖拽开始结束（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽  | Function   |  —   |   —   |
-| node-drag-end  | 节点拖拽开始结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），4.0版本将废弃此属性，改为on-node-drag-end事件  | Function   |  —   |   —   |
+| node-drag-start  | 节点拖拽开始（参数当前节点node），4.0版本后将废弃此属性，改为on-node-drag-start事件  | Function   |  —   |   —   |
+| node-draging  | 节点拖拽（参数当前节点node），4.0版本后将废弃此属性，改为on-node-drag事件  | Function   |  —   |   —   |
+| before-drag-end  | 节点拖拽结束前钩子（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽  | Function   |  —   |   —   |
+| node-drag-end  | 节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），4.0版本后将废弃此属性，改为on-node-drag-end事件  | Function   |  —   |   —   |
 | node-add  | 自定义节点新增，覆盖默认新增行为（参数当前节点node）  | Function   |  —   |   —   |
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
@@ -119,9 +119,9 @@ searchTree
 | on-node-blur | 节点失去焦点事件  | e, data  |
 | on-node-copy | 复制节点文本事件，如果设置了node-copy属性，此事件将不会执行  | 复制的文本  |
 | on-node-delete | 删除节点事件，如果设置了node-delete属性，此事件将不会执行  | 删除的节点  |
-| on-node-drag-start | 节点拖拽开始事件，4.0版本新增，代替原node-drag-start属性  | node  |
-| on-node-drag | 节点拖拽事件，4.0版本新增，代替原node-draging属性  | node  |
-| on-node-drag-end | 节点拖拽结束事件，4.0版本新增，代替原node-drag-end属性  | node, targetNode  |
+| on-node-drag-start | 节点拖拽开始事件，4.0版本后新增，代替原node-drag-start属性  | node  |
+| on-node-drag | 节点拖拽事件，4.0版本后新增，代替原node-draging属性  | node  |
+| on-node-drag-end | 节点拖拽结束事件，4.0版本后新增，代替原node-drag-end属性  | node, targetNode  |
 | on-contextmenu | 右键菜单点击事件  | {command, node}  |
 | on-zoom | 缩放事件  | scale缩放倍数  |
 | on-drag | 拖拽事件  | x, y  |

@@ -66,6 +66,9 @@ export declare const treeEmits: {
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
     'on-node-delete': (node: INode) => boolean;
+    'on-node-drag-start': (node: INode) => boolean;
+    'on-node-drag': (node: INode) => boolean;
+    'on-node-drag-end': (node: INode, targetNode: INode) => boolean;
     'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => boolean;
 };
 export declare type TreeEmits = typeof treeEmits;
