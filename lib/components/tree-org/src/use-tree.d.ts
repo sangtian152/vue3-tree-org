@@ -76,6 +76,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         };
         handleStart: Function | undefined;
         handleMove: Function | undefined;
+        initNodes: (nodeData: INodeData) => INode;
         beforeDragEnd: Function | undefined;
         handleEnd: Function | undefined;
     }>;

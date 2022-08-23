@@ -1,6 +1,6 @@
 {
   "name": "vue3-tree-org",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "author": "sangtian152",
   "private": false,
   "main": "lib/vue3-tree-org.common.js",

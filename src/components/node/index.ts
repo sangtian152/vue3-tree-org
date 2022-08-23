@@ -33,15 +33,11 @@ export const renderNode = (h:any, data:INode, context:any):any => {
   const { attrs } = context
   const cls = ['tree-org-node']
   const childNodes = []
-  const { expand, $$level, children, id } = data
-  if (expand === undefined && $$level < attrs.defaultExpandLevel) {
-    data.expand = true
-  }
-  const isExpand = data.expand
+  const { expand, children, id } = data
   // 如果是叶子节点则追加leaf事件
   if (isLeaf(data, 'children')) {
     cls.push('is-leaf')
-  } else if (attrs.collapsable && !isExpand) { // 追加是否展开class
+  } else if (attrs.collapsable && !expand) { // 追加是否展开class
     cls.push('collapsed')
   }
   if (data.moving) {
@@ -49,7 +45,7 @@ export const renderNode = (h:any, data:INode, context:any):any => {
   }
   // 渲染label块
   childNodes.push(renderLabel(h, data, context))
-  if (!attrs.collapsable || isExpand) {
+  if (!attrs.collapsable || expand) {
     childNodes.push(renderChildren(h, children, context))
   }
   return withDirectives(h('div', {
@@ -74,7 +70,8 @@ export const renderBtn = (h:any, node:INode, context:any) => {
   }
   return h('span', {
     class: cls,
-    onDblclick: (e:MouseEvent) => { e.stopPropagation(); },
+    onMousedown: (e:MouseEvent) => { e.stopPropagation() },
+    onDblclick: (e:MouseEvent) => { e.stopPropagation() },
     onClick: (e:MouseEvent) => { e.stopPropagation(); expandHandler && expandHandler(e, node) }
   }, children)
 }

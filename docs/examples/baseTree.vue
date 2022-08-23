@@ -19,7 +19,6 @@
           :collapsable="collapsable"
           :label-style="style"
           :only-one-node="onlyOneNode"
-          :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
           :node-draging="nodeDragMove"
           :before-drag-end="beforeDragEnd"
@@ -74,7 +73,7 @@ export default {
       },
       horizontal: false,
       collapsable: true,
-      onlyOneNode: true,
+      onlyOneNode: false,
       expandAll: true,
       disaled: false,
       style: {

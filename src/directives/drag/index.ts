@@ -96,7 +96,7 @@ const addChildNode = function (node: INode, context: IContext) {
 const drag:ObjectDirective = {
   beforeMount (el: HTMLElement, binding: DirectiveBinding) {
     const { l, t } = binding.modifiers
-    const { drag, dragData, node, handleStart, handleMove, beforeDragEnd, handleEnd } = binding.value
+    const { drag, dragData, node, handleStart, handleMove, beforeDragEnd, handleEnd, initNodes } = binding.value
     const { value }:{value: any } = binding
     const instance = { ...dragData }
     el.addEventListener('mousedown', handleDownCb)
@@ -115,9 +115,9 @@ const drag:ObjectDirective = {
         const { children } = keys
         const cloneNode = { ...node.$$data }
         cloneNode[children] = []
-        instance.cloneData.value = cloneNode
+        instance.cloneData.value = initNodes(cloneNode)
       } else {
-        instance.cloneData.value = node.$$data
+        instance.cloneData.value = initNodes(node.$$data)
       }
     }
     function handleDownCb (e: MouseEvent) {
