@@ -250,21 +250,26 @@ export const useTree = (
       nextTick(() => {
         onDragStop(left.value, top.value)
       })
-    } else {
-      toggleExpand(treeData.value, true)
     }
+    toggleExpand(treeData.value, expanded.value)
     emit('on-expand-all', expanded.value)
   }
   function toggleExpand (data: INode | Array<INode>, val: boolean) {
     if (Array.isArray(data)) {
       data.forEach((item) => {
-        expandedKeys.add(item.id)
+        if (val) {
+          expandedKeys.add(item.id)
+        }
+        item.expand = val
         if (item.children) {
           toggleExpand(item.children, val)
         }
       })
     } else {
-      expandedKeys.add(data.id)
+      if (val) {
+        expandedKeys.add(data.id)
+      }
+      data.expand = val
       if (data.children) {
         toggleExpand(data.children, val)
       }
