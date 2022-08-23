@@ -14,19 +14,15 @@
       <div style="height: 400px;">
         <vue3-tree-org
           :data="data"
-          :disabled="disaled"
-          :horizontal="horizontal"
           :collapsable="collapsable"
           :label-style="style"
           :only-one-node="onlyOneNode"
-          :default-expand-level="3"
           :clone-node-drag="cloneNodeDrag"
           :before-drag-end="beforeDragEnd"
           @on-node-drag="nodeDragMove"
           @on-node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
-          @on-expand-all="onExpandAll"
           @on-node-dblclick="onNodeDblclick"
           @on-node-click="onNodeClick"
         />
@@ -74,7 +70,7 @@ export default {
       },
       horizontal: false,
       collapsable: true,
-      onlyOneNode: true,
+      onlyOneNode: false,
       expandAll: true,
       disaled: false,
       style: {
@@ -84,7 +80,7 @@ export default {
     };
   },
   created() {
-    this.toggleExpand(this.data, this.expandAll);
+    // this.toggleExpand(this.data, this.expandAll);
   },
   methods: {
     onMenus({ node, command }) {
@@ -119,7 +115,7 @@ export default {
       ElMessage.info(data.label);
     },
     expandChange() {
-      this.toggleExpand(this.data, this.expandAll);
+      // this.toggleExpand(this.data, this.expandAll);
     },
     toggleExpand(data, val) {
       if (Array.isArray(data)) {

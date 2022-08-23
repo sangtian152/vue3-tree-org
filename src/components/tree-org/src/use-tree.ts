@@ -152,7 +152,10 @@ export const useTree = (
       const left = el.offsetLeft
       const top = el.offsetTop
       node.expand = !node.expand
-      if (!node.expand && node.children) {
+      if (node.expand) {
+        expandedKeys.add(node.id)
+      } else if (!node.expand && node.children) {
+        expandedKeys.delete(node.id)
         collapse(node.children)
       }
       nextTick(() => {
@@ -231,12 +234,12 @@ export const useTree = (
     }
   }
   function collapse (list: Array<INode>) {
-    const { expand, children } = keys
     list.forEach((child) => {
-      if (child[expand]) {
-        child[expand] = false
+      if (child.expand) {
+        child.expand = false
+        expandedKeys.delete(child.id)
       }
-      child[children] && collapse(child[children])
+      child.children && collapse(child.children)
     })
   }
   const expanded = ref(false)
@@ -295,6 +298,7 @@ export const useTree = (
       drag: props.nodeDraggable,
       dragData: { keys, nodeMoving, stopClick, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
       beforeDragEnd: props.beforeDragEnd,
+      initNodes: initNodes,
       emit: emit
     }
   })
@@ -304,7 +308,10 @@ export const useTree = (
         onDragStop(left.value, top.value)
       })
     })
+
+  const expandedKeys = new Set()
   function initNodes (nodeData: INodeData) {
+    const { defaultExpandLevel = 0 } = props
     const data2node = (data: INodeData, level: number): INode => {
       const { id, label, pid, expand, children } = keys
       const cloneData = {}
@@ -315,12 +322,19 @@ export const useTree = (
       })
       const childNodes = (data[children] as Array<INodeData>)
       const childLevel = level + 1
+      const _expand = data[expand]
+      const _id = data[id]
+      if (_expand) {
+        expandedKeys.add(_id)
+      } else if (_expand === undefined && level < defaultExpandLevel) {
+        expandedKeys.add(_id)
+      }
       return {
         ...cloneData,
-        id: data[id],
+        id: _id,
         label: data[label],
         pid: data[pid],
-        expand: data[expand],
+        expand: expandedKeys.has(_id),
         children: childNodes ? childNodes.map(child => {
           return data2node(child, childLevel)
         }) : undefined,
@@ -333,8 +347,11 @@ export const useTree = (
   }
   const treeData = ref(initNodes(props.data))
   watch(() => props.data,
-    () => {
+    (newVal, oldVal) => {
       setData(props.data)
+      if (newVal !== oldVal) {
+        expandedKeys.clear()
+      }
     }, {
       deep: true
     })
