@@ -75,6 +75,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
             data: Record<string, any>;
         };
         beforeDragEnd: Function | undefined;
+        initNodes: (nodeData: INodeData) => INode;
         emit: ((event: "on-drag", args_0: Record<string, number>) => void) & ((event: "on-drag-stop", args_0: Record<string, number>) => void) & ((event: "on-restore") => void) & ((event: "on-zoom", val: number) => void) & ((event: "on-expand", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-expand-all", bool: boolean) => void) & ((event: "on-node-blur", e: FocusEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-click", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-dblclick", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-mouseenter", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-mouseleave", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-contextmenu", data: any) => void) & ((event: "on-node-copy", str: string) => void) & ((event: "on-node-delete", node: INode) => void) & ((event: "on-node-drag-start", node: INode) => void) & ((event: "on-node-drag", node: INode) => void) & ((event: "on-node-drag-end", node: INode, targetNode: INode) => void) & ((event: "on-node-focus", e: FocusEvent, data: Record<string, any>, node: INode) => void);
     }>;
     expanded: import("vue").Ref<boolean>;
