@@ -87,6 +87,13 @@ command相同则执行事件相同，应避免重复</p>
 <td>——</td>
 </tr>
 <tr>
+<td>default-expand-keys</td>
+<td>默认展开的节点的 key 的数组</td>
+<td>Array</td>
+<td>——</td>
+<td>——</td>
+</tr>
+<tr>
 <td>disabled</td>
 <td>禁止编辑，设为true后，所有节点不可新增下级、编辑和删除，单个节点禁止编辑，可将节点属性设置disabled为true</td>
 <td>Boolean</td>
@@ -381,6 +388,16 @@ command相同则执行事件相同，应避免重复</p>
 <td>filter</td>
 <td>对树节点进行筛选操作</td>
 <td>接收一个任意类型的参数，该参数会在 filter-node-method 中作为第一个参数</td>
+</tr>
+<tr>
+<td>getExpandKeys</td>
+<td>获取当前展开的key数组</td>
+<td>返回节点的 key 的数组</td>
+</tr>
+<tr>
+<td>setExpandKeys</td>
+<td>设置展开的key数组，接收节点的 key 的数组作为参数</td>
+<td>——</td>
 </tr>
 </tbody>
 </table>

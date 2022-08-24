@@ -68,6 +68,7 @@ searchTree
 | collapsable     | 是否可以展开收起节点   | Boolean  | true,false  |  false  |
 | filter-node-method | 对树节点进行筛选时执行的方法，返回 true 表示这个节点可以显示，返回 false 则表示这个节点会被隐藏 | Function(value, data) | —— | —— |
 | default-expand-level     | 默认展开层级（如果层级内有节点展开属性值为false，该节点不会默认展开）   | Number  | ——  |  ——  |
+| default-expand-keys     | 默认展开的节点的 key 的数组   | Array  | ——  |  ——  |
 | disabled     | 禁止编辑，设为true后，所有节点不可新增下级、编辑和删除，单个节点禁止编辑，可将节点属性设置disabled为true   | Boolean  | true,false  |  true  |
 | scalable     | 架构图是否可缩放   | Boolean  | true,false  |  true  |
 | draggable     | 架构图是否可拖拽，单个节点禁止拖拽，可将节点属性设置noDragging为true   | Boolean  | true,false  |  true  |
@@ -129,6 +130,8 @@ searchTree
 | 事件名      | 说明    | 返回值      |
 |---------- |-------- |---------- |
 | filter | 对树节点进行筛选操作  | 接收一个任意类型的参数，该参数会在 filter-node-method 中作为第一个参数  |
+| getExpandKeys | 获取当前展开的key数组  | 返回节点的 key 的数组  |
+| setExpandKeys | 设置展开的key数组，接收节点的 key 的数组作为参数  | ——  |
 
 ### Slot
 
