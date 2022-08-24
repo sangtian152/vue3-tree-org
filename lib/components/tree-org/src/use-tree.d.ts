@@ -133,6 +133,8 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     zoomOrgchart: (zoom: number) => void;
     restoreOrgchart: () => void;
     handleExpand: (e: MouseEvent, node: INode) => void;
+    getExpandKeys: () => unknown[];
+    setExpandKeys: (keys: Array<number | string>) => void;
     nodeMouseenter: (e: MouseEvent, node: INode) => boolean;
     nodeMouseleave: (e: MouseEvent, node: INode) => boolean;
     nodeContextmenu: (e: MouseEvent, node: INode) => void;

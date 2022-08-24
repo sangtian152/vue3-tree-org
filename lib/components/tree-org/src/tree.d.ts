@@ -29,6 +29,7 @@ export declare const treeProps: {
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
     readonly defaultExpandLevel: NumberConstructor;
+    readonly defaultExpandKeys: import("../../../utils/props").BuildPropReturn<ArrayConstructor, unknown, unknown, () => never[], unknown>;
     readonly beforeDragEnd: FunctionConstructor;
     readonly horizontal: BooleanConstructor;
     readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;

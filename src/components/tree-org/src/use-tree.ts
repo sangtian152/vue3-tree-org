@@ -316,7 +316,14 @@ export const useTree = (
       })
     })
 
-  const expandedKeys = new Set()
+  let expandedKeys = new Set(props.defaultExpandKeys)
+  function getExpandKeys () {
+    return [...expandedKeys]
+  }
+  function setExpandKeys (keys:Array<number|string>) {
+    expandedKeys = new Set(keys)
+    setData(props.data)
+  }
   function initNodes (nodeData: INodeData) {
     const { defaultExpandLevel = 0 } = props
     const data2node = (data: INodeData, level: number): INode => {
@@ -355,10 +362,10 @@ export const useTree = (
   const treeData = ref(initNodes(props.data))
   watch(() => props.data,
     (newVal, oldVal) => {
-      setData(props.data)
       if (newVal !== oldVal) {
-        expandedKeys.clear()
+        expandedKeys = new Set(props.defaultExpandKeys)
       }
+      setData(props.data)
     }, {
       deep: true
     })
@@ -411,6 +418,8 @@ export const useTree = (
     zoomOrgchart,
     restoreOrgchart,
     handleExpand,
+    getExpandKeys,
+    setExpandKeys,
     nodeMouseenter,
     nodeMouseleave,
     nodeContextmenu,
