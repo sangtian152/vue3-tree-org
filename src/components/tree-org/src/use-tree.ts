@@ -363,10 +363,10 @@ export const useTree = (
   const treeData = ref(initNodes(props.data))
   watch(() => props.data,
     (newVal, oldVal) => {
-      setData(props.data)
       if (newVal !== oldVal) {
         expandedKeys = new Set(props.defaultExpandKeys)
       }
+      setData(props.data)
     }, {
       deep: true
     })
