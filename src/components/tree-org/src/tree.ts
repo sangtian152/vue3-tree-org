@@ -2,7 +2,7 @@ import { buildProps, definePropType } from '@/utils/props'
 import { isNumber, isObject, isString } from '@/utils/utils'
 
 import type { ExtractPropTypes } from 'vue'
-import type { INode, INodeData, IMenu, IKeysProps, IMousePosition, DefineMenus } from '@/utils/types'
+import type { INode, INodeData, IMenu, IKeysProps, IMousePosition, DefineMenus, LoadFn } from '@/utils/types'
 export const menus = [
   { name: '复制文本', command: 'copy' },
   { name: '新增节点', command: 'add' },
@@ -75,6 +75,10 @@ export const treeProps = buildProps({
     type: Number,
     default: 260
   },
+  lazy: Boolean, // 懒加载
+  load: {
+    type: definePropType<LoadFn>(Function)
+  }, // 加载子树数据的方法，仅当 lazy 属性为true 时生效
   defaultExpandLevel: Number,
   defaultExpandKeys: {
     type: Array,

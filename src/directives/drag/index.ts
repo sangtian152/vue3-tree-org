@@ -193,7 +193,8 @@ const drag:ObjectDirective = {
         if (before && before.then) {
           before.then(() => {
             doDragEnd(e)
-          })
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+          }, () => {})
         } else if (before !== false) {
           doDragEnd(e)
         }

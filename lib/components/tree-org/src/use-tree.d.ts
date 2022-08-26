@@ -8,6 +8,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         label: string;
         expand: string;
         children: string;
+        isLeaf: string;
     };
     left: import("vue").Ref<number>;
     top: import("vue").Ref<number>;
@@ -42,6 +43,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
                 label: string;
                 expand: string;
                 children: string;
+                isLeaf: string;
             };
             nodeMoving: import("vue").Ref<boolean>;
             stopClick: {

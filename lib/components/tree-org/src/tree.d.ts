@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue';
-import type { INode, INodeData, IMenu, IMousePosition, DefineMenus } from '@/utils/types';
+import type { INode, INodeData, IMenu, IMousePosition, DefineMenus, LoadFn } from '@/utils/types';
 export declare const menus: {
     name: string;
     command: string;
@@ -28,6 +28,8 @@ export declare const treeProps: {
     readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly lazy: BooleanConstructor;
+    readonly load: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<LoadFn>, unknown, unknown, unknown, unknown>;
     readonly defaultExpandLevel: NumberConstructor;
     readonly defaultExpandKeys: import("../../../utils/props").BuildPropReturn<ArrayConstructor, unknown, unknown, () => never[], unknown>;
     readonly beforeDragEnd: FunctionConstructor;

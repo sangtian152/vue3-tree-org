@@ -1,6 +1,6 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
 import type { SetupContext } from 'vue'
-import type { IMenu, INode, INodeData, IRefs } from '@/utils/types'
+import type { IMenu, INode, INodeData, IRefs, LoadFn } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
 import { stopClick } from '@/store'
 export const useTree = (
@@ -161,8 +161,20 @@ export const useTree = (
       nextTick(() => {
         autoDrag(el, left, top)
       })
+      if (props.lazy && props.load) {
+        loadData(node, props.load)
+      }
       emit('on-expand', e, node.$$data, node)
     }
+  }
+  function loadData (node:INode, load: LoadFn) {
+    load(node, (data:Array<INodeData>) => {
+      const { children } = keys
+      node.isLeaf = !data.length
+      if (data.length) {
+        node.$$data[children] = data
+      }
+    })
   }
   function filter (value: any) {
     const filterNodeMethod = props.filterNodeMethod
@@ -193,7 +205,8 @@ export const useTree = (
     pid: 'pid',
     label: 'label',
     expand: 'expand',
-    children: 'children'
+    children: 'children',
+    isLeaf: 'isLeaf'
   }, props.props))
 
   function handleBlur (e: MouseEvent, data: INodeData, node: INode) {
@@ -327,7 +340,7 @@ export const useTree = (
   function initNodes (nodeData: INodeData) {
     const { defaultExpandLevel = 0 } = props
     const data2node = (data: INodeData, level: number): INode => {
-      const { id, label, pid, expand, children } = keys
+      const { id, label, pid, expand, children, isLeaf } = keys
       const cloneData = {}
       Object.keys(data).map(key => {
         if (['hidden', 'disabled', 'className', 'style'].includes(key)) {
@@ -352,6 +365,7 @@ export const useTree = (
         children: childNodes ? childNodes.map(child => {
           return data2node(child, childLevel)
         }) : undefined,
+        isLeaf: data[isLeaf],
         $$level: level,
         $$data: data,
         $$focused: data.focused || false

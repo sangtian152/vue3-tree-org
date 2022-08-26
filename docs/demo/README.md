@@ -57,6 +57,18 @@ searchTree
 
 :::
 
+#### 懒加载子节点
+由于在点击节点时才进行该层数据的获取，默认情况下 Tree 无法预知某个节点是否为叶子节点，所以会为每个节点添加一个展开按钮，如果节点没有下层数据，则点击后展开按钮会消失。同时，你也可以提前告知 Tree 某个节点是否为叶子节点，从而避免在叶子节点前渲染下拉按钮
+:::tip
+启用懒加载之后，默认展开层级（default-expand-level）、默认展开节点数组（default-expand-keys）和工具栏全部展开按钮可能表现异常，应尽量避免使用
+:::
+
+:::demo
+
+lazyTree
+
+:::
+
 ### Attributes
 
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
@@ -80,6 +92,8 @@ searchTree
 | <span style="color:red">node-draging</span>   | 节点拖拽（参数当前节点node），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag事件</span>  | Function   |  —   |   —   |
 | before-drag-end  | 节点拖拽结束前钩子（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽  | Function   |  —   |   —   |
 | <span style="color:red">node-drag-end</span>   | 节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag-end事件</span>  | Function   |  —   |   —   |
+| lazy  | 是否懒加载子节点，需与 load 方法结合使用，4.1版本新增  | boolean   |  —   |   —   |
+| load  | 加载子树数据的方法，仅当 lazy 属性为true 时生效，4.1版本新增  | Function(node, resolve)   |  —   |   false  |
 | node-add  | 自定义节点新增，覆盖默认新增行为（参数当前节点node）  | Function   |  —   |   —   |
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
@@ -107,6 +121,7 @@ searchTree
 | id | 指定节点唯一标识为节点对象的某个属性值 | String | —  |— |
 | pid | 指定父级节点唯一标识为节点对象的某个属性值 | String | —  |— |
 | expand | 指定节点是否展开为节点对象的某个属性值 | String | —  |— |
+| isLeaf | 指定节点对象的某个key用于判断是否叶子节点（该key对应的value应为boolean类型） | String | —  |— |
 
 ### Events
 

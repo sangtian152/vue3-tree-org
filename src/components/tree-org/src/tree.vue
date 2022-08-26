@@ -23,6 +23,7 @@
           <tree-org-node
             :data="treeData"
             :props="keys"
+            :lazy="lazy"
             :horizontal="horizontal"
             :labelStyle="labelStyle"
             :collapsable="collapsable"
