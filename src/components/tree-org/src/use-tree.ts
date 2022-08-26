@@ -155,7 +155,11 @@ export const useTree = (
       if (node.expand) {
         expandedKeys.add(node.id)
         if (props.lazy && props.load) {
-          loadData(node, props.load)
+          loadData(node, props.load, () => {
+            nextTick(() => {
+              autoDrag(el, left, top)
+            })
+          })
         }
       } else if (!node.expand && node.children) {
         expandedKeys.delete(node.id)
@@ -167,12 +171,13 @@ export const useTree = (
       emit('on-expand', e, node.$$data, node)
     }
   }
-  function loadData (node:INode, load: LoadFn) {
+  function loadData (node:INode, load: LoadFn, cb: () => void) {
     load(node, (data:Array<INodeData>) => {
       const { children } = keys
       node.isLeaf = !data.length
       if (data.length) {
         node.$$data[children] = data
+        cb()
       }
     })
   }
