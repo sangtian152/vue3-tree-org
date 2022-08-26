@@ -154,6 +154,9 @@ export const useTree = (
       node.expand = !node.expand
       if (node.expand) {
         expandedKeys.add(node.id)
+        if (props.lazy && props.load) {
+          loadData(node, props.load)
+        }
       } else if (!node.expand && node.children) {
         expandedKeys.delete(node.id)
         collapse(node.children)
@@ -161,9 +164,6 @@ export const useTree = (
       nextTick(() => {
         autoDrag(el, left, top)
       })
-      if (props.lazy && props.load) {
-        loadData(node, props.load)
-      }
       emit('on-expand', e, node.$$data, node)
     }
   }
