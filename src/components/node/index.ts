@@ -118,7 +118,7 @@ export const renderLabel = (h:any, node:INode, context:any) => {
   selectedClassName && selectedKey && selectedKey.includes(node.id) && cls.push(selectedClassName)
   const nodeLabelClass = ['tree-org-node__content']
   if (node.$$root) {
-    nodeLabelClass.push('is-root')
+    nodeLabelClass.push(`is-root_${attrs.suffix}`)
   }
   if (!node.label) {
     nodeLabelClass.push('is-empty')

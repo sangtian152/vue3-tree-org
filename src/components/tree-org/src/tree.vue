@@ -24,6 +24,7 @@
             :data="treeData"
             :props="keys"
             :lazy="lazy"
+            :suffix="suffix"
             :horizontal="horizontal"
             :labelStyle="labelStyle"
             :collapsable="collapsable"

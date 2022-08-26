@@ -14,6 +14,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     top: import("vue").Ref<number>;
     menuX: import("vue").Ref<number>;
     menuY: import("vue").Ref<number>;
+    suffix: string;
     nodeMoving: import("vue").Ref<boolean>;
     zoomStyle: import("vue").ComputedRef<{
         width: string;
@@ -31,7 +32,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         };
     };
     zoomPercent: import("vue").ComputedRef<string>;
-    dragCancel: import("vue").ComputedRef<"" | ".tree-org-node__content:not(.is-root)>.tree-org-node__inner">;
+    dragCancel: import("vue").ComputedRef<string>;
     expandTitle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     fullTiltle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     nodeargs: import("vue").ComputedRef<{

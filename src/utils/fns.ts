@@ -7,7 +7,17 @@ export function isFunction (func: any): boolean {
   return (typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]')
 }
 
-export function snapToGrid (grid: any[], pendingX: number, pendingY: number, scale = 1):IGrid {
+// 生成随机字符串, e表示长度
+export function randomString (e: number) {
+  e = e || 32
+  const t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+  const a = t.length
+  let n = ''
+  for (let i = 0; i < e; i++) n += t.charAt(Math.floor(Math.random() * a))
+  return n
+}
+
+export function snapToGrid (grid: any[], pendingX: number, pendingY: number, scale = 1): IGrid {
   const deltaX = Math.round((pendingX / scale) / grid[0]) * grid[0]
   const deltaY = Math.round((pendingY / scale) / grid[1]) * grid[1]
 

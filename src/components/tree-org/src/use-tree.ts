@@ -1,4 +1,5 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
+import { randomString } from "@/utils/fns"
 import type { SetupContext } from 'vue'
 import type { IMenu, INode, INodeData, IRefs, LoadFn } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
@@ -147,14 +148,16 @@ export const useTree = (
   }
   function handleExpand (e: MouseEvent, node: INode) {
     e.stopPropagation()
-    const el = document.querySelector('.is-root') as HTMLElement
+    const el = document.querySelector(`.is-root_${suffix}`) as HTMLElement
     if (el) {
       const left = el.offsetLeft
       const top = el.offsetTop
       node.expand = !node.expand
+      let needMove = true
       if (node.expand) {
         expandedKeys.add(node.id)
         if (props.lazy && props.load) {
+          needMove = false
           loadData(node, props.load, () => {
             nextTick(() => {
               autoDrag(el, left, top)
@@ -166,18 +169,18 @@ export const useTree = (
         collapse(node.children)
       }
       nextTick(() => {
-        autoDrag(el, left, top)
+        needMove && autoDrag(el, left, top)
       })
       emit('on-expand', e, node.$$data, node)
     }
   }
   function loadData (node:INode, load: LoadFn, cb: () => void) {
-    load(node, (data:Array<INodeData>) => {
+    load(node, (data:Array<INodeData>, auto:boolean) => {
       const { children } = keys
       node.isLeaf = !data.length
       if (data.length) {
         node.$$data[children] = data
-        cb()
+        auto && cb()
       }
     })
   }
@@ -308,7 +311,7 @@ export const useTree = (
     return `${Math.round(scale.value * 100)}%`
   })
   const dragCancel = computed(() => {
-    return props.draggableOnNode && !props.nodeDraggable ? '' : '.tree-org-node__content:not(.is-root)>.tree-org-node__inner'
+    return props.draggableOnNode && !props.nodeDraggable ? '' : `.tree-org-node__content:not(.is-root_${suffix})>.tree-org-node__inner`
   })
   const expandTitle = computed(() => {
     return expanded.value ? '收起全部节点' : '展开全部节点'
@@ -405,12 +408,16 @@ export const useTree = (
       tools.visible = false
     }
   })
+  
+  const suffix = randomString(6)
+
   return {
     keys,
     left,
     top,
     menuX,
     menuY,
+    suffix,
     nodeMoving,
     zoomStyle,
     tools,
