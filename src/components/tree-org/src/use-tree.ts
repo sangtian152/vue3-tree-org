@@ -1,5 +1,5 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
-import { randomString } from "@/utils/fns"
+import { randomString } from '@/utils/fns'
 import type { SetupContext } from 'vue'
 import type { IMenu, INode, INodeData, IRefs, LoadFn } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
@@ -408,7 +408,7 @@ export const useTree = (
       tools.visible = false
     }
   })
-  
+
   const suffix = randomString(6)
 
   return {
