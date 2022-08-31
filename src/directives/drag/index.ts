@@ -125,7 +125,7 @@ const drag:ObjectDirective = {
       if (drag === false ||
         e.button !== 0 ||
         node.focused ||
-        node.noDragging ||
+        node.$$data.noDragging ||
         target.className.indexOf('tree-org-node-btn') > -1) {
         return false
       }
