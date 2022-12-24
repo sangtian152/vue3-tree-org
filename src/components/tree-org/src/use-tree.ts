@@ -216,7 +216,9 @@ export const useTree = (
     children: 'children',
     isLeaf: 'isLeaf'
   }, props.props))
-
+  function handleFocus (e: MouseEvent, data: INodeData, node: INode) {
+    emit('on-node-focus', e, data, node)
+  }
   function handleBlur (e: MouseEvent, data: INodeData, node: INode) {
     const { id, label } = keys
     const childNodes = menuData.value.children || []
@@ -318,6 +320,10 @@ export const useTree = (
   })
   const fullTiltle = computed(() => {
     return expanded.value ? '收起全部节点' : '展开全部节点'
+  })
+  const isEmpty = computed(() => {
+    console.log(props.data, treeData.value, Object.keys(treeData.value))
+    return Object.keys(treeData.value).length === 0
   })
   const cloneData = ref({})
   const nodeargs = computed(() => {
@@ -449,6 +455,7 @@ export const useTree = (
     nodeMouseenter,
     nodeMouseleave,
     nodeContextmenu,
+    handleFocus,
     handleBlur,
     handleClick,
     handleDblclick

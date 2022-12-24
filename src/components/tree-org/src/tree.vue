@@ -40,11 +40,7 @@
             @node-mouseenter="nodeMouseenter"
             @node-mouseleave="nodeMouseleave"
             @node-contextmenu="nodeContextmenu"
-            @node-focus="
-              (e, data, node) => {
-                $emit('on-node-focus', e, data, node);
-              }
-            "
+            @node-focus="handleFocus"
             @node-blur="handleBlur"
           >
           <template v-if="defaultSlot" v-slot:default="{node}">

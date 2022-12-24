@@ -65,7 +65,7 @@ export declare const treeEmits: {
     'on-node-mouseleave': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
-    'on-node-delete': (node: INode) => boolean;
+    'on-node-delete': (node: INodeData) => boolean;
     'on-node-drag-start': (node: INode) => boolean;
     'on-node-drag': (node: INode) => boolean;
     'on-node-drag-end': (node: INode, targetNode: INode) => boolean;

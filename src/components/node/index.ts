@@ -187,7 +187,7 @@ export const renderChildren = (h:any, list:any, context:any) => {
 }
 
 export const TreeOrgNode = (props: any, context: any) => {
-  if (!props.data) return ''
+  if (!props.data || Object.keys(props.data).length === 0) return ''
   props.data.$$root = !props.isClone
   return renderNode(h, props.data, context)
 }
