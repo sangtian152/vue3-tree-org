@@ -125,13 +125,14 @@ export const useTree = (
   function autoDrag (el: HTMLElement, lf: number, tp: number) {
     // 计算偏移量，保持根节点相对页面位置不变
     autoDragging.value = true
-    if (!props.center) {
+    console.log(props.center, props.horizontal, el.offsetLeft, lf)
+    if (!props.center || props.horizontal) {
       const x = el.offsetLeft - lf
-      const y = el.offsetTop - tp
       left.value -= x
-      top.value -= y
-      preventOutOfBounds(left.value, top.value)
     }
+    const y = el.offsetTop - tp
+    top.value -= y
+    preventOutOfBounds(left.value, top.value)
   }
   let timer: any
   function handleClick (e: MouseEvent, node: INode) {

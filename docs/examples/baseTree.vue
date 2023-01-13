@@ -14,6 +14,8 @@
       <div style="height: 400px;">
         <vue3-tree-org
           :data="data"
+          center
+          :horizontal="horizontal"
           :collapsable="collapsable"
           :label-style="style"
           :only-one-node="onlyOneNode"
@@ -68,7 +70,7 @@ export default {
               {"id":4,"pid":1,"label":"业务部"}
           ]
       },
-      horizontal: false,
+      horizontal: true,
       collapsable: true,
       onlyOneNode: false,
       expandAll: true,

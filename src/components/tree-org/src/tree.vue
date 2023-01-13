@@ -3,7 +3,7 @@
     <div
       ref="zoomRef"
       class="zoom-container"
-      :class="{'is-center': center}"
+      :class="{'is-center': center && !horizontal}"
       :style="zoomStyle"
       @wheel="zoomWheel"
     >
