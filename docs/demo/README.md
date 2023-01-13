@@ -74,7 +74,7 @@ lazyTree
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | data     | 数据源,必须传入   | Object  |  —   |   —   |
-| center     | 是否居中   | Boolean  |  —   |   false   |
+| center     | 是否水平居中   | Boolean  |  —   |   false   |
 | props    | 配置选项，具体看下表   | Object  |  —   |  {id: 'id', pid: 'pid', label: 'label', expand: 'expand',children: 'children'  }  |
 | toolBar    | 工具栏   | [Object, Boolean] |  —   |  {scale: true, restore: true, expand: true, zoom: true, fullscreen: true,  }  |
 | horizontal     | 是否是横向   | Boolean  | true,false  |  false  |

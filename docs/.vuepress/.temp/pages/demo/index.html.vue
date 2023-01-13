@@ -52,7 +52,7 @@ command相同则执行事件相同，应避免重复</p>
 </tr>
 <tr>
 <td>center</td>
-<td>是否居中</td>
+<td>是否水平居中</td>
 <td>Boolean</td>
 <td>—</td>
 <td>false</td>
