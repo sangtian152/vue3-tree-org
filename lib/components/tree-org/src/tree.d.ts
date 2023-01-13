@@ -6,6 +6,7 @@ export declare const menus: {
 }[];
 export declare const treeProps: {
     readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly center: BooleanConstructor;
     readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, () => {
         id: string;
         pid: string;

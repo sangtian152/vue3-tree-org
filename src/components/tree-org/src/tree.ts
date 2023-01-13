@@ -15,6 +15,7 @@ export const treeProps = buildProps({
     type: Object,
     required: true
   },
+  center: Boolean,
   props: {
     type: definePropType<IKeysProps>(Object),
     default: () => ({

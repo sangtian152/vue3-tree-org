@@ -51,6 +51,13 @@ command相同则执行事件相同，应避免重复</p>
 <td>—</td>
 </tr>
 <tr>
+<td>center</td>
+<td>是否居中</td>
+<td>Boolean</td>
+<td>—</td>
+<td>false</td>
+</tr>
+<tr>
 <td>props</td>
 <td>配置选项，具体看下表</td>
 <td>Object</td>

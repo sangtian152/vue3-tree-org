@@ -22,7 +22,7 @@ export const useTree = (
   function preventOutOfBounds (x: number, y: number) {
     const zoom = refs.zoomRef.value as HTMLElement
     const orgchart = refs.treeRef.value as HTMLElement
-    const maxX = zoom.clientWidth / 2
+    let maxX = zoom.clientWidth / 2
     const maxY = zoom.clientHeight / 2
     let minY = zoom.clientHeight - orgchart.clientHeight
     let minX = zoom.clientWidth - orgchart.clientWidth
@@ -31,6 +31,12 @@ export const useTree = (
     }
     if (minX > 0) {
       minX = 0
+    }
+    if (props.center) {
+      const deviation = (zoom.clientWidth - orgchart.clientWidth) / 2
+      minX = minX - deviation
+      maxX = maxX - deviation
+      // console.log(props.center, minX, 38)
     }
     if (x > maxX) {
       left.value = maxX
@@ -119,11 +125,13 @@ export const useTree = (
   function autoDrag (el: HTMLElement, lf: number, tp: number) {
     // 计算偏移量，保持根节点相对页面位置不变
     autoDragging.value = true
-    const x = el.offsetLeft - lf
-    const y = el.offsetTop - tp
-    left.value -= x
-    top.value -= y
-    preventOutOfBounds(left.value, top.value)
+    if (!props.center) {
+      const x = el.offsetLeft - lf
+      const y = el.offsetTop - tp
+      left.value -= x
+      top.value -= y
+      preventOutOfBounds(left.value, top.value)
+    }
   }
   let timer: any
   function handleClick (e: MouseEvent, node: INode) {
