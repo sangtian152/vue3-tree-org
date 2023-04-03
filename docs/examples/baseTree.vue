@@ -18,6 +18,7 @@
           :horizontal="horizontal"
           :collapsable="collapsable"
           :label-style="style"
+          :render-content="renderContent"
           :only-one-node="onlyOneNode"
           :clone-node-drag="cloneNodeDrag"
           :before-drag-end="beforeDragEnd"
@@ -85,6 +86,10 @@ export default {
     // this.toggleExpand(this.data, this.expandAll);
   },
   methods: {
+    renderContent(...arg) {
+      console.log(arg)
+      return '11'
+    },
     onMenus({ node, command }) {
       console.log(node, command);
     },
