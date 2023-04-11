@@ -8,11 +8,13 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         label: string;
         expand: string;
         children: string;
+        isLeaf: string;
     };
     left: import("vue").Ref<number>;
     top: import("vue").Ref<number>;
     menuX: import("vue").Ref<number>;
     menuY: import("vue").Ref<number>;
+    suffix: string;
     nodeMoving: import("vue").Ref<boolean>;
     zoomStyle: import("vue").ComputedRef<{
         width: string;
@@ -30,7 +32,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
         };
     };
     zoomPercent: import("vue").ComputedRef<string>;
-    dragCancel: import("vue").ComputedRef<"" | ".tree-org-node__content:not(.is-root)>.tree-org-node__inner">;
+    dragCancel: import("vue").ComputedRef<string>;
     expandTitle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     fullTiltle: import("vue").ComputedRef<"收起全部节点" | "展开全部节点">;
     nodeargs: import("vue").ComputedRef<{
@@ -42,6 +44,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
                 label: string;
                 expand: string;
                 children: string;
+                isLeaf: string;
             };
             nodeMoving: import("vue").Ref<boolean>;
             stopClick: {
@@ -74,11 +77,9 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
             cloneData: import("vue").Ref<{}>;
             data: Record<string, any>;
         };
-        handleStart: Function | undefined;
-        handleMove: Function | undefined;
-        initNodes: (nodeData: INodeData) => INode;
         beforeDragEnd: Function | undefined;
-        handleEnd: Function | undefined;
+        initNodes: (nodeData: INodeData) => INode;
+        emit: ((event: "on-drag", args_0: Record<string, number>) => void) & ((event: "on-drag-stop", args_0: Record<string, number>) => void) & ((event: "on-restore") => void) & ((event: "on-zoom", val: number) => void) & ((event: "on-expand", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-expand-all", bool: boolean) => void) & ((event: "on-node-blur", e: FocusEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-click", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-dblclick", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-mouseenter", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-node-mouseleave", e: MouseEvent, data: Record<string, any>, node: INode) => void) & ((event: "on-contextmenu", data: any) => void) & ((event: "on-node-copy", str: string) => void) & ((event: "on-node-delete", node: Record<string, any>) => void) & ((event: "on-node-drag-start", node: INode) => void) & ((event: "on-node-drag", node: INode) => void) & ((event: "on-node-drag-end", node: INode, targetNode: INode) => void) & ((event: "on-node-focus", e: FocusEvent, data: Record<string, any>, node: INode) => void);
     }>;
     expanded: import("vue").Ref<boolean>;
     fullscreen: import("vue").Ref<boolean>;
@@ -140,6 +141,7 @@ export declare const useTree: (props: TreeProps, { emit }: SetupContext<TreeEmit
     nodeMouseenter: (e: MouseEvent, node: INode) => boolean;
     nodeMouseleave: (e: MouseEvent, node: INode) => boolean;
     nodeContextmenu: (e: MouseEvent, node: INode) => void;
+    handleFocus: (e: MouseEvent, data: INodeData, node: INode) => void;
     handleBlur: (e: MouseEvent, data: INodeData, node: INode) => void;
     handleClick: (e: MouseEvent, node: INode) => void;
     handleDblclick: (e: MouseEvent, node: INode) => void;

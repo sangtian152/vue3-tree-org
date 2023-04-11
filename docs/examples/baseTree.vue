@@ -14,18 +14,17 @@
       <div style="height: 400px;">
         <vue3-tree-org
           :data="data"
-          :disabled="disaled"
+          center
           :horizontal="horizontal"
           :collapsable="collapsable"
           :label-style="style"
           :only-one-node="onlyOneNode"
           :clone-node-drag="cloneNodeDrag"
-          :node-draging="nodeDragMove"
           :before-drag-end="beforeDragEnd"
-          :node-drag-end="nodeDragEnd"
+          @on-node-drag="nodeDragMove"
+          @on-node-drag-end="nodeDragEnd"
           @on-contextmenu="onMenus"
           @on-expand="onExpand"
-          @on-expand-all="onExpandAll"
           @on-node-dblclick="onNodeDblclick"
           @on-node-click="onNodeClick"
         />
@@ -71,7 +70,7 @@ export default {
               {"id":4,"pid":1,"label":"业务部"}
           ]
       },
-      horizontal: false,
+      horizontal: true,
       collapsable: true,
       onlyOneNode: false,
       expandAll: true,
@@ -83,7 +82,7 @@ export default {
     };
   },
   created() {
-    this.toggleExpand(this.data, this.expandAll);
+    // this.toggleExpand(this.data, this.expandAll);
   },
   methods: {
     onMenus({ node, command }) {
@@ -100,6 +99,7 @@ export default {
     },
     beforeDragEnd(node, targetNode) {
       return new Promise((resolve, reject) => {
+        if (!targetNode) reject()
         if (node.id === targetNode.id) {
           reject()
         } else {
@@ -117,7 +117,7 @@ export default {
       ElMessage.info(data.label);
     },
     expandChange() {
-      this.toggleExpand(this.data, this.expandAll);
+      // this.toggleExpand(this.data, this.expandAll);
     },
     toggleExpand(data, val) {
       if (Array.isArray(data)) {

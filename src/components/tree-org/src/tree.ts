@@ -2,7 +2,7 @@ import { buildProps, definePropType } from '@/utils/props'
 import { isNumber, isObject, isString } from '@/utils/utils'
 
 import type { ExtractPropTypes } from 'vue'
-import type { INode, INodeData, IMenu, IKeysProps, IMousePosition, DefineMenus } from '@/utils/types'
+import type { INode, INodeData, IMenu, IKeysProps, IMousePosition, DefineMenus, LoadFn } from '@/utils/types'
 export const menus = [
   { name: '复制文本', command: 'copy' },
   { name: '新增节点', command: 'add' },
@@ -15,6 +15,7 @@ export const treeProps = buildProps({
     type: Object,
     required: true
   },
+  center: Boolean,
   props: {
     type: definePropType<IKeysProps>(Object),
     default: () => ({
@@ -75,6 +76,10 @@ export const treeProps = buildProps({
     type: Number,
     default: 260
   },
+  lazy: Boolean, // 懒加载
+  load: {
+    type: definePropType<LoadFn>(Function)
+  }, // 加载子树数据的方法，仅当 lazy 属性为true 时生效
   defaultExpandLevel: Number,
   defaultExpandKeys: {
     type: Array,
@@ -82,10 +87,7 @@ export const treeProps = buildProps({
       return []
     }
   },
-  nodeDragStart: Function,
-  nodeDraging: Function,
   beforeDragEnd: Function,
-  nodeDragEnd: Function,
   horizontal: Boolean,
   selectedKey: {
     type: [Array, String, Number]
@@ -128,7 +130,10 @@ export const treeEmits = {
   'on-node-mouseleave': (e: MouseEvent, data: INodeData, node: INode) => e instanceof MouseEvent && isObject(node) && isObject(data),
   'on-contextmenu': (data: any) => isObject(data),
   'on-node-copy': (str: string) => isString(str),
-  'on-node-delete': (node: INode) => isObject(node),
+  'on-node-delete': (node: INodeData) => isObject(node),
+  'on-node-drag-start': (node: INode) => isObject(node),
+  'on-node-drag': (node: INode) => isObject(node),
+  'on-node-drag-end': (node: INode, targetNode: INode) => isObject(node) && isObject(targetNode),
   'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => e instanceof FocusEvent && isObject(node) && isObject(data)
 
 }

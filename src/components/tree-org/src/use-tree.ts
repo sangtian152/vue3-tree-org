@@ -1,6 +1,7 @@
 import { ref, nextTick, watch, computed, reactive, onBeforeMount } from 'vue'
+import { randomString } from '@/utils/fns'
 import type { SetupContext } from 'vue'
-import type { IMenu, INode, INodeData, IRefs } from '@/utils/types'
+import type { IMenu, INode, INodeData, IRefs, LoadFn } from '@/utils/types'
 import type { TreeEmits, TreeProps } from './tree'
 import { stopClick } from '@/store'
 export const useTree = (
@@ -21,7 +22,7 @@ export const useTree = (
   function preventOutOfBounds (x: number, y: number) {
     const zoom = refs.zoomRef.value as HTMLElement
     const orgchart = refs.treeRef.value as HTMLElement
-    const maxX = zoom.clientWidth / 2
+    let maxX = zoom.clientWidth / 2
     const maxY = zoom.clientHeight / 2
     let minY = zoom.clientHeight - orgchart.clientHeight
     let minX = zoom.clientWidth - orgchart.clientWidth
@@ -30,6 +31,12 @@ export const useTree = (
     }
     if (minX > 0) {
       minX = 0
+    }
+    if (props.center) {
+      const deviation = (zoom.clientWidth - orgchart.clientWidth) / 2
+      minX = minX - deviation
+      maxX = maxX - deviation
+      // console.log(props.center, minX, 38)
     }
     if (x > maxX) {
       left.value = maxX
@@ -118,9 +125,12 @@ export const useTree = (
   function autoDrag (el: HTMLElement, lf: number, tp: number) {
     // 计算偏移量，保持根节点相对页面位置不变
     autoDragging.value = true
-    const x = el.offsetLeft - lf
+    console.log(props.center, props.horizontal, el.offsetLeft, lf)
+    if (!props.center || props.horizontal) {
+      const x = el.offsetLeft - lf
+      left.value -= x
+    }
     const y = el.offsetTop - tp
-    left.value -= x
     top.value -= y
     preventOutOfBounds(left.value, top.value)
   }
@@ -147,22 +157,41 @@ export const useTree = (
   }
   function handleExpand (e: MouseEvent, node: INode) {
     e.stopPropagation()
-    const el = document.querySelector('.is-root') as HTMLElement
+    const el = document.querySelector(`.is-root_${suffix}`) as HTMLElement
     if (el) {
       const left = el.offsetLeft
       const top = el.offsetTop
       node.expand = !node.expand
+      let needMove = true
       if (node.expand) {
         expandedKeys.add(node.id)
+        if (props.lazy && props.load) {
+          needMove = false
+          loadData(node, props.load, () => {
+            nextTick(() => {
+              autoDrag(el, left, top)
+            })
+          })
+        }
       } else if (!node.expand && node.children) {
         expandedKeys.delete(node.id)
         collapse(node.children)
       }
       nextTick(() => {
-        autoDrag(el, left, top)
+        needMove && autoDrag(el, left, top)
       })
       emit('on-expand', e, node.$$data, node)
     }
+  }
+  function loadData (node:INode, load: LoadFn, cb: () => void) {
+    load(node, (data:Array<INodeData>, auto:boolean) => {
+      const { children } = keys
+      node.isLeaf = !data.length
+      if (data.length) {
+        node.$$data[children] = data
+        auto && cb()
+      }
+    })
   }
   function filter (value: any) {
     const filterNodeMethod = props.filterNodeMethod
@@ -193,9 +222,12 @@ export const useTree = (
     pid: 'pid',
     label: 'label',
     expand: 'expand',
-    children: 'children'
+    children: 'children',
+    isLeaf: 'isLeaf'
   }, props.props))
-
+  function handleFocus (e: MouseEvent, data: INodeData, node: INode) {
+    emit('on-node-focus', e, data, node)
+  }
   function handleBlur (e: MouseEvent, data: INodeData, node: INode) {
     const { id, label } = keys
     const childNodes = menuData.value.children || []
@@ -261,6 +293,9 @@ export const useTree = (
           expandedKeys.add(item.id)
         }
         item.expand = val
+        if (val) {
+          expandedKeys.add(item.id)
+        }
         if (item.children) {
           toggleExpand(item.children, val)
         }
@@ -270,6 +305,9 @@ export const useTree = (
         expandedKeys.add(data.id)
       }
       data.expand = val
+      if (val) {
+        expandedKeys.add(data.id)
+      }
       if (data.children) {
         toggleExpand(data.children, val)
       }
@@ -290,7 +328,7 @@ export const useTree = (
     return `${Math.round(scale.value * 100)}%`
   })
   const dragCancel = computed(() => {
-    return props.draggableOnNode && !props.nodeDraggable ? '' : '.tree-org-node__content:not(.is-root)>.tree-org-node__inner'
+    return props.draggableOnNode && !props.nodeDraggable ? '' : `.tree-org-node__content:not(.is-root_${suffix})>.tree-org-node__inner`
   })
   const expandTitle = computed(() => {
     return expanded.value ? '收起全部节点' : '展开全部节点'
@@ -304,11 +342,9 @@ export const useTree = (
     return {
       drag: props.nodeDraggable,
       dragData: { keys, nodeMoving, stopClick, parenNode, cloneNodeDrag, onlyOneNode, contextmenu, cloneData, data },
-      handleStart: props.nodeDragStart,
-      handleMove: props.nodeDraging,
-      initNodes: initNodes,
       beforeDragEnd: props.beforeDragEnd,
-      handleEnd: props.nodeDragEnd
+      initNodes: initNodes,
+      emit: emit
     }
   })
   watch(() => props.horizontal,
@@ -328,7 +364,7 @@ export const useTree = (
   function initNodes (nodeData: INodeData) {
     const { defaultExpandLevel = 0 } = props
     const data2node = (data: INodeData, level: number): INode => {
-      const { id, label, pid, expand, children } = keys
+      const { id, label, pid, expand, children, isLeaf } = keys
       const cloneData = {}
       Object.keys(data).map(key => {
         if (['hidden', 'disabled', 'className', 'style'].includes(key)) {
@@ -353,6 +389,7 @@ export const useTree = (
         children: childNodes ? childNodes.map(child => {
           return data2node(child, childLevel)
         }) : undefined,
+        isLeaf: data[isLeaf],
         $$level: level,
         $$data: data,
         $$focused: data.focused || false
@@ -387,12 +424,16 @@ export const useTree = (
       tools.visible = false
     }
   })
+
+  const suffix = randomString(6)
+
   return {
     keys,
     left,
     top,
     menuX,
     menuY,
+    suffix,
     nodeMoving,
     zoomStyle,
     tools,
@@ -424,6 +465,7 @@ export const useTree = (
     nodeMouseenter,
     nodeMouseleave,
     nodeContextmenu,
+    handleFocus,
     handleBlur,
     handleClick,
     handleDblclick

@@ -20,6 +20,10 @@
     overflow: hidden;
     text-align: center;
     transform-origin: left top;
+    &.is-center {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 .tree-org {

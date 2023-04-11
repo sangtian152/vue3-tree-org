@@ -1,7 +1,7 @@
 import { mdPlugin } from './config/plugins'
-const { path } = require('@vuepress/utils')
+import { path } from '@vuepress/utils'
 // import type { UserConfig } from 'vitepress'
-const { defaultTheme } = require('@vuepress/theme-default')
+import { defaultTheme } from '@vuepress/theme-default'
 
 const buildTransformers = () => {
     const transformer = () => {

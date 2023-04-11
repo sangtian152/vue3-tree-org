@@ -47,8 +47,13 @@ export interface IKeysObject {
     label: string;
     expand: string;
     children: string;
+    isLeaf: string;
 }
 
 export type IKeysProps = Partial<IKeysObject>
 
 export type DefineMenus = (e: MouseEvent, node: INode) => IMenu[]
+
+export type LoadCb = (data: INodeData[], auto:boolean) => void
+
+export type LoadFn = (node: INode, cb: LoadCb) => void

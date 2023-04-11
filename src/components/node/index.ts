@@ -24,8 +24,9 @@ function createListener (handler:any, node:INode) {
   }
 }
 // 判断是否叶子节点
-const isLeaf = (data:INode, prop:string) => {
-  return !(Array.isArray(data[prop]) && data[prop].length > 0) || data.isLeaf
+const isLeaf = (data:INode, prop:string, lazy:boolean) => {
+  const hasChild = Array.isArray(data[prop]) && data[prop].length > 0
+  return (!hasChild && !lazy) || data.isLeaf
 }
 
 // 创建 node 节点
@@ -35,7 +36,7 @@ export const renderNode = (h:any, data:INode, context:any):any => {
   const childNodes = []
   const { expand, children, id } = data
   // 如果是叶子节点则追加leaf事件
-  if (isLeaf(data, 'children')) {
+  if (isLeaf(data, 'children', attrs.lazy)) {
     cls.push('is-leaf')
   } else if (attrs.collapsable && !expand) { // 追加是否展开class
     cls.push('collapsed')
@@ -95,7 +96,7 @@ export const renderLabel = (h:any, node:INode, context:any) => {
       class: 'tree-org-node__text'
     }, label))
   }
-  if (attrs.collapsable && !isLeaf(node, 'children')) {
+  if (attrs.collapsable && !isLeaf(node, 'children', attrs.lazy)) {
     childNodes.push(renderBtn(h, node, context))
   }
 
@@ -117,7 +118,7 @@ export const renderLabel = (h:any, node:INode, context:any) => {
   selectedClassName && selectedKey && selectedKey.includes(node.id) && cls.push(selectedClassName)
   const nodeLabelClass = ['tree-org-node__content']
   if (node.$$root) {
-    nodeLabelClass.push('is-root')
+    nodeLabelClass.push(`is-root_${attrs.suffix}`)
   }
   if (!node.label) {
     nodeLabelClass.push('is-empty')
@@ -186,7 +187,7 @@ export const renderChildren = (h:any, list:any, context:any) => {
 }
 
 export const TreeOrgNode = (props: any, context: any) => {
-  if (!props.data) return ''
+  if (!props.data || Object.keys(props.data).length === 0) return ''
   props.data.$$root = !props.isClone
   return renderNode(h, props.data, context)
 }

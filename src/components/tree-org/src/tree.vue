@@ -3,6 +3,7 @@
     <div
       ref="zoomRef"
       class="zoom-container"
+      :class="{'is-center': center && !horizontal}"
       :style="zoomStyle"
       @wheel="zoomWheel"
     >
@@ -23,6 +24,8 @@
           <tree-org-node
             :data="treeData"
             :props="keys"
+            :lazy="lazy"
+            :suffix="suffix"
             :horizontal="horizontal"
             :labelStyle="labelStyle"
             :collapsable="collapsable"
@@ -38,11 +41,7 @@
             @node-mouseenter="nodeMouseenter"
             @node-mouseleave="nodeMouseleave"
             @node-contextmenu="nodeContextmenu"
-            @node-focus="
-              (e, data, node) => {
-                $emit('on-node-focus', e, data, node);
-              }
-            "
+            @node-focus="handleFocus"
             @node-blur="handleBlur"
           >
           <template v-if="defaultSlot" v-slot:default="{node}">

@@ -57,11 +57,24 @@ searchTree
 
 :::
 
+#### 懒加载子节点
+由于在点击节点时才进行该层数据的获取，默认情况下 Tree 无法预知某个节点是否为叶子节点，所以会为每个节点添加一个展开按钮，如果节点没有下层数据，则点击后展开按钮会消失。同时，你也可以提前告知 Tree 某个节点是否为叶子节点，从而避免在叶子节点前渲染下拉按钮
+:::tip
+启用懒加载之后，默认展开层级（default-expand-level）、默认展开节点数组（default-expand-keys）和工具栏全部展开按钮可能表现异常，应尽量避免使用
+:::
+
+:::demo
+
+lazyTree
+
+:::
+
 ### Attributes
 
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | data     | 数据源,必须传入   | Object  |  —   |   —   |
+| center     | 是否水平居中   | Boolean  |  —   |   false   |
 | props    | 配置选项，具体看下表   | Object  |  —   |  {id: 'id', pid: 'pid', label: 'label', expand: 'expand',children: 'children'  }  |
 | toolBar    | 工具栏   | [Object, Boolean] |  —   |  {scale: true, restore: true, expand: true, zoom: true, fullscreen: true,  }  |
 | horizontal     | 是否是横向   | Boolean  | true,false  |  false  |
@@ -76,10 +89,12 @@ searchTree
 | node-draggable     | 节点是否可拖拽   | Boolean  | true,false  |  true  |
 | clone-node-drag     | 是否拷贝节点拖拽   | Boolean  | true,false  |  true  |
 | only-one-node     | 是否仅拖动当前节点，如果true，仅拖动当前节点，子节点自动添加到当前节点父节点，如果false，则当前节点及子节点一起拖动   | Boolean  | true,false  |  true  |
-| node-drag-start  | 节点拖拽开始（参数当前节点node）  | Function   |  —   |   —   |
-| node-draging  | 节点拖拽（参数当前节点node）  | Function   |  —   |   —   |
+| <span style="color:red">node-drag-start</span>  | 节点拖拽开始（参数当前节点node），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag-start事件</span>  | Function   |  —   |   —   |
+| <span style="color:red">node-draging</span>   | 节点拖拽（参数当前节点node），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag事件</span>  | Function   |  —   |   —   |
 | before-drag-end  | 节点拖拽结束前钩子（参数当前节点node, 目标节点targetNode），若返回 false 或者返回 Promise 且被 reject，则阻止节点拖拽  | Function   |  —   |   —   |
-| node-drag-end  | 节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf）  | Function   |  —   |   —   |
+| <span style="color:red">node-drag-end</span>   | 节点拖拽结束（参数当前节点node, 判断当前节点和目标节点是否同一节点isSelf），<span style="color:red">4.0版本后将废弃此属性，改为on-node-drag-end事件</span>  | Function   |  —   |   —   |
+| lazy  | 是否懒加载子节点，需与 load 方法结合使用，4.1版本新增  | boolean   |  —   |   —   |
+| load  | 加载子树数据的方法，仅当 lazy 属性为true 时生效，4.1版本新增  | Function(node, resolve)   |  —   |   false  |
 | node-add  | 自定义节点新增，覆盖默认新增行为（参数当前节点node）  | Function   |  —   |   —   |
 | node-delete  | 自定义节点删除，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
 | node-edit  | 自定义节点编辑，覆盖默认新增行为（参数当前节点node） | Function   |  —   |   —   |
@@ -107,6 +122,7 @@ searchTree
 | id | 指定节点唯一标识为节点对象的某个属性值 | String | —  |— |
 | pid | 指定父级节点唯一标识为节点对象的某个属性值 | String | —  |— |
 | expand | 指定节点是否展开为节点对象的某个属性值 | String | —  |— |
+| isLeaf | 指定节点对象的某个key用于判断是否叶子节点（该key对应的value应为boolean类型） | String | —  |— |
 
 ### Events
 
@@ -120,6 +136,9 @@ searchTree
 | on-node-blur | 节点失去焦点事件  | e, data  |
 | on-node-copy | 复制节点文本事件，如果设置了node-copy属性，此事件将不会执行  | 复制的文本  |
 | on-node-delete | 删除节点事件，如果设置了node-delete属性，此事件将不会执行  | 删除的节点  |
+| on-node-drag-start | 节点拖拽开始事件，4.0版本后新增，代替原node-drag-start属性  | node  |
+| on-node-drag | 节点拖拽事件，4.0版本后新增，代替原node-draging属性  | node  |
+| on-node-drag-end | 节点拖拽结束事件，4.0版本后新增，代替原node-drag-end属性  | node, targetNode  |
 | on-contextmenu | 右键菜单点击事件  | {command, node}  |
 | on-zoom | 缩放事件  | scale缩放倍数  |
 | on-drag | 拖拽事件  | x, y  |
@@ -131,7 +150,7 @@ searchTree
 |---------- |-------- |---------- |
 | filter | 对树节点进行筛选操作  | 接收一个任意类型的参数，该参数会在 filter-node-method 中作为第一个参数  |
 | getExpandKeys | 获取当前展开的key数组  | 返回节点的 key 的数组  |
-| setExpandKeys | 设置展开的key数组，接收节点的 key 的数组作为参数  | ——  |
+| setExpandKeys | 设置展开的key数组，接收节点的 key 的数组作为参数  |   |
 
 ### Slot
 

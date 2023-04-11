@@ -96,7 +96,7 @@ const addChildNode = function (node: INode, context: IContext) {
 const drag:ObjectDirective = {
   beforeMount (el: HTMLElement, binding: DirectiveBinding) {
     const { l, t } = binding.modifiers
-    const { drag, dragData, node, handleStart, handleMove, beforeDragEnd, handleEnd, initNodes } = binding.value
+    const { drag, dragData, node, emit, beforeDragEnd, initNodes } = binding.value
     const { value }:{value: any } = binding
     const instance = { ...dragData }
     el.addEventListener('mousedown', handleDownCb)
@@ -193,7 +193,8 @@ const drag:ObjectDirective = {
         if (before && before.then) {
           before.then(() => {
             doDragEnd(e)
-          })
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+          }, () => {})
         } else if (before !== false) {
           doDragEnd(e)
         }
@@ -214,23 +215,23 @@ const drag:ObjectDirective = {
     function doDragEnd (e: MouseEvent) {
       const movingNode = document.querySelector('.tree-org-node__moving')
       if (movingNode && movingNode.contains(e.target as HTMLElement)) {
-        handleEmit('end', true)
+        handleEmit('end')
         return false
       }
       addChildNode(node, instance as IContext)
-      handleEmit('end', false)
+      handleEmit('end')
     }
-    function handleEmit (type:string, isSelf?:boolean) {
+    function handleEmit (type:string) {
       if (type === 'start') {
-        typeof handleStart === 'function' && handleStart(node)
+        emit('on-node-drag-start', node)
         return
       }
       if (type === 'move') {
-        typeof handleMove === 'function' && handleMove(node)
+        emit('on-node-drag', node)
         return
       }
       if (type === 'end') {
-        typeof handleEnd === 'function' && handleEnd(node, isSelf)
+        emit('on-node-drag-end', node, instance.parenNode.value)
       }
     }
   }

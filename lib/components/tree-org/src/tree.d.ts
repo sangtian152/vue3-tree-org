@@ -1,11 +1,12 @@
 import type { ExtractPropTypes } from 'vue';
-import type { INode, INodeData, IMenu, IMousePosition, DefineMenus } from '@/utils/types';
+import type { INode, INodeData, IMenu, IMousePosition, DefineMenus, LoadFn } from '@/utils/types';
 export declare const menus: {
     name: string;
     command: string;
 }[];
 export declare const treeProps: {
     readonly data: import("../../../utils/props").BuildPropReturn<ObjectConstructor, unknown, unknown, unknown, true>;
+    readonly center: BooleanConstructor;
     readonly props: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<Partial<import("../../../utils/types").IKeysObject>>, unknown, unknown, () => {
         id: string;
         pid: string;
@@ -28,12 +29,11 @@ export declare const treeProps: {
     readonly cloneNodeDrag: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly onlyOneNode: import("../../../utils/props").BuildPropReturn<BooleanConstructor, unknown, unknown, true, unknown>;
     readonly clickDelay: import("../../../utils/props").BuildPropReturn<NumberConstructor, unknown, unknown, 260, unknown>;
+    readonly lazy: BooleanConstructor;
+    readonly load: import("../../../utils/props").BuildPropReturn<import("../../../utils/props").PropWrapper<LoadFn>, unknown, unknown, unknown, unknown>;
     readonly defaultExpandLevel: NumberConstructor;
     readonly defaultExpandKeys: import("../../../utils/props").BuildPropReturn<ArrayConstructor, unknown, unknown, () => never[], unknown>;
-    readonly nodeDragStart: FunctionConstructor;
-    readonly nodeDraging: FunctionConstructor;
     readonly beforeDragEnd: FunctionConstructor;
-    readonly nodeDragEnd: FunctionConstructor;
     readonly horizontal: BooleanConstructor;
     readonly selectedKey: import("../../../utils/props").BuildPropReturn<readonly [ArrayConstructor, StringConstructor, NumberConstructor], unknown, unknown, unknown, unknown>;
     readonly collapsable: BooleanConstructor;
@@ -66,7 +66,10 @@ export declare const treeEmits: {
     'on-node-mouseleave': (e: MouseEvent, data: INodeData, node: INode) => boolean;
     'on-contextmenu': (data: any) => boolean;
     'on-node-copy': (str: string) => boolean;
-    'on-node-delete': (node: INode) => boolean;
+    'on-node-delete': (node: INodeData) => boolean;
+    'on-node-drag-start': (node: INode) => boolean;
+    'on-node-drag': (node: INode) => boolean;
+    'on-node-drag-end': (node: INode, targetNode: INode) => boolean;
     'on-node-focus': (e: FocusEvent, data: INodeData, node: INode) => boolean;
 };
 export declare type TreeEmits = typeof treeEmits;
