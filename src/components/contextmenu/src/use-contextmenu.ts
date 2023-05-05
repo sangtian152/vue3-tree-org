@@ -11,14 +11,14 @@ export const useContextmenu = (
 ) => {
   const copyText = ref('')
   // 递归遍历实现
-  function getNodeById (data: INodeData, key: string, value: any): INodeData | undefined {
-    if (data[key] === value) {
+  function getNodeById (data: INodeData, props:IKeysObject, value: any): INodeData | undefined {
+    if (data[props.id] === value) {
       return data
-    } else if (Array.isArray(data.children)) {
-      const list = data.children
+    } else if (Array.isArray(data[props.children])) {
+      const list = data[props.children]
       for (let i = 0, len = list.length; i < len; i++) {
         const row = list[i]
-        const pNode = getNodeById(row, key, value)
+        const pNode = getNodeById(row, props, value)
         if (pNode) {
           return pNode
         }
@@ -37,7 +37,7 @@ export const useContextmenu = (
       return
     }
     const { id, children } = (props as IKeysObject)
-    const oldPaNode = getNodeById(data, id, node.pid)
+    const oldPaNode = getNodeById(data, props as IKeysObject, node.pid)
     if (oldPaNode) {
       const list = oldPaNode[children]
       for (let i = 0, len = list.length; i < len; i++) {

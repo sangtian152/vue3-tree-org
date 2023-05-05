@@ -67,7 +67,7 @@ const addChildNode = function (node: INode, context: IContext) {
   const { parenNode, onlyOneNode, cloneNodeDrag } = context
   if (parenNode.value) {
     const { keys } = context
-    const { id, pid } = keys
+    const { id, pid, children } = keys
     const parentData = parenNode.value.$$data
     const nodeClone = JSON.parse(JSON.stringify(node.$$data))
 
@@ -75,7 +75,7 @@ const addChildNode = function (node: INode, context: IContext) {
       // 如果拖拽节点
       removeNode(nodeClone, context)
       nodeClone[pid] = parentData[id]
-      parentData.children ? parentData.children.push(nodeClone) : parentData.children = [].concat(nodeClone)
+      parentData[children] ? parentData[children].push(nodeClone) : parentData[children] = [].concat(nodeClone)
     } else {
       // 如果拷贝并拖拽节点
       recurseData(nodeClone, keys, function (item: INodeData) {
@@ -84,12 +84,11 @@ const addChildNode = function (node: INode, context: IContext) {
           item[id] = `clone-node-${item[id]}`
         }
       })
-      const { children } = keys
       if (onlyOneNode && Array.isArray(nodeClone[children])) {
         nodeClone[children] = []
       }
       nodeClone[keys.pid] = parentData[keys.id]
-      parentData.children ? parentData.children.push(nodeClone) : parentData.children = [nodeClone]
+      parentData[children] ? parentData[children].push(nodeClone) : parentData[children] = [nodeClone]
     }
   }
 }
